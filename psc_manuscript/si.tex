@@ -1,19 +1,22 @@
 \documentclass[10pt]{article}
-\usepackage[T1]{fontenc}\usepackage[margin=2cm]{geometry}\usepackage{booktabs,longtable,lmodern,url,xcolor}
+\usepackage[T1]{fontenc}\usepackage[margin=2cm]{geometry}\usepackage{booktabs,longtable,lmodern,url,xcolor,graphicx}
 \usepackage{microtype}\usepackage{hyperref}
 \title{Supplementary Information: Perovskite Solar Cell Performance Prediction with LLM-Derived Feature Augmentation under Leakage-Aware DOI Evaluation}
 \date{}\begin{document}\maketitle\small
+\noindent\textbf{Tier naming.} Throughout the main paper and this document, $t_1$ = PDP-derived device, processing and composition features; $t_2$ = $t_1$ + curated material-property descriptors; $t_3$ = $t_2$ + the 36 LLM-derived recipe flags. An earlier, superseded 44-predictor literature representation (the ``earlier literature block'') is \emph{not} $t_3$; where its results are shown they are labelled ``$t_2$ + earlier lit.\ block''. In the underlying run files and result tables of the repository this block carries the tier name \texttt{t3}; this document relabels it and never mixes its numbers with the recipe-flag results.\par
 \section*{Table S1. Predictors per tier}
-Column sets shown for a preprocessor fitted on the full filtered data (documentation); in the experiments the \texttt{\_na} indicators and the $>$80\% missing filter are re-derived from each training partition. Tiers are nested: $t_1\subset t_2\subset t_3$.\par
+Column sets shown for a preprocessor fitted on the full filtered data (documentation); in the experiments the \texttt{\_na} indicators and the $>$80\% missing filter are re-derived from each training partition. Tiers are nested: $t_1\subset t_2\subset t_3$ (77, 179 and 215 predictor columns in the common-split models).\par
 \subsection*{t1: 77 predictors (77 added relative to the previous tier)}
 \textbf{process} (21): \texttt{ETL\_deposition\_method}, \texttt{HTL\_deposition\_method}, \texttt{Perovskite\_deposition\_method}, \texttt{Perovskite\_thickness\_nm}, \texttt{ETL\_thickness\_nm}, \texttt{HTL\_thickness\_nm}, \texttt{Backcontact\_thickness\_nm}, \texttt{Perov\_anneal\_temp\_C}, \texttt{Perov\_anneal\_time\_min}, \texttt{Perov\_deposition\_steps}, \texttt{Perovskite\_dimension\_list\_of\_layers}, \texttt{Perov\_quenching\_crystallisation}, \texttt{Perovskite\_dimension\_3D\_with\_2D\_capping\_layer}, \texttt{Perovskite\_deposition\_solvent\_annealing}, \texttt{Perovskite\_thickness\_nm\_na}, \texttt{ETL\_thickness\_nm\_na}, \texttt{HTL\_thickness\_nm\_na}, \texttt{Backcontact\_thickness\_nm\_na}, \texttt{Perov\_anneal\_temp\_C\_na}, \texttt{Perov\_anneal\_time\_min\_na}, \texttt{Perovskite\_dimension\_list\_of\_layers\_na}\par\smallskip
 \textbf{device} (9): \texttt{Cell\_architecture}, \texttt{Perovskite\_band\_gap\_measured}, \texttt{is\_flexible\_x}, \texttt{is\_semitransparent}, \texttt{Encapsulation}, \texttt{Add\_lay\_front}, \texttt{Perovskite\_pl\_max\_nm}, \texttt{Perovskite\_band\_gap\_measured\_na}, \texttt{Perovskite\_pl\_max\_nm\_na}\par\smallskip
 \textbf{composition} (47): \texttt{num\_a\_ions}, \texttt{num\_b\_ions}, \texttt{num\_c\_ions}, \texttt{total\_ion\_count}, \texttt{a\_coeff\_sum}, \texttt{b\_coeff\_sum}, \texttt{c\_coeff\_sum}, \texttt{a\_FA\_fraction}, \texttt{a\_MA\_fraction}, \texttt{a\_Cs\_fraction}, \texttt{a\_Rb\_fraction}, \texttt{a\_organic\_fraction}, \texttt{a\_other\_fraction}, \texttt{b\_Pb\_fraction}, \texttt{b\_Sn\_fraction}, \texttt{b\_Bi\_fraction}, \texttt{b\_other\_fraction}, \texttt{halide\_I\_fraction}, \texttt{halide\_Br\_fraction}, \texttt{halide\_Cl\_fraction}, \texttt{halide\_F\_fraction}, \texttt{halide\_other\_fraction}, \texttt{is\_inorganic}, \texttt{is\_leadfree}, \texttt{is\_3D}, \texttt{is\_2D}, \texttt{is\_2D3D\_mixture}, \texttt{Perovskite\_composition\_perovskite\_inspired\_structure}, \texttt{Perovskite\_composition\_perovskite\_ABC3\_structure}, \texttt{a\_coeff\_sum\_na}, \texttt{b\_coeff\_sum\_na}, \texttt{c\_coeff\_sum\_na}, \texttt{a\_FA\_fraction\_na}, \texttt{a\_MA\_fraction\_na}, \texttt{a\_Cs\_fraction\_na}, \texttt{a\_Rb\_fraction\_na}, \texttt{a\_organic\_fraction\_na}, \texttt{a\_other\_fraction\_na}, \texttt{b\_Pb\_fraction\_na}, \texttt{b\_Sn\_fraction\_na}, \texttt{b\_Bi\_fraction\_na}, \texttt{b\_other\_fraction\_na}, \texttt{halide\_I\_fraction\_na}, \texttt{halide\_Br\_fraction\_na}, \texttt{halide\_Cl\_fraction\_na}, \texttt{halide\_F\_fraction\_na}, \texttt{halide\_other\_fraction\_na}\par\smallskip
 \subsection*{t2: 179 predictors (102 added relative to the previous tier)}
 \textbf{material} (102): \texttt{ETL\_band\_gap}, \texttt{ETL\_LUMO}, \texttt{ETL\_HOMO}, \texttt{ETL\_electron\_mobility}, \texttt{ETL\_hole\_mobility}, \texttt{ETL\_dielectric\_constant}, \texttt{ETL\_min\_atomic\_mass}, \texttt{ETL\_max\_atomic\_mass}, \texttt{ETL\_avg\_atomic\_mass}, \texttt{ETL\_min\_radius}, \texttt{ETL\_max\_radius}, \texttt{ETL\_avg\_radius}, \texttt{ETL\_en\_min}, \texttt{ETL\_en\_max}, \texttt{ETL\_en\_avg}, \texttt{HTL\_band\_gap}, \texttt{HTL\_LUMO}, \texttt{HTL\_HOMO}, \texttt{HTL\_electron\_mobility}, \texttt{HTL\_hole\_mobility}, \texttt{HTL\_dielectric\_constant}, \texttt{HTL\_min\_atomic\_mass}, \texttt{HTL\_max\_atomic\_mass}, \texttt{HTL\_avg\_atomic\_mass}, \texttt{HTL\_min\_radius}, \texttt{HTL\_max\_radius}, \texttt{HTL\_avg\_radius}, \texttt{HTL\_en\_min}, \texttt{HTL\_en\_max}, \texttt{HTL\_en\_avg}, \texttt{Perovskite\_band\_gap}, \texttt{Perovskite\_LUMO}, \texttt{Perovskite\_HOMO}, \texttt{Perovskite\_electron\_mobility}, \texttt{Perovskite\_hole\_mobility}, \texttt{Perovskite\_dielectric\_constant}, \texttt{Perovskite\_min\_atomic\_mass}, \texttt{Perovskite\_max\_atomic\_mass}, \texttt{Perovskite\_avg\_atomic\_mass}, \texttt{Perovskite\_min\_radius}, \texttt{Perovskite\_max\_radius}, \texttt{Perovskite\_avg\_radius}, \texttt{Perovskite\_en\_min}, \texttt{Perovskite\_en\_max}, \texttt{Perovskite\_en\_avg}, \texttt{perovskite\_tolerance\_factor}, \texttt{perovskite\_octahedral\_factor}, \texttt{perovskite\_cation\_radius\_ratio}, \texttt{perovskite\_tau\_descriptor}, \texttt{HTL\_hole\_barrier}, \texttt{ETL\_electron\_barrier}, \texttt{ETL\_band\_gap\_na}, \texttt{ETL\_LUMO\_na}, \texttt{ETL\_HOMO\_na}, \texttt{ETL\_electron\_mobility\_na}, \texttt{ETL\_hole\_mobility\_na}, \texttt{ETL\_dielectric\_constant\_na}, \texttt{ETL\_min\_atomic\_mass\_na}, \texttt{ETL\_max\_atomic\_mass\_na}, \texttt{ETL\_avg\_atomic\_mass\_na}, \texttt{ETL\_min\_radius\_na}, \texttt{ETL\_max\_radius\_na}, \texttt{ETL\_avg\_radius\_na}, \texttt{ETL\_en\_min\_na}, \texttt{ETL\_en\_max\_na}, \texttt{ETL\_en\_avg\_na}, \texttt{HTL\_band\_gap\_na}, \texttt{HTL\_LUMO\_na}, \texttt{HTL\_HOMO\_na}, \texttt{HTL\_electron\_mobility\_na}, \texttt{HTL\_hole\_mobility\_na}, \texttt{HTL\_dielectric\_constant\_na}, \texttt{HTL\_min\_atomic\_mass\_na}, \texttt{HTL\_max\_atomic\_mass\_na}, \texttt{HTL\_avg\_atomic\_mass\_na}, \texttt{HTL\_min\_radius\_na}, \texttt{HTL\_max\_radius\_na}, \texttt{HTL\_avg\_radius\_na}, \texttt{HTL\_en\_min\_na}, \texttt{HTL\_en\_max\_na}, \texttt{HTL\_en\_avg\_na}, \texttt{Perovskite\_band\_gap\_na}, \texttt{Perovskite\_LUMO\_na}, \texttt{Perovskite\_HOMO\_na}, \texttt{Perovskite\_electron\_mobility\_na}, \texttt{Perovskite\_hole\_mobility\_na}, \texttt{Perovskite\_dielectric\_constant\_na}, \texttt{Perovskite\_min\_atomic\_mass\_na}, \texttt{Perovskite\_max\_atomic\_mass\_na}, \texttt{Perovskite\_avg\_atomic\_mass\_na}, \texttt{Perovskite\_min\_radius\_na}, \texttt{Perovskite\_max\_radius\_na}, \texttt{Perovskite\_avg\_radius\_na}, \texttt{Perovskite\_en\_min\_na}, \texttt{Perovskite\_en\_max\_na}, \texttt{Perovskite\_en\_avg\_na}, \texttt{perovskite\_tolerance\_factor\_na}, \texttt{perovskite\_octahedral\_factor\_na}, \texttt{perovskite\_cation\_radius\_ratio\_na}, \texttt{perovskite\_tau\_descriptor\_na}, \texttt{HTL\_hole\_barrier\_na}, \texttt{ETL\_electron\_barrier\_na}\par\smallskip
-\subsection*{t3: 223 predictors (44 added relative to the previous tier)}
+\subsection*{t3: 215 predictors (36 recipe flags added to $t_2$)}
+Flags are paper-level, binary, and missing (native NaN, no indicator) for publications without an extraction record. Share positive among the 2,835 extracted papers in parentheses: \texttt{rc\_cl\_source} (20.5\%), \texttt{rc\_acetate} (4.7\%), \texttt{rc\_scn} (2.3\%), \texttt{rc\_snf2} (0.7\%), \texttt{rc\_ava} (0.8\%), \texttt{rc\_hx\_acid} (7.0\%), \texttt{rc\_alkali} (2.4\%), \texttt{rc\_cs} (12.0\%), \texttt{rc\_pea\_family} (60.8\%), \texttt{rc\_lewis\_base} (34.7\%), \texttt{rc\_water\_add} (4.1\%), \texttt{rc\_polymer} (17.7\%), \texttt{rc\_carbon} (28.4\%), \texttt{rc\_dio} (0.7\%), \texttt{rc\_htl\_tbp} (24.5\%), \texttt{rc\_htl\_litfsi} (23.5\%), \texttt{rc\_htl\_fk} (4.9\%), \texttt{rc\_htl\_f4tcnq} (0.8\%), \texttt{rc\_htl\_cu} (4.5\%), \texttt{rc\_htl\_borate} (0.3\%), \texttt{rc\_etl\_ticl4} (5.6\%), \texttt{rc\_etl\_dopant} (6.2\%), \texttt{rc\_undoped} (9.1\%), \texttt{rc\_interface\_pass} (15.7\%), \texttt{rc\_antisolvent} (6.4\%), \texttt{rc\_vacuum} (17.6\%), \texttt{rc\_two\_step} (3.9\%), \texttt{rc\_hot\_cast} (0.0\%), \texttt{rc\_solvent\_anneal} (1.0\%), \texttt{rc\_flexible} (4.3\%), \texttt{rc\_tandem} (3.4\%), \texttt{rc\_lead\_free} (4.0\%), \texttt{rc\_inorganic} (7.5\%), \texttt{rc\_mesoscopic} (22.3\%), \texttt{rc\_n2\_box} (4.0\%), \texttt{rc\_ambient} (10.4\%).\par\smallskip
+\subsection*{Earlier literature block (44 predictors; not part of $t_3$)}
 \textbf{literature} (44): \texttt{has\_BCP}, \texttt{has\_LiF}, \texttt{has\_PEAI}, \texttt{has\_SAM}, \texttt{has\_C60}, \texttt{has\_PCBM}, \texttt{has\_Spiro}, \texttt{has\_PEDOT}, \texttt{has\_NiOx}, \texttt{has\_SnO2}, \texttt{has\_TiO2}, \texttt{has\_ZnO}, \texttt{has\_PTAA}, \texttt{has\_fullerene}, \texttt{has\_passivation\_layer}, \texttt{is\_flexible\_y}, \texttt{is\_encapsulated}, \texttt{has\_stability\_measurement}, \texttt{used\_antisolvent}, \texttt{used\_glovebox}, \texttt{used\_vacuum\_evaporation}, \texttt{json\_numeric\_values\_found}, \texttt{has\_BCP\_na}, \texttt{has\_LiF\_na}, \texttt{has\_PEAI\_na}, \texttt{has\_SAM\_na}, \texttt{has\_C60\_na}, \texttt{has\_PCBM\_na}, \texttt{has\_Spiro\_na}, \texttt{has\_PEDOT\_na}, \texttt{has\_NiOx\_na}, \texttt{has\_SnO2\_na}, \texttt{has\_TiO2\_na}, \texttt{has\_ZnO\_na}, \texttt{has\_PTAA\_na}, \texttt{has\_fullerene\_na}, \texttt{has\_passivation\_layer\_na}, \texttt{is\_flexible\_y\_na}, \texttt{is\_encapsulated\_na}, \texttt{has\_stability\_measurement\_na}, \texttt{used\_antisolvent\_na}, \texttt{used\_glovebox\_na}, \texttt{used\_vacuum\_evaporation\_na}, \texttt{json\_numeric\_values\_found\_na}\par\smallskip
-\section*{Table S2. Per-split results of the matched CatBoost ablation (DOI-grouped)}\begin{longtable}{lllrrrr}\toprule Subset & Tier & Split & $n_\mathrm{test}$ & $R^2$ & MAE & RMSE\\\midrule\endhead
+\section*{Table S2. Per-split results of the matched CatBoost five-holdout experiment (DOI-grouped; $t_3$ in the run files = earlier literature block)}\begin{longtable}{lllrrrr}\toprule Subset & Tier & Split & $n_\mathrm{test}$ & $R^2$ & MAE & RMSE\\\midrule\endhead
 nip & t1 & 1 & 5476 & 0.3524 & 3.101 & 3.937\\
 nip & t1 & 2 & 5376 & 0.3780 & 3.067 & 3.928\\
 nip & t1 & 3 & 5688 & 0.3845 & 3.068 & 3.936\\
@@ -24,11 +27,11 @@ nip & t2 & 2 & 5376 & 0.4228 & 2.933 & 3.784\\
 nip & t2 & 3 & 5688 & 0.4030 & 2.999 & 3.876\\
 nip & t2 & 4 & 5785 & 0.4049 & 2.957 & 3.775\\
 nip & t2 & 5 & 5736 & 0.3877 & 3.007 & 3.905\\
-nip & t3 & 1 & 5476 & 0.3939 & 2.960 & 3.809\\
-nip & t3 & 2 & 5376 & 0.4197 & 2.953 & 3.794\\
-nip & t3 & 3 & 5688 & 0.4091 & 2.982 & 3.856\\
-nip & t3 & 4 & 5785 & 0.4071 & 2.943 & 3.768\\
-nip & t3 & 5 & 5736 & 0.3963 & 2.981 & 3.877\\
+nip & t2 + earlier lit.\ block & 1 & 5476 & 0.3939 & 2.960 & 3.809\\
+nip & t2 + earlier lit.\ block & 2 & 5376 & 0.4197 & 2.953 & 3.794\\
+nip & t2 + earlier lit.\ block & 3 & 5688 & 0.4091 & 2.982 & 3.856\\
+nip & t2 + earlier lit.\ block & 4 & 5785 & 0.4071 & 2.943 & 3.768\\
+nip & t2 + earlier lit.\ block & 5 & 5736 & 0.3963 & 2.981 & 3.877\\
 overall & t1 & 1 & 8224 & 0.3707 & 3.082 & 3.914\\
 overall & t1 & 2 & 8505 & 0.3345 & 3.101 & 3.958\\
 overall & t1 & 3 & 8269 & 0.3604 & 3.136 & 3.945\\
@@ -39,11 +42,11 @@ overall & t2 & 2 & 8505 & 0.3712 & 2.985 & 3.847\\
 overall & t2 & 3 & 8269 & 0.3787 & 3.067 & 3.888\\
 overall & t2 & 4 & 8550 & 0.4420 & 2.892 & 3.719\\
 overall & t2 & 5 & 8594 & 0.4326 & 2.864 & 3.684\\
-overall & t3 & 1 & 8224 & 0.4089 & 2.966 & 3.793\\
-overall & t3 & 2 & 8505 & 0.3731 & 2.982 & 3.842\\
-overall & t3 & 3 & 8269 & 0.3782 & 3.075 & 3.890\\
-overall & t3 & 4 & 8550 & 0.4408 & 2.893 & 3.723\\
-overall & t3 & 5 & 8594 & 0.4317 & 2.874 & 3.687\\
+overall & t2 + earlier lit.\ block & 1 & 8224 & 0.4089 & 2.966 & 3.793\\
+overall & t2 + earlier lit.\ block & 2 & 8505 & 0.3731 & 2.982 & 3.842\\
+overall & t2 + earlier lit.\ block & 3 & 8269 & 0.3782 & 3.075 & 3.890\\
+overall & t2 + earlier lit.\ block & 4 & 8550 & 0.4408 & 2.893 & 3.723\\
+overall & t2 + earlier lit.\ block & 5 & 8594 & 0.4317 & 2.874 & 3.687\\
 pin & t1 & 1 & 2437 & 0.3046 & 3.116 & 3.919\\
 pin & t1 & 2 & 2521 & 0.1653 & 3.166 & 4.151\\
 pin & t1 & 3 & 2723 & 0.2863 & 3.123 & 4.020\\
@@ -54,17 +57,17 @@ pin & t2 & 2 & 2521 & 0.2043 & 3.081 & 4.053\\
 pin & t2 & 3 & 2723 & 0.3437 & 2.994 & 3.855\\
 pin & t2 & 4 & 2872 & 0.2379 & 3.105 & 4.116\\
 pin & t2 & 5 & 2441 & 0.3248 & 3.028 & 3.948\\
-pin & t3 & 1 & 2437 & 0.3592 & 2.980 & 3.762\\
-pin & t3 & 2 & 2521 & 0.1815 & 3.136 & 4.111\\
-pin & t3 & 3 & 2723 & 0.3385 & 3.009 & 3.871\\
-pin & t3 & 4 & 2872 & 0.2571 & 3.105 & 4.064\\
-pin & t3 & 5 & 2441 & 0.3315 & 3.026 & 3.928\\
+pin & t2 + earlier lit.\ block & 1 & 2437 & 0.3592 & 2.980 & 3.762\\
+pin & t2 + earlier lit.\ block & 2 & 2521 & 0.1815 & 3.136 & 4.111\\
+pin & t2 + earlier lit.\ block & 3 & 2723 & 0.3385 & 3.009 & 3.871\\
+pin & t2 + earlier lit.\ block & 4 & 2872 & 0.2571 & 3.105 & 4.064\\
+pin & t2 + earlier lit.\ block & 5 & 2441 & 0.3315 & 3.026 & 3.928\\
 \bottomrule\end{longtable}
 \section*{Table S3. Split integrity (all 270 recorded fits)}
 DOI-grouped fits: 135; maximum DOI overlap between test and train: 0, validation and train: 0, test and validation: 0.\par
 Records without DOI: 232 (one block). Publications (normalised DOIs): 7326.\par
 Data SHA-256: \texttt{600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc}; config SHA-256: \texttt{dddb51a44e89fde8}; git HEAD at run time: \texttt{9b1d2ca3e1c7} (working tree dirty: True); CatBoost 1.2.10, scikit-learn 1.6.1, Python 3.13.5.\par
-\section*{Table S4. Literature-feature coverage and constancy within publication}\begin{tabular}{lrr}\toprule Feature & coverage & constant within DOI\\\midrule
+\section*{Table S4. Earlier literature block: coverage and constancy within publication}\begin{tabular}{lrr}\toprule Feature & coverage & constant within DOI\\\midrule
 \texttt{contact\_thickness\_nm} & 0.176 & 1.000\\
 \texttt{etl\_anneal\_temp\_C} & 0.053 & 1.000\\
 \texttt{etl\_thickness\_nm} & 0.101 & 1.000\\
@@ -98,6 +101,62 @@ Data SHA-256: \texttt{600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c93
 \texttt{used\_glovebox} & 0.362 & 1.000\\
 \texttt{used\_vacuum\_evaporation} & 0.362 & 1.000\\
 \bottomrule\end{tabular}\par\smallskip Coverage values below the median belong to sparsely reported process parameters; all other columns are non-missing exactly for the 14,896 records of publications with an extraction record.
+\section*{Table S5. Earlier 44-predictor literature block: five-holdout ablation (matched CatBoost, DOI-grouped; mean $\pm$ s.d. over five splits)}
+This experiment evaluated the superseded literature block, not $t_3$. $\Delta R^2$ is the mean per-split difference to $t_2$.\par\smallskip\begin{tabular}{llcccc}\toprule Subset & Tier & $R^2$ & MAE & RMSE & $\Delta R^2$ vs $t_2$\\\midrule
+Pooled & $t_1$ & $0.368\pm0.024$ & $3.081\pm0.040$ & $3.908\pm0.046$ & -0.040\\
+Pooled & $t_2$ & $0.408\pm0.032$ & $2.950\pm0.080$ & $3.783\pm0.085$ & \\
+Pooled & $t_2$ + earlier lit.\ block & $0.407\pm0.031$ & $2.958\pm0.080$ & $3.787\pm0.083$ & -0.001\\
+\midrule
+p-i-n & $t_1$ & $0.244\pm0.058$ & $3.168\pm0.049$ & $4.085\pm0.114$ & -0.047\\
+p-i-n & $t_2$ & $0.291\pm0.065$ & $3.047\pm0.045$ & $3.955\pm0.131$ & \\
+p-i-n & $t_2$ + earlier lit.\ block & $0.294\pm0.074$ & $3.051\pm0.067$ & $3.947\pm0.142$ & +0.002\\
+\midrule
+n-i-p & $t_1$ & $0.374\pm0.016$ & $3.062\pm0.047$ & $3.918\pm0.061$ & -0.029\\
+n-i-p & $t_2$ & $0.404\pm0.013$ & $2.966\pm0.036$ & $3.825\pm0.060$ & \\
+n-i-p & $t_2$ + earlier lit.\ block & $0.405\pm0.010$ & $2.964\pm0.017$ & $3.821\pm0.045$ & +0.001\\
+\midrule
+\bottomrule\end{tabular}\par\medskip
+\noindent Feature-group controls (same protocol):\par\smallskip\begin{tabular}{llcccc}\toprule Subset & Variant & Feat. & $R^2$ & MAE & RMSE\\\midrule
+Pooled & $t_1$ + earlier lit.\ block (no material properties) & 121 & $0.372\pm0.026$ & $3.060\pm0.053$ & $3.895\pm0.061$\\
+Pooled & $t_2$ + earlier block minus 2 completeness flags & 219 & $0.407\pm0.028$ & $2.953\pm0.075$ & $3.787\pm0.078$\\
+Pooled & $t_2$ + 32 noise columns & 211 & $0.404\pm0.029$ & $2.970\pm0.065$ & $3.796\pm0.076$\\
+p-i-n & $t_1$ + earlier lit.\ block (no material properties) & 122 & $0.251\pm0.071$ & $3.150\pm0.058$ & $4.065\pm0.136$\\
+p-i-n & $t_2$ + earlier block minus 2 completeness flags & 220 & $0.292\pm0.070$ & $3.052\pm0.061$ & $3.951\pm0.134$\\
+p-i-n & $t_2$ + 32 noise columns & 211 & $0.288\pm0.072$ & $3.067\pm0.063$ & $3.962\pm0.144$\\
+n-i-p & $t_1$ + earlier lit.\ block (no material properties) & 120 & $0.378\pm0.014$ & $3.050\pm0.038$ & $3.907\pm0.053$\\
+n-i-p & $t_2$ + earlier block minus 2 completeness flags & 218 & $0.407\pm0.012$ & $2.960\pm0.024$ & $3.816\pm0.051$\\
+n-i-p & $t_2$ + 32 noise columns & 210 & $0.402\pm0.009$ & $2.976\pm0.025$ & $3.830\pm0.053$\\
+\bottomrule\end{tabular}\par\medskip
+\section*{Table S6. Earlier-block rows of the reference-model, model-development and stricter-protocol experiments}
+\noindent Reference models, pooled, five DOI-grouped splits (mean $\pm$ s.d.):\par\smallskip\begin{tabular}{llccc}\toprule Model & Tier & $R^2$ & MAE & RMSE\\\midrule
+XGBoost (defaults) & $t_2$ + earlier lit.\ block & $0.377\pm0.025$ & $3.011\pm0.057$ & $3.880\pm0.056$\\
+Random forest & $t_2$ + earlier lit.\ block & $0.352\pm0.021$ & $3.073\pm0.049$ & $3.958\pm0.070$\\
+MLP & $t_2$ + earlier lit.\ block & $0.376\pm0.023$ & $3.042\pm0.052$ & $3.883\pm0.056$\\
+GPR (3,000-record subsample) & $t_2$ + earlier lit.\ block & $0.352\pm0.029$ & $3.129\pm0.051$ & $3.957\pm0.065$\\
+\bottomrule\end{tabular}\par\medskip
+\noindent Model-development experiment ($R^2$, mean $\pm$ s.d. over five splits):\par\smallskip\begin{tabular}{llcccc}\toprule Subset & Tier & Tuned & Bag & XGB & Ens\\\midrule
+Pooled & $t_2$ + earlier lit.\ block & $0.408\pm0.029$ & $0.412\pm0.029$ & $0.411\pm0.024$ & $0.418\pm0.026$\\
+p-i-n & $t_2$ + earlier lit.\ block & $0.295\pm0.071$ & $0.299\pm0.069$ & $0.284\pm0.077$ & $0.300\pm0.074$\\
+n-i-p & $t_2$ + earlier lit.\ block & $0.407\pm0.015$ & $0.409\pm0.015$ & $0.403\pm0.015$ & $0.413\pm0.015$\\
+\bottomrule\end{tabular}\par\medskip
+\noindent Stricter protocols, pooled CatBoost $R^2$ (mean $\pm$ s.d.):\par\smallskip\begin{tabular}{llcc}\toprule Protocol & Tier & $R^2$ & MAE\\\midrule
+Lead-author-grouped & $t_2$ + earlier lit.\ block & $0.395\pm0.013$ & 2.92\\
+Forward in time & $t_2$ + earlier lit.\ block & $0.335\pm0.058$ & 3.21\\
+\bottomrule\end{tabular}\par
+\section*{Figs.\ S1 and S2. SHAP analysis (models trained on $t_2$ + the earlier 44-predictor literature block; not $t_3$)}
+\begin{figure}[h]\centering\includegraphics[width=0.75\textwidth]{figures/fig_shap_groups.png}\caption*{Fig.\ S1. Share of total feature attribution by feature group for matched CatBoost models trained on $t_2$ plus the earlier 44-predictor literature block (first DOI-grouped split, 1,500 test records). Attribution is not predictive benefit, and no SHAP analysis was run for the recipe-flag model $t_3$.}\end{figure}
+\begin{figure}[h]\centering\includegraphics[width=\textwidth]{figures/shap.png}\caption*{Fig.\ S2. Twelve highest-ranked features by mean $|$SHAP$|$ (PCE percentage points) for the (a) pooled, (b) p-i-n and (c) n-i-p models of Fig.\ S1; \texttt{na} denotes a missingness indicator.}\end{figure}
+\section*{Table S7. Common-split comparison: per-seed paired $\Delta R^2$}
+Reserved publications, matched default CatBoost; each seed model scored separately (the main-text values use the mean of the five seed models).\par\smallskip\begin{tabular}{llccccc}\toprule Population & Comparison & seed 0 & seed 1 & seed 2 & seed 3 & seed 4\\\midrule
+LLM-covered & $t_2-t_1$ & +0.0427 & +0.0431 & +0.0427 & +0.0414 & +0.0415\\
+LLM-covered & $t_3-t_2$ & -0.0012 & +0.0120 & +0.0059 & +0.0045 & +0.0092\\
+All reserved & $t_2-t_1$ & +0.0323 & +0.0337 & +0.0328 & +0.0356 & +0.0301\\
+All reserved & $t_3-t_2$ & +0.0012 & +0.0079 & +0.0017 & -0.0023 & +0.0034\\
+\bottomrule\end{tabular}\par\medskip
+Negative controls (default settings; $\Delta R^2$ relative to $t_2$ under the same settings):
+LLM-covered: five DOI-permuted flag blocks -0.0049 to +0.0015; coverage indicator only +0.0015.
+all reserved: five DOI-permuted flag blocks -0.0028 to +0.0007; coverage indicator only +0.0011.
+\par
 \section*{Extraction system prompt (verbatim from the recovered script)}\begin{verbatim}You are a materials-science data-extraction assistant.
 
 Given a Markdown document converted from a published paper, extract every

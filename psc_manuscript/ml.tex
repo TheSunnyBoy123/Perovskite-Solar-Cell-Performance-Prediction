@@ -22,9 +22,6 @@
 \usepackage{inconsolata}
 \usepackage{hyperref}
 
-% Visible author placeholders -- remove all before submission
-\newcommand{\authortodo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
-
 \journal{Digital Discovery (manuscript prepared for submission)}
 
 \emergencystretch=3em
@@ -44,7 +41,7 @@
 
 
     \begin{abstract}
-        Machine-learning (ML) models for perovskite solar cell (PSC) performance are increasingly trained on literature-derived databases such as the Perovskite Database Project (PDP), yet the PDP studies that describe their partitioning use record-level splits, even though a single publication often contributes many closely related device records. Here we build a power conversion efficiency (PCE) prediction framework on 41,107 PDP device records from 7,326 publications, combining device and fabrication variables and composition descriptors ($t_1$), curated material properties ($t_2$) and publication-level features extracted from full texts with a locally served large language model (LLM, $t_3^{\mathrm{orig}}$). Models are evaluated with repeated DOI-grouped holdouts that use a DOI-disjoint validation set for early stopping, so that no test publication influences training or model selection. With one fixed CatBoost configuration, the pooled $R^2$ on unseen publications is $0.368 \pm 0.024$, $0.408 \pm 0.032$ and $0.407 \pm 0.031$ for $t_1$, $t_2$ and the original literature block (MAE 2.96 percentage points; mean $\pm$ s.d. over five overlapping holdouts); a validation-tuned CatBoost--XGBoost ensemble reaches $0.418 \pm 0.026$ (MAE 2.92). Material-property descriptors give a measurable gain ($\Delta R^2 = +0.040$, paired DOI-cluster bootstrap interval excluding zero in all five pooled splits), but a material-identity control recovers essentially all of it, so the gain reflects knowing which materials are present; the original literature block gives no detectable gain ($\Delta R^2 = -0.001$ pooled). Our final LLM-derived representation is a block of 36 binary recipe flags (additive and precursor identities, electron- and hole-transport-layer dopants, process route and device context) built from the stored extraction output, available for 36.6\% of records. Scored once on reserved publications, adding the flags to $t_2$ changed $R^2$ by $+0.0071$ (95\% interval $-0.0007$ to $+0.0157$) on publications with extraction data and by $+0.0025$ ($-0.0011$ to $+0.0062$) on all records under the same default settings, and by $+0.0094$ ($-0.0016$ to $+0.0219$; $R^2$ 0.361 to 0.371) and $+0.0015$ ($-0.0039$ to $+0.0067$) when each tier used its own tuned settings. All intervals include zero, so we describe these as small, suggestive improvements that are not statistically established. Under matched features and budgets, record-level random splitting yields a converged CatBoost $R^2$ of 0.59--0.63, i.e.\ 0.21--0.22 higher than DOI-grouped evaluation, while a ridge model shows a gap of only 0.06; 69\% of PCE variance lies between publications. DOI-grouped evaluation therefore gives a more defensible estimate of performance on new publications, while lead-author grouping changes little (0.395) and forward-in-time evaluation lowers it to 0.335; no external validation was possible.
+        Machine-learning (ML) models for perovskite solar cell (PSC) performance are increasingly trained on literature-derived databases such as the Perovskite Database Project (PDP), yet the PDP studies that describe their partitioning use record-level splits, even though a single publication often contributes many closely related device records. Here we build a power conversion efficiency (PCE) prediction framework on 41,107 PDP device records from 7,326 publications and evaluate it on unseen publications. Three nested feature tiers are compared: PDP-derived device, processing and composition features ($t_1$); $t_1$ plus curated material-property descriptors ($t_2$); and $t_2$ plus 36 binary recipe flags (additive and precursor identities, electron- and hole-transport-layer dopants, process route and device context) built deterministically from full-text information extracted with a locally served large language model (LLM) ($t_3$), available for 36.6\% of records. All tiers are trained with one fixed CatBoost configuration, a DOI-disjoint validation set for early stopping, and no test-based selection. On reserved publications scored once for this representation (14,125 records from 2,619 publications; they had, however, appeared in earlier experiments with other feature representations), $R^2$ rose from 0.371 ($t_1$) to 0.403 ($t_2$) and 0.406 ($t_3$) on all records, and from 0.318 to 0.359 and 0.366 on the 5,460 records (1,005 publications) whose publications have LLM-derived features. The material-property step is clear (paired $\Delta R^2 = +0.042$, 95\% interval $+0.021$ to $+0.063$, on LLM-covered records; $+0.032$, $+0.021$ to $+0.044$, on all records), whereas the recipe-flag step is small and not statistically established ($\Delta R^2 = +0.0071$, $-0.0007$ to $+0.0157$, covered; $+0.0025$, $-0.0011$ to $+0.0062$, all records), and it depends on the CatBoost configuration. Under repeated DOI-grouped holdouts the pooled $R^2$ of $t_1$ and $t_2$ is $0.368 \pm 0.024$ and $0.408 \pm 0.032$ (MAE 2.95 percentage points for $t_2$; mean $\pm$ s.d. over five overlapping holdouts); a material-identity control recovers essentially all of the $t_1 \rightarrow t_2$ gain, so it reflects knowing which materials are present. Under matched features and budgets, record-level random splitting yields a converged CatBoost $R^2$ of 0.59--0.62, i.e.\ 0.21--0.22 higher than DOI-grouped evaluation, while a ridge model shows a gap of only 0.06; 69\% of PCE variance lies between publications. DOI-grouped evaluation therefore gives a more defensible estimate of performance on new publications; lead-author grouping changes little (0.394 for $t_2$) and forward-in-time evaluation lowers it to 0.345; no external validation was possible.
     \end{abstract}
 
     \begin{keyword}
@@ -90,17 +87,16 @@ The literature-derived nature of PSC databases raises a further concern about mo
 
 In this work, we develop a literature- and material-augmented ML framework for predicting PSC PCE from the PDP, and evaluate it at the publication level. The contributions are twofold.
 \begin{enumerate}[label=(\roman*)]
-    \item \textbf{Controlled feature ablation and an LLM-derived recipe block.} We combine PDP device and fabrication variables with composition-derived descriptors, curated layer-resolved material properties, and publication-level features extracted from the full text of 2,699 matched articles using a locally served LLM. Nested feature tiers are compared with one fixed CatBoost configuration, identical splits and validation-based early stopping. Material-property descriptors give a measurable gain on unseen publications, which a material-identity control attributes to knowing which materials are used; an original block of 44 literature predictors adds no measurable gain over the material tier. We then construct a final LLM-derived representation, 36 binary recipe flags covering additive and precursor identities, transport-layer dopants, process route and device context, and score it once on reserved publications: the point estimates favour the flags (about $+0.007$ $R^2$ on publications with extraction data under matched settings), but all intervals include zero and coverage is limited to 36.6\% of records.
-    \item \textbf{Publication-level evaluation.} We compare record-level random splitting with repeated DOI-grouped holdouts under matched feature tiers, models, preprocessing and budgets, with DOI normalisation, an explicit treatment of records lacking a DOI, and a DOI-disjoint validation set so that no model selection touches the test publications. We quantify the gap for a flexible (CatBoost) and a linear (ridge) model and relate it to the within-publication structure of the data.
+    \item \textbf{Publication-level evaluation.} We compare record-level random splitting with repeated DOI-grouped holdouts under matched feature tiers, models, preprocessing and budgets, with DOI normalisation, an explicit treatment of records lacking a DOI, and a DOI-disjoint validation set so that no model selection touches the test publications. We quantify the gap for a flexible (CatBoost) and a linear (ridge) model, relate it to the within-publication structure of the data, and add lead-author and forward-in-time protocols.
+    \item \textbf{Three nested feature tiers, including LLM-derived recipe flags.} We combine PDP device and fabrication variables with composition-derived descriptors ($t_1$), curated layer-resolved material properties ($t_2$), and 36 binary recipe flags derived from LLM-extracted full-text information for 2,731 publications ($t_3$). The three tiers are compared on identical reserved publications and test records with one fixed CatBoost configuration. Material-property descriptors give a measurable gain on unseen publications, which a material-identity control attributes to knowing which materials are used; the recipe flags give a small additional gain whose interval includes zero, and coverage is limited to 36.6\% of records.
 \end{enumerate}
 
-SHAP-based interpretation is further used to characterize the features associated with model predictions in the n-i-p and p-i-n architectures. The overall workflow is summarized in Fig.~\ref{fig:ml_workflow}.
+SHAP-based interpretation of an earlier model variant is given in the Supplementary Information. The overall workflow is summarized in Fig.~\ref{fig:ml_workflow}.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/ml_pipeline.png}
-    \caption{Overview of the machine-learning workflow for perovskite solar-cell power conversion efficiency (PCE) prediction. The Perovskite Database Project provided unique DOIs, from which full-text PDFs were retrieved, which were converted to Markdown. Subsequently structured JSON files were generated through large language model (LLM)-based extraction. The resulting literature-derived features were integrated with structured database descriptors at the DOI level, followed by publication-grouped model evaluation using CatBoost and model interpretation using SHAP.
-    Panel 6 shows the matched CatBoost configuration and the subset sizes used.}
+    \caption{Overview of the machine-learning workflow for perovskite solar-cell power conversion efficiency (PCE) prediction. The Perovskite Database Project provided unique DOIs, from which full-text PDFs were retrieved, which were converted to Markdown. Subsequently structured JSON files were generated through large language model (LLM)-based extraction. The 36 recipe flags built from these files were integrated with structured database descriptors at the DOI level, followed by publication-grouped model evaluation using CatBoost. The predictor counts in panel 2 are for $t_1$, $t_2$ and $t_3$. Panel 6 shows the matched CatBoost configuration and the subset sizes used.}
     \label{fig:ml_workflow}
 \end{figure}
 
@@ -125,7 +121,8 @@ A catalogue of unique standardized material identifiers was subsequently constru
 
 \subsubsection{DOI Identification and Full-Text Retrieval}
 
-To enrich the structured device database with information from the original experimental literature, publication identifiers were extracted from the \texttt{Ref\_DOI\_number} field of the PDP. In total, 7,499 unique DOIs were identified across the 43,398 device records (7,326 publications plus 232 records without a DOI after the record filtering described in Section~\ref{sec:integration}). These identifiers were used to drive an automated full-text retrieval workflow, with retrieved documents associated with their corresponding DOIs to maintain traceability throughout subsequent processing. The retrieval workflow released with this work requests full texts only through legal routes, in order: open-access PDF locations listed by Unpaywall and OpenAlex, openly accessible publisher full-text links deposited with Crossref, and finally manual download through institutional access; each retrieval is logged with its route (\texttt{scripts/retrieve\_fulltext.py}). Retrieved PDFs, their Markdown conversions and the raw LLM outputs are not redistributed. The retrieval stage yielded 3,299 PDF documents. As full-text availability and successful retrieval varied across publications, the resulting corpus represented the subset of identified publications for which PDF documents were obtained.
+To enrich the structured device database with information from the original experimental literature, publication identifiers were extracted from the \texttt{Ref\_DOI\_number} field of the PDP. In total, 7,499 unique DOI strings were identified across the 43,398 device records (7,326 publications plus 232 records without a DOI after the record filtering described in Section~\ref{sec:integration}). These identifiers were used to drive an automated full-text retrieval workflow, with retrieved documents associated with their corresponding DOIs to maintain traceability throughout subsequent processing. The retrieval script released with this work (\texttt{scripts/retrieve\_fulltext.py}) requests full texts only through legal routes, in order: open-access PDF locations listed by Unpaywall and OpenAlex, openly accessible publisher full-text links deposited with Crossref, and finally manual download through institutional access; each retrieval is logged with its route. We do not assert that the historical corpus of 3,299 PDFs behind the reported features was obtained exclusively through these routes; its provenance is described in the repository retrieval notes. % AUTHOR DECISION NEEDED: legacy/NOTES_retrieval_history.md records that recovered earlier retrieval scripts also used non-legal routes (Sci-Hub domains) alongside OpenAlex; decide the final provenance statement (and whether the extraction should be regenerated from a legally retrieved corpus) before submission.
+Retrieved PDFs, their Markdown conversions and the raw LLM outputs are not redistributed. The retrieval stage yielded 3,299 PDF documents. As full-text availability and successful retrieval varied across publications, the resulting corpus represented the subset of identified publications for which PDF documents were obtained.
 
 \subsubsection{PDF Conversion and LLM-Based Information Extraction}
 \label{sec:extraction}
@@ -136,15 +133,15 @@ Each Markdown document was supplied individually to a locally served Qwen3.5-9B 
 
 The individual extraction outputs were consolidated into a combined JSON representation and subsequently organized into DOI-indexed JSON files. This process yielded 2,835 structured paper records. These records served as the intermediate representation for downstream feature construction, in which the extracted information was normalized and converted into a consistent set of publication-level descriptors for integration with the device-level database.
 
-No hand-annotated reference set was available, so a true extraction precision/recall and hallucination rate were \emph{not} measured. As a proxy we compared the extracted features with the independently curated PDP entries for the same publications (\texttt{results/extraction\_validation.json}). For the numerical parameters, the paper-level value agreed with the median PDP device value within 10\% for 59--85\% of publications that have both (Spearman 0.44--0.90; perovskite thickness 0.79, $n=507$; annealing temperature 0.71, $n=455$), and for the material flags the DOI-level precision/recall against the PDP stack strings were 0.94/0.82 (TiO$_2$), 0.95/0.80 (Spiro-OMeTAD), 0.82/0.87 (PEDOT), 0.85/0.83 (NiO$_x$), 0.83/0.83 (PTAA) and 0.54/0.82 (SnO$_2$), with lower precision where the PDP records only a subset of the materials a paper describes (the BCP and LiF flags cannot be assessed because the PDP stack strings rarely contain those layers). This is agreement with a second human-curated source, not accuracy against ground truth. Importantly, the extracted numerical values equal the PDP value exactly in 59--82\% of records where both exist, and they supply a value where the PDP column is empty for only 0.8--5.3\% of records, so they are largely redundant with columns already present in $t_1$. The corpus shrank from 3,299 retrieved PDFs to 3,141 Markdown documents and 2,835 structured paper records; these matched 2,726 distinct DOI strings of the filtered dataset (2,699 publications after DOI normalisation), covering 14,896 of 41,107 records (36.2\%). Within the table, the literature features are non-missing exactly for publications with an extraction record (individual sparsely reported process parameters have lower coverage, 3.7--36.2\%) and, where present, are constant within a publication (\texttt{results/feature\_audit.json}, Supplementary Table~S4).
+No hand-annotated reference set was available, so a true extraction precision/recall and hallucination rate were \emph{not} measured. As a proxy we compared the extracted features with the independently curated PDP entries for the same publications (\texttt{results/extraction\_validation.json}). For the numerical parameters, the paper-level value agreed with the median PDP device value within 10\% for 59--85\% of publications that have both (Spearman 0.44--0.90; perovskite thickness 0.79, $n=507$; annealing temperature 0.71, $n=455$), and for the material flags the DOI-level precision/recall against the PDP stack strings were 0.94/0.82 (TiO$_2$), 0.95/0.80 (Spiro-OMeTAD), 0.82/0.87 (PEDOT), 0.85/0.83 (NiO$_x$), 0.83/0.83 (PTAA) and 0.54/0.82 (SnO$_2$), with lower precision where the PDP records only a subset of the materials a paper describes (the BCP and LiF flags cannot be assessed because the PDP stack strings rarely contain those layers). This is agreement with a second human-curated source, not accuracy against ground truth, and it was computed for the numerical parameters and material flags of an earlier feature table, not for the 36 recipe flags of $t_3$, which were not separately validated. Importantly, the extracted numerical values equal the PDP value exactly in 59--82\% of records where both exist, and they supply a value where the PDP column is empty for only 0.8--5.3\% of records, so they are largely redundant with columns already present in $t_1$. The corpus shrank from 3,299 retrieved PDFs to 3,141 Markdown documents and 2,835 structured paper records. The recipe flags built from these records ($t_3$, Section~\ref{sec:recipe}) are non-missing for 15,027 of 41,107 filtered device records (36.6\%; 2,731 publications). An earlier literature feature table built from the same 2,835 records matched 2,726 distinct DOI strings of the filtered dataset (2,699 publications after DOI normalisation) and covered 14,896 records (36.2\%). The two coverage masks therefore differ by 32 publications and 131 records; we did not investigate the cause and do not claim that the masks are identical. In both tables the features are non-missing exactly for publications with an extraction record (individual sparsely reported process parameters of the earlier table have lower coverage, 3.7--36.2\%) and, where present, are constant within a publication (\texttt{results/feature\_audit.json}, Supplementary Table~S4).
 
-\subsubsection{DOI-Level Feature Construction}
+\subsubsection{Earlier DOI-Level Feature Table}
 
 The structured JSON records were parsed to construct a tabular dataset of publication-level features for integration with the device database. An initial, broader feature representation was developed and subsequently refined to retain information relevant to PSC materials and fabrication. The feature-construction procedure used recursive traversal of nested JSON objects to retrieve property values and associated units, together with normalization of synonymous field names and material-type labels. This harmonization enabled information expressed using different terminology across publications to be mapped to consistent feature definitions.
 
 The resulting features represented material properties and fabrication conditions reported in the source literature, including layer-specific properties, deposition parameters, annealing conditions, and available processing-environment information. Material and layer assignments were resolved using standardized material classifications and bounded pattern matching to reduce false matches between similar material names. Layer-specific descriptors were retained separately rather than averaging properties across different functional layers. In addition to these material and processing descriptors, the table includes extraction-level descriptors, such as the number of numerical values recovered from a paper, which summarize how completely a publication reports its experimental details. Bibliographic metadata, including author names, journal names, and publication year, were excluded.
 
-The final DOI-level feature table contained one row per successfully processed publication. These features represented information extracted from the associated research paper and were therefore defined at the publication level, rather than as independent measurements for every device reported in that paper. The table was subsequently linked to the device-level dataset by DOI.
+The final DOI-level feature table of this earlier representation contained one row per successfully processed publication (32 base columns, 44 predictors with their missingness indicators). These features represented information extracted from the associated research paper and were therefore defined at the publication level, rather than as independent measurements for every device reported in that paper. This earlier 44-predictor representation was superseded by the recipe flags below. It is not part of $t_1$, $t_2$ or $t_3$; its ablation is reported in the Supplementary Information and it is referred to as the ``earlier literature block''.
 
 
 \subsection{Feature Engineering}
@@ -182,22 +179,18 @@ For each device, property lookup was performed separately for the ETL, HTL, and 
 
 \subsubsection{PDP-Derived Process and Device Features}
 
-The composition descriptors were combined with relevant device and fabrication variables retained from the original PDP export. These variables included available layer-thickness information, deposition methods and solvents, annealing conditions, and device-related flags. Because the parsed material identifiers were not used as predictors, this database-level representation ($t_1$, Section~\ref{sec:tiers}) contains no explicit information on which transport-layer materials were used; that information enters the model only through the material-property descriptors of $t_2$.
+The composition descriptors were combined with relevant device and fabrication variables retained from the original PDP export. These variables included available layer-thickness information, deposition methods and solvents, annealing conditions, and device-related flags. Together with the composition descriptors they form the PDP-derived tier $t_1$ (Section~\ref{sec:tiers}). Because the parsed material identifiers were not used as predictors, $t_1$ contains no explicit information on which transport-layer materials were used; that information enters the model only through the material-property descriptors of $t_2$.
 
-\subsubsection{LLM-Derived Literature Features}
-
-The DOI-level feature table was used to augment the device-level representation with information extracted from the associated research papers. Paper-level features were not treated as device-specific experimental measurements; instead, they provided publication-level context derived from the reported literature. The feature-construction process normalized aliases and functional classifications before producing the final DOI-level table, allowing the same feature definitions to be applied consistently across publications. Photovoltaic outcome fields extracted during literature processing were not used as model predictors. The 32 literature-derived base columns (44 predictors once their missingness indicators are included) are listed in Table~S1 of the Supplementary Information. Because several of them describe how completely a paper reports its methods (e.g.\ \texttt{json\_numeric\_values\_found}, \texttt{has\_stability\_measurement}), they can act as proxies for the publication itself; Section~\ref{sec:features} tests their contribution with controls.
-
-\subsubsection{Recipe-flag block (final LLM-derived representation).}
+\subsubsection{LLM-Derived Recipe Flags ($t_3$)}
 \label{sec:recipe}
-The final LLM-derived representation, denoted $t_3$, was built from the same stored extraction JSON (no new LLM calls and no further full-text retrieval) by deterministic matching of canonicalised material names and process fields. It consists of 36 binary paper-level recipe flags (\texttt{rc\_*}): additive and precursor identities (for example chloride and thiocyanate sources, acetate, SnF$_2$, 5-AVA, hydrohalic acids, alkali and Cs additives, PEA-family spacers, Lewis bases, polymer, water and DIO additives, carbon-based contacts), electron- and hole-transport-layer dopants and treatments (TBP, LiTFSI, FK-type dopants, F4-TCNQ, Cu salts, borates, TiCl$_4$, undoped layers, interface passivation), process route (antisolvent, vacuum, two-step, hot casting, solvent annealing, nitrogen box versus ambient) and device context (flexible, tandem, lead-free, inorganic, mesoscopic). $t_3$ is $t_2$ plus these flags. The flags are missing for publications without an extraction record, which covers 15,027 of 41,107 records (36.6\%; 2,731 publications), and a CatBoost first-feature-use penalty of 0.5 is applied to these columns. Photovoltaic outcome fields were not used. The flags are paper-level outputs of pattern matching over LLM-extracted JSON, so they are noisy and cannot distinguish devices within a publication. The original 44-predictor block described above, denoted simply $t_3^{\mathrm{orig}}$ in the controlled ablation (Tables~\ref{tab:tiers}--\ref{tab:groups} and Figs.~\ref{fig:tiers}--\ref{fig:groups}), is a different representation and is not a subset of $t_3$.
+The LLM-derived part of $t_3$ was built from the stored extraction JSON (no new LLM calls and no further full-text retrieval) by deterministic matching of canonicalised material names and process fields. It consists of 36 binary paper-level recipe flags (\texttt{rc\_*}), intended to encode recipe information that the PDP columns do not hold as explicit identities: 14 additive and precursor flags (for example chloride and thiocyanate sources, acetate, SnF$_2$, 5-AVA, hydrohalic acids, alkali and Cs additives, PEA-family spacers, Lewis bases, polymer, water and DIO additives, carbon-based contacts); 6 hole-transport-layer dopant flags (TBP, LiTFSI, FK-type dopants, F4-TCNQ, Cu salts, borates); 2 electron-transport-layer flags (TiCl$_4$ treatment, other dopants); undoped-layer and interface-passivation flags (2); 7 process-route flags (antisolvent, vacuum, two-step, hot casting, solvent annealing, nitrogen box, ambient); and 5 device-context flags (flexible, tandem, lead-free, inorganic, mesoscopic). A flag is 1 if the pattern is found in the extracted records of the publication and 0 otherwise, so it means ``mentioned in the extraction'', not necessarily ``used in every device of the paper''. The flags are missing for publications without an extraction record, which covers 15,027 of 41,107 records (36.6\%; 2,731 publications), and are passed to CatBoost as native missing values without missingness indicators. $t_3$ is $t_2$ plus these 36 flags; in the models of Section~\ref{sec:three} this gives 215 predictor columns (179 of $t_2$ plus 36), verified on the fitted models. A CatBoost first-feature-use penalty of 0.5 is applied to the flag columns. Photovoltaic outcome fields were not used. The flags are paper-level outputs of pattern matching over LLM-extracted JSON, so they are noisy, were not validated against annotation, and cannot distinguish devices within a publication; one flag (hot casting) is positive for a single publication and is effectively constant. The earlier 44-predictor literature block (previous subsection) is a different representation and is not a subset of $t_3$.
 
 \subsection{Data Integration, Filtering and Feature Tiers}
 \label{sec:integration}
 
 The structured device-level feature table and the DOI-level literature feature table were integrated using the publication DOI as the join key. DOI strings were normalised before matching and before grouping by removing byte-order marks and whitespace, lower-casing, and stripping \texttt{doi.org} and \texttt{doi:} prefixes; this merges 45 case/prefix variants, so the 7,371 raw DOI strings of the filtered data correspond to 7,326 publications. A left join was performed from the device-level table to the DOI-level feature table, retaining the device records even when a corresponding literature-feature record was unavailable. Missing paper-level features arising from unsuccessful retrieval, incomplete extraction, or unmatched DOI identifiers were preserved as missing values for subsequent model preparation.
 
-The initial PDP export contained 43,398 records associated with 7,499 unique raw DOI strings. We excluded 1,002 records with missing target values and a further 1,289 records with reported PCE below 1.0\%, giving 41,107 records from 7,326 publications plus 232 records without a DOI (Table~\ref{tab:dataset}). Of these, 28,340 records were n-i-p and 12,684 were p-i-n devices; the remaining 83 records have other or unspecified architectures and were used only in the pooled model. The filtered set contains 17 records (six publications) with PCE above 27\%, i.e.\ above the certified single-junction record; the enriched table carries no illumination or tandem field with which to remove them on physical grounds, so they were retained under the pre-declared filter. Excluding them from the test sets changes the pooled $t_3^{\mathrm{orig}}$ $R^2$ by $+0.002$ (0.407 to 0.409), so they do not drive any conclusion. The DOI was used exclusively as a record-linkage and grouping variable and was never a predictor. The 232 records without a DOI were treated as one explicit group that is never divided between partitions; this is conservative, because their true publications are unknown. Free-text columns were removed. All data-dependent preprocessing was fitted on the training partition of each split only: columns with more than 80\% missing values were dropped, numerical features with missing entries were median-imputed and accompanied by a binary missingness indicator (suffix \texttt{\_na}), and missing categorical features were assigned the label ``unknown''. The predictor columns of each tier are listed in the Supplementary Information (Table~S1).
+The initial PDP export contained 43,398 records associated with 7,499 unique raw DOI strings. We excluded 1,002 records with missing target values and a further 1,289 records with reported PCE below 1.0\%, giving 41,107 records from 7,326 publications plus 232 records without a DOI (Table~\ref{tab:dataset}). Of these, 28,340 records were n-i-p and 12,684 were p-i-n devices; the remaining 83 records have other or unspecified architectures and were used only in the pooled model. The filtered set contains 17 records (six publications) with PCE above 27\%, i.e.\ above the certified single-junction record; the enriched table carries no illumination or tandem field with which to remove them on physical grounds, so they were retained under the pre-declared filter. Excluding them from the test sets changes the pooled $t_2$ $R^2$ by $+0.003$ (0.408 to 0.410), so they do not drive any conclusion. The DOI was used exclusively as a record-linkage and grouping variable and was never a predictor. The 232 records without a DOI were treated as one explicit group that is never divided between partitions; this is conservative, because their true publications are unknown. Free-text columns were removed. All data-dependent preprocessing was fitted on the training partition of each split only: columns with more than 80\% missing values were dropped, numerical features with missing entries were median-imputed and accompanied by a binary missingness indicator (suffix \texttt{\_na}), and missing categorical features were assigned the label ``unknown''; the recipe flags of $t_3$ are the exception and are kept as native missing values. The predictor columns of each tier are listed in the Supplementary Information (Table~S1).
 
 \begin{table}[t]
     \centering\small
@@ -213,7 +206,8 @@ The initial PDP export contained 43,398 records associated with 7,499 unique raw
         Records after filtering (publications) & 41,107 (7,326) \\
         \quad n-i-p / p-i-n / other architecture & 28,340 / 12,684 / 83 \\
         \quad Records without DOI & 232 \\
-        Records with LLM-derived literature features (publications) & 14,896 (2,699) \\
+        Records with recipe flags, $t_3$ (publications) & 15,027 (2,731) \\
+        Records with the earlier literature block (publications) & 14,896 (2,699) \\
         PCE after filtering: mean, median, range (\%) & 12.4, 13.0, 1.0--36.2 \\
         Records per publication: median, maximum & 4, 127 \\
         Target variance between publications (ICC) & 0.69 \\
@@ -225,11 +219,11 @@ The initial PDP export contained 43,398 records associated with 7,499 unique raw
 
 \subsubsection{Prediction task and feature tiers.}
 \label{sec:tiers}
-We formulated PCE prediction as a supervised regression task, with experimentally reported PCE as the target. Three nested feature tiers were defined (Table~\ref{tab:tiertable}): the PDP database representation ($t_1$), comprising device architecture, layer deposition and fabrication variables and composition-derived descriptors; $t_1$ augmented with material-property descriptors ($t_2$); and $t_2$ further augmented with the original block of LLM-derived literature features ($t_3^{\mathrm{orig}}$). Nesting is enforced in code and asserted in the test suite. Each tier was evaluated on the pooled dataset and separately on the p-i-n and n-i-p subsets, which were modelled independently. Three additional control tiers were used only to probe the literature features: $t_1$ plus the literature block without material properties; $t_3^{\mathrm{orig}}$ without the two reporting-completeness flags (\texttt{json\_numeric\_values\_found}, \texttt{has\_stability\_measurement}); and $t_2$ plus 32 columns of N(0,1) noise (a negative control). The final recipe-flag representation ($t_3$, Section~\ref{sec:recipe}) is not part of this ablation; it is evaluated separately on reserved publications (Section~\ref{sec:recipe_results}).
+We formulated PCE prediction as a supervised regression task, with experimentally reported PCE as the target. Three nested feature tiers are used throughout (Table~\ref{tab:tiertable}): $t_1$, the PDP-derived device, processing, architecture and composition features; $t_2$, $t_1$ plus curated material-property descriptors; and $t_3$, $t_2$ plus the 36 LLM-derived recipe flags (Section~\ref{sec:recipe}). Nesting is enforced in code and asserted in the test suite. The three tiers are compared on the same reserved publications (Section~\ref{sec:v4protocol}). Earlier experiments with repeated DOI-grouped holdouts, record-level and stricter protocols, and the reference and tuned models used $t_1$ and $t_2$ only; those experiments also evaluated an earlier 44-predictor literature block, which is not $t_3$, is not part of the tiers and is reported in the Supplementary Information. Each tier was evaluated on the pooled dataset and, in the five-holdout experiments, separately on the p-i-n and n-i-p subsets, which were modelled independently. There, $t_2$ plus 32 columns of N(0,1) noise served as a negative control (Supplementary Information).
 
 \begin{table*}[t]
     \centering\small
-    \caption{Feature tiers. Counts are for the pooled model and include missingness indicators. Because the indicator set is derived from each training partition, the n-i-p and p-i-n models contain on average 76/178/222 and 77/179/224 features for $t_1$/$t_2$/$t_3^{\mathrm{orig}}$. Exact lists: Supplementary Table~S1.}
+    \caption{Feature tiers. Counts are predictor columns of the pooled model after preprocessing, including missingness indicators, as verified on the fitted models (in the five-holdout experiments the indicator set is derived from each training partition, so the n-i-p and p-i-n models contain on average 76/178 and 77/179 features for $t_1$/$t_2$). The 36 recipe flags of $t_3$ are kept as native missing values and have no indicators. Exact lists: Supplementary Table~S1.}
     \label{tab:tiertable}
     \begin{tabular}{llrp{8cm}}
         \toprule
@@ -239,16 +233,16 @@ We formulated PCE prediction as a supervised regression task, with experimentall
         Device & $t_1$ & 9 & Architecture and device flags \\
         Composition & $t_1$ & 47 & A-, B- and X-site ion fractions and counts \\
         Material properties & $t_2$ & 102 & Band gap, HOMO/LUMO, mobility, etc.\ (49 base columns plus 2 band-alignment differences and indicators) \\
-        Literature (LLM) & $t_3^{\mathrm{orig}}$ & 44 & 32 paper-level base columns plus indicators \\
+        Recipe flags (LLM) & $t_3$ & 36 & Binary paper-level flags: additive and precursor identities, ETL/HTL dopants, process route, device context \\
         \midrule
-        Total & $t_1$ / $t_2$ / $t_3^{\mathrm{orig}}$ & 77 / 179 / 223 & \\
+        Total & $t_1$ / $t_2$ / $t_3$ & 77 / 179 / 215 & \\
         \bottomrule
     \end{tabular}
 \end{table*}
 
 \subsubsection{Model training.}
 \label{sec:models}
-Models were trained with CatBoost \cite{prokhorenkova2018catboost}, using its native handling of the categorical variables (architecture and the deposition methods). To ensure a controlled comparison across feature tiers, all three tiers used a single CatBoost regressor with the same fixed hyperparameters (Table~\ref{tab:config}). These values were fixed a priori and inherited from an earlier configuration of this project that was not tuned in the present study; the number of trees was chosen by early stopping on a DOI-disjoint validation set and no tier was tuned. The only difference between tiers is the predictor set, so the tier comparisons are feature ablations rather than comparisons between model architectures, hyperparameters or ensembling. Reference models were trained on the same splits and features: a training-mean predictor; ridge regression (one-hot categorical encoding, standardised and winsorised numerical features, penalty chosen on the validation set); XGBoost with library defaults (the setting of Roberts-style pipelines); a random forest (300 trees); a multilayer perceptron (two hidden layers, early stopping on the validation set); and an exact Gaussian process on a fixed random subsample of 3,000 training records (exact GPR scales cubically with the number of records). A separate model-development experiment on the original-block tiers, \emph{not} used for the tier comparison, selected CatBoost depth and L2 regularisation from a six-point grid by validation RMSE (identical grid for every tier), then averaged three seeds, and combined this bag with an early-stopped XGBoost model.
+Models were trained with CatBoost \cite{prokhorenkova2018catboost}, using its native handling of the categorical variables (architecture and the deposition methods). To ensure a controlled comparison across feature tiers, all tiers used a single CatBoost regressor with the same fixed hyperparameters (Table~\ref{tab:config}). These values were fixed a priori and inherited from an earlier configuration of this project that was not tuned in the present study; the number of trees was chosen by early stopping on a DOI-disjoint validation set and no tier was tuned. The only difference between tiers is the predictor set, so the tier comparisons are feature ablations rather than comparisons between model architectures, hyperparameters or ensembling. Separately tuned configurations are used only where stated (Section~\ref{sec:recipe_results}) and are never mixed with the matched comparison. Reference models were trained on the same splits and features: a training-mean predictor; ridge regression (one-hot categorical encoding, standardised and winsorised numerical features, penalty chosen on the validation set); XGBoost with library defaults (the setting of Roberts-style pipelines); a random forest (300 trees); a multilayer perceptron (two hidden layers, early stopping on the validation set); and an exact Gaussian process on a fixed random subsample of 3,000 training records (exact GPR scales cubically with the number of records). A separate model-development experiment, \emph{not} used for the tier comparison, selected CatBoost depth and L2 regularisation from a six-point grid by validation RMSE (identical grid for every tier), then averaged three seeds, and combined this bag with an early-stopped XGBoost model.
 
 \begin{table*}[t]
     \centering\small
@@ -289,9 +283,9 @@ To evaluate generalization to previously unseen publications, we used five repea
     \end{tabular}
 \end{table*}
 
-\subsubsection{Evaluation of the recipe-flag block.}
+\subsubsection{Common-split evaluation of the three tiers.}
 \label{sec:v4protocol}
-The recipe-flag block was evaluated under a separate protocol fixed after the controlled ablation. Publications were assigned by a salted DOI hash to a development partition (65\%; 26,982 records, 4,708 publications) used for all design, tuning and ablation work, and a reserved partition (35\%; 14,125 records, 2,619 publications, of which 5,460 records from 1,005 publications have extraction data) scored once. The reserved publications had appeared in earlier experiments with other feature representations, so they are new for this representation but not untouched data, and the flag block was selected after comparisons on development publications. For $t_2$ and $t_3$ separately, an equal-budget random search of 24 CatBoost configurations (the matched default included) was scored by DOI-grouped five-fold mean squared error on development publications. For the final scoring, models were trained on all development records (DOI-disjoint 15\% validation set for early stopping), five seed models were averaged, and paired differences on the reserved publications were assessed by a publication-cluster bootstrap of the squared error (2,000 resamples). Two comparisons isolate different questions: \emph{same settings} gives both tiers the matched default configuration (or both the same tuned configuration), so that only the added features differ; \emph{each tuned} gives each tier its own selected configuration. Negative controls replaced the flag block by five DOI-permuted copies or by a coverage indicator alone. Scores are reported for the covered subset (reserved records from publications with extraction data) and for all reserved records. Because this partition and protocol differ from the five repeated holdouts above, absolute $R^2$ values from the two protocols are not comparable.
+$t_1$, $t_2$ and $t_3$ were compared under one protocol fixed after the exploratory ablation. Publications were assigned by a salted DOI hash to a development partition (65\%; 26,982 records, 4,708 publications) used for all design, tuning and ablation work, and a reserved partition (35\%; 14,125 records, 2,619 publications, of which 5,460 records from 1,005 publications have extraction data). The reserved publications had appeared in earlier experiments with other feature representations, so they are new for the recipe-flag representation but not untouched data, and the flag block was selected after comparisons on development publications. For the main comparison all three tiers used the matched default CatBoost configuration (Table~\ref{tab:config}), the same development records for training, the same DOI-disjoint 15\% validation set per seed for early stopping, training-only preprocessing, and the same five seeds; the final prediction is the mean of the five seed models, and all tiers are scored on identical reserved records. Models were trained once on all development records. The $t_2$ and $t_3$ arms were scored first; the $t_1$ arm was added afterwards in the same script path, with the same seeds and validation splits, and no choice depended on its result. Scores are reported for the covered subset (reserved records from publications with extraction data) and for all reserved records, where records of publications without extraction data carry missing flags under the missing-feature policy above. Paired differences between tiers were assessed by a publication-cluster bootstrap of the squared error (2,000 resamples), and per-tier $R^2$ intervals by the same bootstrap. To examine configuration dependence of the $t_2 \rightarrow t_3$ step only, an equal-budget random search of 24 CatBoost configurations (the matched default included) was run for $t_2$ and $t_3$ separately and scored by DOI-grouped five-fold mean squared error on development publications; $t_1$ was not tuned. Two comparisons then isolate different questions: \emph{same settings} gives both tiers the same configuration (the default, or one tier's tuned configuration), so that only the added features differ; \emph{each tuned} gives each tier its own selected configuration, which mixes feature and tuning effects. Negative controls replaced the flag block by five DOI-permuted copies or by a coverage indicator alone. Because this partition and protocol differ from the five repeated holdouts below, absolute $R^2$ values from the two protocols are not comparable.
 
 \subsubsection{Performance metrics.}
 Predictive performance was assessed using the coefficient of determination ($R^2$), mean absolute error (MAE), and root mean squared error (RMSE), calculated by comparing experimentally reported PCE values, $y_i$, with predictions, $\hat{y}_i$, for the $N$ records in each held-out test partition:
@@ -312,213 +306,72 @@ where $\bar{y}$ is the mean experimentally reported PCE in the corresponding tes
 
 \subsection{Feature Importance and Model Interpretation}
 
-SHAP (Shapley additive explanations) was used to interpret the fitted CatBoost models and quantify the contributions of individual predictors to PCE predictions \cite{shappaper}. SHAP values were computed for the original-block ($t_3^{\mathrm{orig}}$) models, not for the recipe-flag models, with \texttt{TreeExplainer} for a random sample of 1,500 held-out records from the first DOI-grouped split, using the matched CatBoost model trained for $t_3^{\mathrm{orig}}$ with validation-based early stopping. Global feature importance was assessed using mean absolute SHAP values. The analysis was conducted for the pooled dataset and the separate p-i-n and n-i-p models, and features were aggregated into the groups of Table~\ref{tab:tiertable} to compare group-level contributions. Because the p-i-n and n-i-p models were trained on different records, differences between their rankings describe what each model learned rather than different physical effects in the two architectures.
+SHAP (Shapley additive explanations) was used to interpret fitted CatBoost models \cite{shappaper}. The SHAP analysis was computed for matched CatBoost models trained on $t_2$ plus the earlier 44-predictor literature block, not for $t_1$, $t_2$ or $t_3$ models. It used \texttt{TreeExplainer} on a random sample of 1,500 held-out records from the first DOI-grouped split, with mean absolute SHAP values as global importance, for the pooled, p-i-n and n-i-p models; features were aggregated into feature groups. Because the p-i-n and n-i-p models were trained on different records, differences between their rankings describe what each model learned rather than different physical effects in the two architectures.
 
 % ---------------- RESULTS AND DISCUSSION ----------------
 \section{Results and Discussion}
 
-\subsection{Generalization to unseen publications}
-\label{sec:generalization}
+\subsection{Three feature tiers on reserved publications}
+\label{sec:three}
 
-With the matched CatBoost configuration and all features ($t_3^{\mathrm{orig}}$), the pooled model reached $R^2 = 0.407 \pm 0.031$, MAE $= 2.96 \pm 0.08$ and RMSE $= 3.79 \pm 0.08$ percentage points on publications it had not seen (Table~\ref{tab:tiers}, Fig.~\ref{fig:tiers}; mean $\pm$ s.d. over five repeated DOI-grouped holdouts, each with a DOI-disjoint validation set for early stopping). The training-mean predictor has $R^2 \approx 0$ and MAE $4.08$, so the model removes about 28\% of the mean absolute error. Performance differed by architecture: $R^2$ was $0.405 \pm 0.010$ for n-i-p and $0.294 \pm 0.074$ for p-i-n devices, whereas MAE (2.96 and 3.05) and RMSE (3.82 and 3.95) were similar. The p-i-n result is also the less certain one, because the subset is smaller (about 2,600 test records and 451 test publications per split). Relative to the training-mean predictor, the p-i-n model reduces MAE by 21\% (3.84 to 3.05) and the n-i-p model by 28\% (4.11 to 2.96), so on this data p-i-n devices are somewhat harder to predict, in addition to $R^2$ depending on the PCE variance within each subset.
-
-\begin{table}[t]
-    \centering\small
-    \caption{Performance across nested feature tiers with the same CatBoost configuration (Table~\ref{tab:config}) under repeated DOI-grouped holdout evaluation (mean $\pm$ s.d. over five splits; MAE and RMSE in PCE percentage points; $N$ is the mean number of test records per split; the number of features varies slightly between splits because the missingness indicators are derived from each training partition).}
-    \label{tab:tiers}
-    \begin{tabular}{llrrccc}
-        \toprule
-        Subset & Feature tier & $N$ & Feat. & $R^2$ & MAE & RMSE \\
-        \midrule
-        Pooled & Database only ($t_1$) & 8,428 & 77 & $0.368 \pm 0.024$ & $3.081 \pm 0.040$ & $3.908 \pm 0.046$ \\
-        Pooled & + material ($t_2$) & 8,428 & 179 & $0.408 \pm 0.032$ & $2.950 \pm 0.080$ & $3.783 \pm 0.085$ \\
-        Pooled & + material + orig.\ lit.\ ($t_3^{\mathrm{orig}}$) & 8,428 & 223 & $0.407 \pm 0.031$ & $2.958 \pm 0.080$ & $3.787 \pm 0.083$ \\
-        \midrule
-        p-i-n & Database only ($t_1$) & 2,598 & 77 & $0.244 \pm 0.058$ & $3.168 \pm 0.049$ & $4.085 \pm 0.114$ \\
-        p-i-n & + material ($t_2$) & 2,598 & 179 & $0.291 \pm 0.065$ & $3.047 \pm 0.045$ & $3.955 \pm 0.131$ \\
-        p-i-n & + material + orig.\ lit.\ ($t_3^{\mathrm{orig}}$) & 2,598 & 224 & $0.294 \pm 0.074$ & $3.051 \pm 0.067$ & $3.947 \pm 0.142$ \\
-        \midrule
-        n-i-p & Database only ($t_1$) & 5,612 & 76 & $0.374 \pm 0.016$ & $3.062 \pm 0.047$ & $3.918 \pm 0.061$ \\
-        n-i-p & + material ($t_2$) & 5,612 & 178 & $0.404 \pm 0.013$ & $2.966 \pm 0.036$ & $3.825 \pm 0.060$ \\
-        n-i-p & + material + orig.\ lit.\ ($t_3^{\mathrm{orig}}$) & 5,612 & 222 & $0.405 \pm 0.010$ & $2.964 \pm 0.017$ & $3.821 \pm 0.045$ \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/fig_feature_tiers.png}
-    \caption{Effect of feature tier on prediction of unseen publications (matched CatBoost, DOI-grouped splits). (a) $R^2$ and (b) RMSE, mean $\pm$ s.d. over five holdout splits; the vertical axes are truncated to the plotted range. $t_3^{\mathrm{orig}}$ is the original literature block, and the recipe-flag block is evaluated separately in Fig.~\ref{fig:v4}. The $t_1\!\to\!t_2$ step is visible in all subsets; the $t_2\!\to\!t_3^{\mathrm{orig}}$ step (original literature block) is not distinguishable from zero.}
-    \label{fig:tiers}
-\end{figure}
-
-The pooled results should be read against simple references (Table~\ref{tab:baselines}). Ridge regression on the same $t_3^{\mathrm{orig}}$ features reaches $R^2 = 0.350 \pm 0.033$, i.e.\ most of what CatBoost achieves, and XGBoost with library defaults, a random forest, a validation-early-stopped MLP and a subsample-trained Gaussian process lie between 0.35 and 0.38. Matched CatBoost is the best of these by 0.03 (XGBoost, MLP) to 0.06 (ridge, random forest, GPR) in $R^2$; the margin over XGBoost and the MLP is comparable to the split-to-split standard deviation (0.02--0.03), so we do not claim a ranking among the non-linear models. A properly trained MLP and a Gaussian process are thus competitive with the tree ensemble on this dataset. All reference models improve when the material and literature blocks are added ($t_1\!\to\!t_3^{\mathrm{orig}}$), consistent with the CatBoost ablation.
+Table~\ref{tab:three} and Fig.~\ref{fig:three} compare $t_1$, $t_2$ and $t_3$ on the same reserved publications (Section~\ref{sec:v4protocol}): one fixed CatBoost configuration, identical training, validation and test publications, DOI-disjoint partitions, and identical test records within each population. On the 5,460 reserved records from 1,005 publications with LLM-derived extraction data, $R^2$ increased from 0.318 ($t_1$) to 0.359 ($t_2$) and 0.366 ($t_3$), with MAE falling from 3.021 to 2.911 and 2.892 and RMSE from 3.866 to 3.747 and 3.726 percentage points. On all 14,125 reserved records from 2,619 publications the corresponding values were 0.371, 0.403 and 0.406 ($R^2$), 3.054, 2.955 and 2.949 (MAE) and 3.896, 3.794 and 3.787 (RMSE). The sequence is therefore monotonic in all three metrics in both populations. The two steps differ in size and in certainty (Table~\ref{tab:paired3}). The material-property step $t_1 \rightarrow t_2$ is clear: $\Delta R^2 = +0.042$ (95\% interval $+0.021$ to $+0.063$) on covered records and $+0.032$ ($+0.021$ to $+0.044$) on all records, positive in all five seed models. The recipe-flag step $t_2 \rightarrow t_3$ is small: $\Delta R^2 = +0.0071$ ($-0.0007$ to $+0.0157$; positive in 4 of 5 seeds) on covered records and $+0.0025$ ($-0.0011$ to $+0.0062$; 4 of 5 seeds) on all records, with intervals that include zero. We therefore describe the trend $t_1 < t_2 < t_3$ as directionally consistent, with a statistically established first step and a small, not statistically established second step; the second step is larger where the flags exist (covered records) than on all records, where 61\% of the reserved records have no flags. The per-tier intervals in Table~\ref{tab:three} overlap widely because they are dominated by between-publication variability shared by all tiers; the paired intervals are the relevant uncertainty for differences. $R^2$ on the covered subset is lower than on all records for every tier, which reflects a different population and PCE variance and not a property of the flags.
 
 \begin{table}[t]
     \centering\small
-    \caption{Reference models on the pooled dataset under the same five DOI-grouped splits (mean $\pm$ s.d.; MAE and RMSE in PCE percentage points). All models use validation data only for early stopping or penalty selection; XGBoost (defaults) and the random forest use no validation data. The Gaussian process is fitted to 3,000 randomly chosen training records.}
-    \label{tab:baselines}
-    \begin{tabular}{llccc}
-        \toprule
-        Model & Tier & $R^2$ & MAE & RMSE \\
-        \midrule
-        Training-mean predictor & $t_1$ & $-0.001 \pm 0.001$ & $4.079 \pm 0.036$ & $4.920 \pm 0.047$ \\
-        Training-mean predictor & $t_3^{\mathrm{orig}}$ & $-0.001 \pm 0.001$ & $4.079 \pm 0.036$ & $4.920 \pm 0.047$ \\
-        Ridge regression & $t_1$ & $0.307 \pm 0.030$ & $3.271 \pm 0.039$ & $4.093 \pm 0.064$ \\
-        Ridge regression & $t_3^{\mathrm{orig}}$ & $0.350 \pm 0.033$ & $3.141 \pm 0.054$ & $3.963 \pm 0.078$ \\
-        CatBoost (matched) & $t_1$ & $0.368 \pm 0.024$ & $3.081 \pm 0.040$ & $3.908 \pm 0.046$ \\
-        CatBoost (matched) & $t_3^{\mathrm{orig}}$ & $0.407 \pm 0.031$ & $2.958 \pm 0.080$ & $3.787 \pm 0.083$ \\
-        XGBoost (library defaults) & $t_1$ & $0.334 \pm 0.031$ & $3.148 \pm 0.052$ & $4.011 \pm 0.070$ \\
-        XGBoost (library defaults) & $t_3^{\mathrm{orig}}$ & $0.377 \pm 0.025$ & $3.011 \pm 0.057$ & $3.880 \pm 0.056$ \\
-        Random forest & $t_1$ & $0.295 \pm 0.018$ & $3.219 \pm 0.041$ & $4.128 \pm 0.058$ \\
-        Random forest & $t_3^{\mathrm{orig}}$ & $0.352 \pm 0.021$ & $3.073 \pm 0.049$ & $3.958 \pm 0.070$ \\
-        MLP (val. early stopping) & $t_1$ & $0.343 \pm 0.020$ & $3.144 \pm 0.029$ & $3.987 \pm 0.025$ \\
-        MLP (val. early stopping) & $t_3^{\mathrm{orig}}$ & $0.376 \pm 0.023$ & $3.042 \pm 0.052$ & $3.883 \pm 0.056$ \\
-        GPR (3,000-record subsample) & $t_1$ & $0.330 \pm 0.024$ & $3.197 \pm 0.039$ & $4.025 \pm 0.053$ \\
-        GPR (3,000-record subsample) & $t_3^{\mathrm{orig}}$ & $0.352 \pm 0.029$ & $3.129 \pm 0.051$ & $3.957 \pm 0.065$ \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\subsubsection{Model development: strongest validated predictor.}
-Separately from the controlled ablation, we asked how much a validation-tuned and ensembled model improves on the matched configuration (Table~\ref{tab:dev}). For each split and tier, CatBoost depth and L2 regularisation were selected from a six-point grid by validation RMSE (the same grid and budget for every tier), the selected configuration was averaged over three seeds, and the result was averaged with an early-stopped XGBoost model. The ensemble reached $R^2 = 0.418 \pm 0.026$, MAE $= 2.92$ and RMSE $= 3.75$ percentage points for the pooled $t_3^{\mathrm{orig}}$ data (p-i-n $0.300 \pm 0.074$, n-i-p $0.413 \pm 0.015$), 0.011 above the matched CatBoost. This gain comes from tuning, bagging and ensembling and not from any additional feature: the same pipeline gives 0.377, 0.416 and 0.418 for $t_1$, $t_2$ and $t_3^{\mathrm{orig}}$, so the $t_2\!\to\!t_3^{\mathrm{orig}}$ step remains negligible ($+0.002$) and the material-property step ($+0.039$) remains the only measurable feature effect. Because $t_2$ and $t_3^{\mathrm{orig}}$ are indistinguishable, the $t_2$ representation, which needs no full-text retrieval or LLM extraction, is the most economical predictor with this performance; we use $t_3^{\mathrm{orig}}$ numbers only where the full model is the object of study. The $t_3^{\mathrm{orig}}$ rows here and in the controlled ablation use the original literature block; the recipe-flag block was evaluated on a different partition with separately tuned CatBoost models (Table~\ref{tab:v4}), without bagging or ensembling, and those results neither replace nor can be merged into Table~\ref{tab:dev}. We regard $R^2 \approx 0.42$ and MAE $\approx 2.9$ percentage points as the performance on unseen publications supported by this evaluation, with the caveat that the split-to-split standard deviation is 0.03 and the validation-selected configuration changed between splits.
-
-\begin{table}[t]
-    \centering\small
-    \caption{Model-development experiment (DOI-grouped splits; $R^2$, mean $\pm$ s.d. over five splits). Tuned: CatBoost with depth/L2 chosen on the validation set; Bag: three-seed average of the selected configuration; XGB: early-stopped XGBoost; Ens: mean of Bag and XGB. $t_3^{\mathrm{orig}}$ is the original literature block. This experiment differs from the matched ablation in estimator and budget, so it must not be used to attribute differences to features, and it is not the same experiment as the recipe-flag evaluation (Table~\ref{tab:v4}).}
-    \label{tab:dev}
-    \begin{tabular}{llcccc}
-        \toprule
-        Subset & Feature tier & Tuned & Bag & XGB & Ens \\
-        \midrule
-        Pooled & Database only ($t_1$) & $0.371 \pm 0.023$ & $0.372 \pm 0.023$ & $0.368 \pm 0.019$ & $0.377 \pm 0.021$ \\
-        Pooled & + material ($t_2$) & $0.408 \pm 0.029$ & $0.410 \pm 0.029$ & $0.409 \pm 0.022$ & $0.416 \pm 0.026$ \\
-        Pooled & + material + orig.\ lit.\ ($t_3^{\mathrm{orig}}$) & $0.408 \pm 0.029$ & $0.412 \pm 0.029$ & $0.411 \pm 0.024$ & $0.418 \pm 0.026$ \\
-        p-i-n & Database only ($t_1$) & $0.235 \pm 0.061$ & $0.241 \pm 0.060$ & $0.235 \pm 0.058$ & $0.249 \pm 0.059$ \\
-        p-i-n & + material ($t_2$) & $0.293 \pm 0.066$ & $0.297 \pm 0.069$ & $0.285 \pm 0.074$ & $0.300 \pm 0.072$ \\
-        p-i-n & + material + orig.\ lit.\ ($t_3^{\mathrm{orig}}$) & $0.295 \pm 0.071$ & $0.299 \pm 0.069$ & $0.284 \pm 0.077$ & $0.300 \pm 0.074$ \\
-        n-i-p & Database only ($t_1$) & $0.374 \pm 0.016$ & $0.377 \pm 0.015$ & $0.368 \pm 0.017$ & $0.380 \pm 0.015$ \\
-        n-i-p & + material ($t_2$) & $0.406 \pm 0.018$ & $0.409 \pm 0.017$ & $0.402 \pm 0.011$ & $0.413 \pm 0.013$ \\
-        n-i-p & + material + orig.\ lit.\ ($t_3^{\mathrm{orig}}$) & $0.407 \pm 0.015$ & $0.409 \pm 0.015$ & $0.403 \pm 0.015$ & $0.413 \pm 0.015$ \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-The predicted-PCE distributions (Fig.~\ref{fig:dist_trio}) show that all models compress predictions toward the centre of the experimental distribution. Among the 8,224 test records of the first split, 272 reach 20\% PCE or more; with $R^2 \approx 0.4$ the spread of the CatBoost predictions is 0.62 times that of the experimental values, the maximum prediction is 21.1\%, and test devices with PCE $\geq$ 20\% were under-predicted by 5.3 percentage points on average (4.7 points over all 1,328 such test records in the five splits). Regressors trained with a squared-error loss estimate conditional means, so extreme values regress toward the centre; the models are therefore not suitable for identifying record-efficiency devices. Six of 42,142 test predictions (five splits, pooled $t_3^{\mathrm{orig}}$) were negative (minimum $-1.3\%$), which is unphysical and indicates that bounding predictions at zero is appropriate in use. The 17 records with PCE above 27\% (six publications, up to 36.2\%) are almost certainly outside single-junction AM1.5G conditions or erroneous; excluding them from the test sets changes the pooled $t_3^{\mathrm{orig}}$ $R^2$ by only $+0.002$. Parity and residual plots (Fig.~\ref{fig:parity}) show the same shrinkage as a residual that is negative at high PCE and positive at low PCE.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/fig_pce_dist_trio.png}
-    \caption{Distribution of experimental and predicted PCE on the first DOI-grouped split (pooled, $t_3^{\mathrm{orig}}$) for (a) CatBoost, (b) the early-stopped MLP and (c) the subsample Gaussian process. Axes extend to the 99.5th percentile of experimental PCE; 272 of the 8,224 test records reach 20\% or more.}
-    \label{fig:dist_trio}
-\end{figure}
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/fig_oof_diagnostics.png}
-    \caption{Matched CatBoost ($t_3^{\mathrm{orig}}$, pooled): (a) parity and (b) residuals for the test records of the five DOI-grouped splits stacked (42,142 predictions; records may recur across splits because test sets overlap). The dashed line is $y=x$.}
-    \label{fig:parity}
-\end{figure}
-
-\subsection{Effect of the evaluation protocol}
-\label{sec:splits}
-
-The evaluation protocol had a large influence on measured performance. Table~\ref{tab:split} and Fig.~\ref{fig:split} compare record-level random splitting with DOI-grouped splitting across the feature tiers with identical features, preprocessing, model configurations, filtering and training budgets; only the unit that is split differs. For matched CatBoost the pooled $R^2$ was 0.587, 0.618 and 0.627 under record-level splitting for $t_1$, $t_2$ and $t_3^{\mathrm{orig}}$, compared with 0.368, 0.408 and 0.407 under DOI-grouped splitting, a difference of 0.219, 0.210 and 0.221. MAE rose from 2.20--2.34 to 2.95--3.08 percentage points. The gap is therefore similar for all three tiers.  The record-level fits needed 7,200--11,700 iterations (DOI-grouped fits stop before 500), and the gap was 0.005--0.007 smaller when the cap was 6,000 iterations, so it is sensitive to training length but not to the cap once converged.
-
-\begin{table}[t]
-    \centering\small
-    \caption{Record-level random versus DOI-grouped splitting for the pooled dataset (mean $\pm$ s.d. over five splits with 20\% of records or publications held out; MAE in PCE percentage points). Features, preprocessing, model configuration and filtering are identical under both protocols; the gap is the mean per-split difference in $R^2$.}
-    \label{tab:split}
-    \begin{tabular}{llccccc}
-        \toprule
-        Model & Feature tier & $R^2$ random & $R^2$ DOI-grouped & Gap & MAE rand. & MAE DOI \\
-        \midrule
-        CatBoost & Database only ($t_1$) & $0.587 \pm 0.009$ & $0.368 \pm 0.024$ & $0.219$ & $2.34$ & $3.08$ \\
-        CatBoost & + material ($t_2$) & $0.618 \pm 0.006$ & $0.408 \pm 0.032$ & $0.210$ & $2.23$ & $2.95$ \\
-        CatBoost & + material + orig.\ lit.\ ($t_3^{\mathrm{orig}}$) & $0.627 \pm 0.006$ & $0.407 \pm 0.031$ & $0.221$ & $2.20$ & $2.96$ \\
-        \midrule
-        Ridge & Database only ($t_1$) & $0.363 \pm 0.008$ & $0.307 \pm 0.030$ & $0.056$ & $3.09$ & $3.27$ \\
-        Ridge & + material ($t_2$) & $0.408 \pm 0.008$ & $0.354 \pm 0.032$ & $0.055$ & $2.95$ & $3.13$ \\
-        Ridge & + material + orig.\ lit.\ ($t_3^{\mathrm{orig}}$) & $0.408 \pm 0.008$ & $0.350 \pm 0.033$ & $0.058$ & $2.95$ & $3.14$ \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.7\textwidth]{figures/fig_split_effect.png}
-    \caption{Record-level random (hatched) versus DOI-grouped (solid) splits for the three feature tiers ($t_3^{\mathrm{orig}}$: original literature block) with (a) CatBoost and (b) ridge regression (pooled dataset; mean $\pm$ s.d. over five splits).}
-    \label{fig:split}
-\end{figure}
-
-Two properties of the data make a large gap plausible. First, 69\% of the variance of PCE lies between publications (one-way intraclass correlation by DOI, 0.69), with a median of four records per publication. Second, 31,591 of 41,107 records (77\%) share their complete $t_3^{\mathrm{orig}}$ predictor vector with at least one other record, but only 162 of 7,733 such groups span more than one publication, so near-duplicate devices are almost entirely within-publication; their PCE values differ by a median standard deviation of 1.2 points within a group. A flexible model can memorise publication-specific patterns that a random split leaves available at test time. This reading is consistent with the linear model: for the pooled data ridge regression shows a much smaller gap (0.055--0.058), but it is not a clean capacity test, because the ridge gap for the p-i-n subset is large (0.11--0.19) and ridge is also a weaker predictor on all splits; we did not run a matched-capacity control. The comparison quantifies sensitivity of the measured performance to the splitting protocol on this dataset; it does not show that all of the difference is leakage of identical devices, because the two protocols also produce test sets with different publication compositions, and the stricter lead-author and forward-in-time protocols of Section~\ref{sec:strict} show how much of the DOI-grouped score survives (a little under lead-author grouping, about 0.07 $R^2$ less going forward in time); it still does not amount to an external test. DOI-grouped evaluation answers a specific question, namely performance on papers not seen in training. It does not remove similarity between papers from the same laboratory, and it is not a prospective or external validation. Earlier PDP studies report a larger drop on newly registered records (Fukasawa et al.: $R^2$ 0.7177 under an 8:2 split to 0.45 on 294 newer records) \cite{fukasawa2024effectiveness}, which is directionally consistent, although the targets, feature sets, dataset versions and test sets differ and the numbers are not comparable.
-
-\subsection{Stricter validation: laboratory proxy and forward-in-time splits}
-\label{sec:strict}
-
-DOI-grouped splitting leaves two obvious routes for residual similarity: papers from the same laboratory and papers close in time. Table~\ref{tab:strict} compares both with DOI-grouped and record-level evaluation (pooled data, all models and tiers matched). Grouping by lead author lowers the CatBoost $t_3^{\mathrm{orig}}$ $R^2$ only slightly, from 0.407 to $0.395 \pm 0.013$ (MAE 2.92), so on this dataset most of the record-level optimism is already removed at the publication level and the same-laboratory effect captured by this coarse proxy is small. Forward-in-time evaluation is clearly stricter: training on earlier and testing on later publications gives $R^2 = 0.335 \pm 0.058$ for $t_3^{\mathrm{orig}}$ (MAE 3.21; individual windows 0.329, 0.396 and 0.279), against $-0.155$ for the training-mean predictor, whose negative $R^2$ reflects a shift of the PCE distribution towards higher efficiencies over time. Ridge regression degrades similarly (0.283). Neither protocol changes the feature conclusions: the material-property step is $+0.030$ (lead-author) and $+0.052$ (forward in time) in $R^2$, whereas the literature step is $+0.001$ and $-0.010$, i.e.\ absent or negative (per-window values in Table~\ref{tab:temporal}). The temporal result is based on three windows of one dataset snapshot and a partly overlapping training history, so its spread should not be over-interpreted; it indicates that the DOI-grouped estimate of about 0.41 is optimistic for prospective use by roughly 0.07 in $R^2$.
-
-\begin{table*}[t]
-    \centering\small
-    \caption{Pooled $R^2$ (mean $\pm$ s.d. over splits) by validation protocol, model and feature tier, with matched features, preprocessing and model settings. Splits: five repeats (record-level, DOI-grouped, lead-author-grouped) or three forward windows. MAE refers to $t_3^{\mathrm{orig}}$ (percentage points). The pooled record-level CatBoost fits are the converged ones (20,000-iteration cap; Section~\ref{sec:splits}).}
-    \label{tab:strict}
-    \setlength{\tabcolsep}{4pt}
+    \caption{Common-split comparison of the three tiers on reserved publications (matched default CatBoost for all tiers; mean of five seed models; trained on development publications only). $R^2$ is given with its 95\% publication-cluster bootstrap interval; MAE and RMSE in PCE percentage points. LLM-covered: reserved records from publications with extraction data. The test records are identical for the three tiers within each population.}
+    \label{tab:three}
     \begin{tabular}{llrrcccc}
         \toprule
-        Protocol & Model & $N_\mathrm{test}$ & Splits & $t_1$ & $t_2$ & $t_3^{\mathrm{orig}}$ & MAE ($t_3^{\mathrm{orig}}$) \\
+        Population & Tier & Test records & Test DOIs & $R^2$ & MAE & RMSE \\
         \midrule
-        Record-level & CatBoost & 8,222 & 5 & $0.587 \pm 0.009$ & $0.618 \pm 0.006$ & $0.627 \pm 0.006$ & $2.20$ \\
-        Record-level & Ridge & 8,222 & 5 & $0.363 \pm 0.008$ & $0.408 \pm 0.008$ & $0.408 \pm 0.008$ & $2.95$ \\
-        Record-level & Mean & 8,222 & 5 & $-0.000 \pm 0.000$ & $-0.000 \pm 0.000$ & $-0.000 \pm 0.000$ & $4.06$ \\
-        DOI-grouped & CatBoost & 8,428 & 5 & $0.368 \pm 0.024$ & $0.408 \pm 0.032$ & $0.407 \pm 0.031$ & $2.96$ \\
-        DOI-grouped & Ridge & 8,428 & 5 & $0.307 \pm 0.030$ & $0.354 \pm 0.032$ & $0.350 \pm 0.033$ & $3.14$ \\
-        DOI-grouped & Mean & 8,428 & 5 & $-0.001 \pm 0.001$ & $-0.001 \pm 0.001$ & $-0.001 \pm 0.001$ & $4.08$ \\
-        Lead-author-grouped & CatBoost & 8,280 & 5 & $0.363 \pm 0.019$ & $0.394 \pm 0.018$ & $0.395 \pm 0.013$ & $2.92$ \\
-        Lead-author-grouped & Ridge & 8,280 & 5 & $0.313 \pm 0.011$ & $0.353 \pm 0.017$ & $0.350 \pm 0.018$ & $3.05$ \\
-        Lead-author-grouped & Mean & 8,280 & 5 & $-0.002 \pm 0.002$ & $-0.002 \pm 0.002$ & $-0.002 \pm 0.002$ & $3.98$ \\
-        Forward in time & CatBoost & 6,436 & 3 & $0.293 \pm 0.059$ & $0.345 \pm 0.049$ & $0.335 \pm 0.058$ & $3.21$ \\
-        Forward in time & Ridge & 6,436 & 3 & $0.227 \pm 0.075$ & $0.286 \pm 0.087$ & $0.283 \pm 0.091$ & $3.34$ \\
-        Forward in time & Mean & 6,436 & 3 & $-0.155 \pm 0.027$ & $-0.155 \pm 0.027$ & $-0.155 \pm 0.027$ & $4.57$ \\
-        \bottomrule
-    \end{tabular}
-\end{table*}
-
-\begin{table}[t]
-    \centering\small
-    \caption{Forward-in-time windows (pooled CatBoost, $R^2$): latest training date, earliest test date, record counts and tier results.}
-    \label{tab:temporal}
-    \setlength{\tabcolsep}{2pt}\footnotesize
-    \begin{tabular}{rllrrrrr}
-        \toprule
-        Win. & Train until & Test from & $n_\mathrm{train}$ & $n_\mathrm{test}$ & $t_1$ & $t_2$ & $t_3^{\mathrm{orig}}$ \\
+        LLM-covered & $t_1$ & 5,460 & 1,005 & 0.318 [0.265, 0.365] & 3.021 & 3.866 \\
+        LLM-covered & $t_2$ & 5,460 & 1,005 & 0.359 [0.304, 0.408] & 2.911 & 3.747 \\
+        LLM-covered & $t_3$ & 5,460 & 1,005 & 0.366 [0.316, 0.412] & 2.892 & 3.726 \\
         \midrule
-        1 & 2017-12-26 & 2018-05-02 & 18,529 & 6,502 & $0.284$ & $0.335$ & $0.329$ \\
-        2 & 2018-07-20 & 2018-12-12 & 24,074 & 6,322 & $0.356$ & $0.398$ & $0.396$ \\
-        3 & 2019-01-27 & 2019-07-19 & 29,429 & 6,484 & $0.240$ & $0.302$ & $0.279$ \\
+        All reserved & $t_1$ & 14,125 & 2,619 & 0.371 [0.337, 0.405] & 3.054 & 3.896 \\
+        All reserved & $t_2$ & 14,125 & 2,619 & 0.403 [0.370, 0.435] & 2.955 & 3.794 \\
+        All reserved & $t_3$ & 14,125 & 2,619 & 0.406 [0.372, 0.438] & 2.949 & 3.787 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-\subsection{Contribution of material-property and literature-derived features}
-\label{sec:features}
+\begin{table}[t]
+    \centering\small
+    \caption{Paired differences between tiers on the reserved publications of Table~\ref{tab:three}. $\Delta R^2$ with a 95\% paired publication-cluster bootstrap interval; $\Delta$MAE and $\Delta$RMSE are differences of the point metrics of Table~\ref{tab:three} (percentage points; negative is better); ``Seeds $>0$'' counts the five seed-level $\Delta R^2$ that are positive.}
+    \label{tab:paired3}
+    \begin{tabular}{llcccc}
+        \toprule
+        Population & Comparison & $\Delta R^2$ [95\% interval] & $\Delta$MAE & $\Delta$RMSE & Seeds $>0$ \\
+        \midrule
+        LLM-covered & $t_2 - t_1$ & $+0.0416$ [$+0.0208$, $+0.0631$] & $-0.110$ & $-0.120$ & 5/5 \\
+        LLM-covered & $t_3 - t_2$ & $+0.0071$ [$-0.0007$, $+0.0157$] & $-0.019$ & $-0.021$ & 4/5 \\
+        LLM-covered & $t_3 - t_1$ & $+0.0487$ [$+0.0293$, $+0.0691$] & $-0.129$ & $-0.140$ & 5/5 \\
+        \midrule
+        All reserved & $t_2 - t_1$ & $+0.0323$ [$+0.0207$, $+0.0442$] & $-0.099$ & $-0.101$ & 5/5 \\
+        All reserved & $t_3 - t_2$ & $+0.0025$ [$-0.0011$, $+0.0062$] & $-0.005$ & $-0.008$ & 4/5 \\
+        All reserved & $t_3 - t_1$ & $+0.0348$ [$+0.0229$, $+0.0468$] & $-0.105$ & $-0.109$ & 5/5 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
-\subsubsection{Material-property descriptors.}
-Adding material-property descriptors ($t_1 \rightarrow t_2$) increased $R^2$ by 0.040 (pooled), 0.047 (p-i-n) and 0.029 (n-i-p) and lowered RMSE by 0.125, 0.130 and 0.093 percentage points (Table~\ref{tab:delta}). The pooled gain had a cluster-bootstrap interval excluding zero in all five splits (two of five for p-i-n and three of five for n-i-p, which have fewer test publications), and $R^2$ improved in all 15 split--subset pairs. Because $t_1$ contains no explicit transport-layer material identities (Section~\ref{sec:integration}), the $t_2$ descriptors convey both which materials were used and their reference properties; each property is a fixed function of the material, so this gain could reflect knowledge of which materials were used rather than their property values. A material-identity control separates the two. Adding only the ETL, HTL and perovskite identities to $t_1$ as native CatBoost categorical features (disjoint DOI-grouped five-fold, three seeds, same CatBoost configuration, 41,107 records) gives $R^2 = 0.406$, against 0.370 for $t_1$ and 0.407 for $t_2$; the 102 descriptor columns add $+0.001$ over identity alone (interval for the paired MSE difference includes zero), and descriptors on top of identity add $+0.004$ (also not distinguishable from zero). The gain of $t_2$ over $t_1$ is therefore attributable to knowing which transport and absorber materials a device contains, not to the physical descriptor values; transferable physical information is not demonstrated by this comparison (a leave-material-out test would be needed). This is consistent with prior work showing that the representation of material and process information strongly affects PCE prediction \cite{fukasawa2024effectiveness}, and it shows that the benefit persists when entire publications are held out.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/fig_three_tier.png}
+    \caption{Common-split comparison of $t_1$, $t_2$ and $t_3$ on reserved publications (matched default CatBoost). (a) $R^2$ per tier with 95\% publication-cluster bootstrap intervals; (b) paired differences $t_2-t_1$ and $t_3-t_2$ with 95\% paired bootstrap intervals, for LLM-covered records (5,460 records, 1,005 DOIs) and all reserved records (14,125 records, 2,619 DOIs). The $t_3-t_2$ intervals include zero.}
+    \label{fig:three}
+\end{figure}
 
-\subsubsection{Original LLM-derived literature block.}
-Adding the original block of 44 LLM-derived literature predictors ($t_2 \rightarrow t_3^{\mathrm{orig}}$) under the same configuration produced no measurable change: $\Delta R^2$ was $-0.001$ (pooled), $+0.002$ (p-i-n) and $+0.001$ (n-i-p), $t_3^{\mathrm{orig}}$ was better than $t_2$ in $R^2$ in only 1, 3 and 3 of five splits, and in none of the 15 split--subset pairs did the bootstrap interval for the paired difference exclude zero (Table~\ref{tab:delta}). The controls in Table~\ref{tab:groups} point the same way: adding the literature block to the database tier without material properties gives $R^2 = 0.372 \pm 0.026$ against 0.368 for $t_1$; removing the two reporting-completeness flags from $t_3^{\mathrm{orig}}$ leaves $R^2$ unchanged (0.407); and appending 32 columns of pure noise to $t_2$ changes $R^2$ by $-0.004$ (0.404 against 0.408), i.e.\ by about as much as the literature block does. The literature features are available for 36.2\% of records, are defined per publication, and are largely redundant with PDP columns that $t_1$ already contains (Section~\ref{sec:extraction}: exact agreement in most records, new information in about 1--5\% of records), which is a plausible reason for the null result; we conclude that this block adds no detectable predictive information beyond the database and material tiers for unseen publications. It motivated the more targeted recipe-flag representation evaluated in Section~\ref{sec:recipe_results}. Under record-level splitting the same comparison gives $R^2$ 0.618 versus 0.627 ($+0.009$), again small, so publication-constant features are not the main source of the random-split advantage here.
-
-\subsubsection{Recipe-flag features on reserved publications.}
+\subsection{Recipe flags: configuration dependence and controls}
 \label{sec:recipe_results}
-The recipe-flag block $t_3$ (Section~\ref{sec:recipe}) was developed on development publications only. There, the remaining content of the extraction JSON (token bags, numeric quantities, device-matched layer values, gap-filling of PDP fields) added at most about $+0.004$ $R^2$, and giving $t_2$ the PDP's own curated process columns for the same papers added only $+0.022$, which motivated a block of recipe identities. On covered development publications the flags gave $+0.007$ $R^2$ (12 of 15 folds), five DOI-permuted copies gave $-0.009$ to $+0.002$, dropping any one flag group reduced the gain, and no single group reproduced it, so the signal is distributed and close to the noise floor. A role-scoped variant of the flags gave $+0.001$, so differences between variants are within development noise.
+The recipe-flag block was developed on development publications only. There, the remaining content of the extraction JSON (token bags, numeric quantities, device-matched layer values, gap-filling of PDP fields) added at most about $+0.004$ $R^2$ to $t_2$, and giving $t_2$ the PDP's own curated process columns for the same papers added only $+0.022$, which motivated a block of recipe identities. On covered development publications the flags gave $+0.007$ $R^2$ (12 of 15 folds), five DOI-permuted copies gave $-0.009$ to $+0.002$, dropping any one flag group reduced the gain, and no single group reproduced it, so the signal is distributed and close to the noise floor. A role-scoped variant of the flags gave $+0.001$, so differences between variants are within development noise.
 
-The reserved publications were then scored once (Table~\ref{tab:v4}, Fig.~\ref{fig:v4}). Under the same default settings, adding the flags to $t_2$ changed $R^2$ by $+0.0071$ (95\% interval $-0.0007$ to $+0.0157$; positive in 4 of 5 seeds) on the 5,460 covered records and by $+0.0025$ ($-0.0011$ to $+0.0062$; 4 of 5 seeds) on all 14,125 reserved records. When each tier used its own tuned configuration, covered-record $R^2$ was 0.361 for $t_2$ and 0.371 for $t_3$ ($\Delta R^2 = +0.0094$, $-0.0016$ to $+0.0219$; 5 of 5 seeds), and on all records both tiers reached about 0.41 ($\Delta R^2 = +0.0015$, $-0.0039$ to $+0.0067$; 3 of 5 seeds). The direction therefore agrees with the development result, and in point estimate the flags exceed all five permuted-block controls (covered $-0.0049$ to $+0.0015$; all records $-0.0028$ to $+0.0007$) and a coverage-indicator-only control ($+0.0015$ and $+0.0011$). Every interval, however, includes zero. We read these results as a small, suggestive improvement that is concentrated where the information exists, not as an established gain in generalisation.
+The reserved-publication results of Table~\ref{tab:three} used the same default configuration for every tier. To separate the effect of the added features from that of hyperparameter selection, Table~\ref{tab:v4} gives the $t_2 \rightarrow t_3$ step under other settings. When each tier used its own tuned configuration, covered-record $R^2$ was 0.361 for $t_2$ and 0.371 for $t_3$ ($\Delta R^2 = +0.0094$, $-0.0016$ to $+0.0219$; 5 of 5 seeds), and on all records both tiers reached about 0.41 ($\Delta R^2 = +0.0015$, $-0.0039$ to $+0.0067$; 3 of 5 seeds). These tuned comparisons are not part of the three-tier sequence: $t_1$ was not tuned, and the tuned arms mix feature and tuning effects. In point estimate the flags exceed all five permuted-block controls under default settings (covered $-0.0049$ to $+0.0015$; all records $-0.0028$ to $+0.0007$) and a coverage-indicator-only control ($+0.0015$ and $+0.0011$). Every interval, however, includes zero. We read these results as a small, suggestive improvement that is concentrated where the information exists, not as an established gain in generalisation.
 
-Four features of the evidence limit how far it can be pushed. First, the size of the effect depends on the estimator: with $t_2$'s tuned configuration used for both tiers the covered $\Delta R^2$ falls to $+0.0024$ ($-0.0077$ to $+0.0131$) and the all-record difference is $-0.0016$. Second, tuning alone moves $t_2$ by $+0.0020$ (covered) to $+0.0030$ (all records), comparable to the flag effect, so the tuned comparison should not be read as a feature gain by itself. Third, the flag block was chosen after development comparisons, and the reserved publications, though not used for any choice in this representation, were examined in earlier experiments with other feature sets. Fourth, a single reserved split of about 1,000 covered publications resolves $R^2$ differences only to roughly $\pm 0.01$. The flags are also available for only 36.6\% of records, which dilutes any benefit on the full data; a larger signal would require full-text extraction for the roughly 4,500 publications that currently lack it, which we did not do. These results use a different partition and, for the tuned arms, different configurations from the controlled ablation and from Table~\ref{tab:dev}, so they must not be combined with those tables.
+Four features of the evidence limit how far it can be pushed. First, the size of the effect depends on the estimator: with $t_2$'s tuned configuration used for both tiers the covered $\Delta R^2$ falls to $+0.0024$ ($-0.0077$ to $+0.0131$) and the all-record difference is $-0.0016$. Second, tuning alone moves $t_2$ by $+0.0020$ (covered) to $+0.0030$ (all records), comparable to the flag effect, so the tuned comparison should not be read as a feature gain by itself. Third, the flag block was chosen after development comparisons, and the reserved publications, though not used for any choice in this representation, were examined in earlier experiments with other feature sets. Fourth, a single reserved split of about 1,000 covered publications resolves $R^2$ differences only to roughly $\pm 0.01$. The flags are also available for only 36.6\% of records, which dilutes any benefit on the full data; a larger signal would require full-text extraction for the roughly 4,500 publications that currently lack it, which we did not do. A plausible reason for the small size of the effect is redundancy: the extracted numerical parameters largely duplicate PDP columns already in $t_1$ (Section~\ref{sec:extraction}), and recipe identities may partly be inferable from the device and material descriptors, so what remains is a small residual; we did not test this explanation. The results in Table~\ref{tab:v4} use the reserved partition of Section~\ref{sec:three}; they must not be combined with the five-holdout tables below.
 
 \begin{table}[ht]
     \centering\small
-    \caption{Recipe-flag block on reserved publications ($t_3$ versus $t_2$; one reserved partition, trained on development publications; $\Delta R^2$ is $t_3$ minus $t_2$ with a 95\% publication-cluster bootstrap interval; ``Seeds $>0$'' counts the five seed-level differences). \emph{Default}: matched default CatBoost configuration for both tiers; \emph{each tuned}: each tier's own selected configuration; \emph{$t_3^{\mathrm{orig}}$'s} and \emph{$t_2$'s} tuned configuration: that configuration applied to both tiers. Covered: 5,460 records from 1,005 publications with extraction data; all: 14,125 records from 2,619 publications. This protocol differs from Tables~\ref{tab:tiers} and~\ref{tab:dev}.}
+    \caption{Dependence of the recipe-flag step ($t_3$ versus $t_2$) on the CatBoost configuration, on the reserved publications of Table~\ref{tab:three}. $\Delta R^2$ is $t_3$ minus $t_2$ with a 95\% publication-cluster bootstrap interval; ``Seeds $>0$'' counts the five seed-level differences. \emph{Default}: matched default configuration for both tiers (same as Table~\ref{tab:three}); \emph{each tuned}: each tier's own selected configuration; \emph{$t_3$'s} and \emph{$t_2$'s} tuned configuration: that configuration applied to both tiers. Covered: 5,460 records from 1,005 publications with extraction data; all: 14,125 records from 2,619 publications.}
     \label{tab:v4}
     \begin{tabular}{llccccc}
         \toprule
@@ -526,12 +379,12 @@ Four features of the evidence limit how far it can be pushed. First, the size of
         \midrule
         Covered & Default & 0.359 & 0.366 & $+0.0071$ & $[-0.0007, +0.0157]$ & 4/5 \\
         Covered & Each tuned & 0.361 & 0.371 & $+0.0094$ & $[-0.0016, +0.0219]$ & 5/5 \\
-        Covered & $t_3^{\mathrm{orig}}$'s tuned config. & 0.364 & 0.371 & $+0.0066$ & $[-0.0021, +0.0162]$ & 4/5 \\
+        Covered & $t_3$'s tuned config. & 0.364 & 0.371 & $+0.0066$ & $[-0.0021, +0.0162]$ & 4/5 \\
         Covered & $t_2$'s tuned config. & 0.361 & 0.364 & $+0.0024$ & $[-0.0077, +0.0131]$ & 3/5 \\
         \midrule
         All & Default & 0.403 & 0.406 & $+0.0025$ & $[-0.0011, +0.0062]$ & 4/5 \\
         All & Each tuned & 0.406 & 0.408 & $+0.0015$ & $[-0.0039, +0.0067]$ & 3/5 \\
-        All & $t_3^{\mathrm{orig}}$'s tuned config. & 0.405 & 0.408 & $+0.0026$ & $[-0.0015, +0.0067]$ & 2/5 \\
+        All & $t_3$'s tuned config. & 0.405 & 0.408 & $+0.0026$ & $[-0.0015, +0.0067]$ & 2/5 \\
         All & $t_2$'s tuned config. & 0.406 & 0.405 & $-0.0016$ & $[-0.0064, +0.0030]$ & 2/5 \\
         \bottomrule
     \end{tabular}
@@ -544,40 +397,195 @@ Four features of the evidence limit how far it can be pushed. First, the size of
     \label{fig:v4}
 \end{figure}
 
+\subsection{Generalization to unseen publications: repeated holdouts}
+\label{sec:generalization}
+
+The remaining experiments use five repeated DOI-grouped holdouts (Section~\ref{sec:models}) and the tiers $t_1$ and $t_2$; they pre-date the recipe flags, are a different protocol from Section~\ref{sec:three}, and their absolute values are not comparable with it. With the matched CatBoost configuration and $t_2$, the pooled model reached $R^2 = 0.408 \pm 0.032$, MAE $= 2.95 \pm 0.08$ and RMSE $= 3.78 \pm 0.09$ percentage points on publications it had not seen (Table~\ref{tab:tiers}, Fig.~\ref{fig:tiers}; mean $\pm$ s.d. over five repeated DOI-grouped holdouts, each with a DOI-disjoint validation set for early stopping). The training-mean predictor has $R^2 \approx 0$ and MAE $4.08$, so the model removes about 28\% of the mean absolute error. Performance differed by architecture: $R^2$ was $0.404 \pm 0.013$ for n-i-p and $0.291 \pm 0.065$ for p-i-n devices, whereas MAE (2.97 and 3.05) and RMSE (3.83 and 3.96) were similar. The p-i-n result is also the less certain one, because the subset is smaller (about 2,600 test records and 451 test publications per split). Relative to the training-mean predictor, the p-i-n model reduces MAE by 21\% (3.84 to 3.05) and the n-i-p model by 28\% (4.11 to 2.97), so on this data p-i-n devices are somewhat harder to predict, in addition to $R^2$ depending on the PCE variance within each subset.
+
 \begin{table}[t]
     \centering\small
-    \caption{Paired differences between tiers (matched CatBoost, DOI-grouped splits). $\Delta R^2$ and $\Delta$RMSE are means over the five splits; ``better'' is the number of splits in which $R^2$ improved; ``CI$\neq0$'' is the number of splits in which the 95\% DOI-cluster bootstrap interval of the paired $\Delta R^2$ excludes zero. Test sets overlap across splits, so no pooled significance test is reported.}
-    \label{tab:delta}
-    \begin{tabular}{lcccccccc}
+    \caption{Performance of $t_1$ and $t_2$ with the same CatBoost configuration (Table~\ref{tab:config}) under repeated DOI-grouped holdout evaluation (mean $\pm$ s.d. over five splits; MAE and RMSE in PCE percentage points; $N$ is the mean number of test records per split; the number of features varies slightly between splits because the missingness indicators are derived from each training partition).}
+    \label{tab:tiers}
+    \begin{tabular}{llrrccc}
         \toprule
-        & \multicolumn{4}{c}{$t_1\!\to\! t_2$} & \multicolumn{4}{c}{$t_2\!\to\! t_3^{\mathrm{orig}}$} \\
-        \cmidrule(lr){2-5}\cmidrule(lr){6-9}
-        Subset & $\Delta R^2$ & $\Delta$RMSE & better & CI$\neq0$ & $\Delta R^2$ & $\Delta$RMSE & better & CI$\neq0$ \\
+        Subset & Feature tier & $N$ & Feat. & $R^2$ & MAE & RMSE \\
         \midrule
-        Pooled & $+0.040$ & $-0.125$ & 5/5 & 5/5 & $-0.001$ & $+0.004$ & 1/5 & 0/5 \\
-        p-i-n & $+0.047$ & $-0.130$ & 5/5 & 2/5 & $+0.002$ & $-0.008$ & 3/5 & 0/5 \\
-        n-i-p & $+0.029$ & $-0.093$ & 5/5 & 3/5 & $+0.001$ & $-0.005$ & 3/5 & 0/5 \\
+        Pooled & Database only ($t_1$) & 8,428 & 77 & $0.368 \pm 0.024$ & $3.081 \pm 0.040$ & $3.908 \pm 0.046$ \\
+        Pooled & + material ($t_2$) & 8,428 & 179 & $0.408 \pm 0.032$ & $2.950 \pm 0.080$ & $3.783 \pm 0.085$ \\
+        \midrule
+        p-i-n & Database only ($t_1$) & 2,598 & 77 & $0.244 \pm 0.058$ & $3.168 \pm 0.049$ & $4.085 \pm 0.114$ \\
+        p-i-n & + material ($t_2$) & 2,598 & 179 & $0.291 \pm 0.065$ & $3.047 \pm 0.045$ & $3.955 \pm 0.131$ \\
+        \midrule
+        n-i-p & Database only ($t_1$) & 5,612 & 76 & $0.374 \pm 0.016$ & $3.062 \pm 0.047$ & $3.918 \pm 0.061$ \\
+        n-i-p & + material ($t_2$) & 5,612 & 178 & $0.404 \pm 0.013$ & $2.966 \pm 0.036$ & $3.825 \pm 0.060$ \\
         \bottomrule
     \end{tabular}
 \end{table}
 
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/fig_feature_tiers.png}
+    \caption{Effect of feature tier on prediction of unseen publications ($t_1$ and $t_2$; matched CatBoost, DOI-grouped splits). (a) $R^2$ and (b) RMSE, mean $\pm$ s.d. over five holdout splits; the vertical axes are truncated to the plotted range. The $t_1\!\to\!t_2$ step is visible in all subsets. $t_3$ was not part of this experiment; see Fig.~\ref{fig:three}.}
+    \label{fig:tiers}
+\end{figure}
+
+The pooled results should be read against simple references (Table~\ref{tab:baselines}). Ridge regression on the same $t_1$ features reaches $R^2 = 0.307 \pm 0.030$ and XGBoost with library defaults, a random forest, a validation-early-stopped MLP and a subsample-trained Gaussian process lie between 0.295 and 0.343. Matched CatBoost is the best of these by 0.025 (MLP) to 0.073 (random forest) in $R^2$; the margin over the MLP is comparable to the split-to-split standard deviation (0.02--0.03), so we do not claim a ranking among the non-linear models. A properly trained MLP and a Gaussian process are thus competitive with the tree ensemble on this dataset. The reference models other than ridge were run for $t_1$ and for $t_2$ plus the earlier literature block only (Supplementary Information), where CatBoost is likewise the best.
+
 \begin{table}[t]
     \centering\small
-    \caption{Feature-group controls (matched CatBoost, DOI-grouped splits; mean $\pm$ s.d. over five splits). Compare with Table~\ref{tab:tiers}.}
-    \label{tab:groups}
+    \caption{Reference models on the pooled dataset under the same five DOI-grouped splits (mean $\pm$ s.d.; MAE and RMSE in PCE percentage points). All models use validation data only for early stopping or penalty selection; XGBoost (defaults) and the random forest use no validation data. The Gaussian process is fitted to 3,000 randomly chosen training records. XGBoost, random forest, MLP and GPR were run for $t_1$ only among the tiers of this paper.}
+    \label{tab:baselines}
+    \begin{tabular}{llccc}
+        \toprule
+        Model & Tier & $R^2$ & MAE & RMSE \\
+        \midrule
+        Training-mean predictor & $t_1$ & $-0.001 \pm 0.001$ & $4.079 \pm 0.036$ & $4.920 \pm 0.047$ \\
+        Ridge regression & $t_1$ & $0.307 \pm 0.030$ & $3.271 \pm 0.039$ & $4.093 \pm 0.064$ \\
+        Ridge regression & $t_2$ & $0.354 \pm 0.032$ & $3.130 \pm 0.051$ & $3.952 \pm 0.075$ \\
+        CatBoost (matched) & $t_1$ & $0.368 \pm 0.024$ & $3.081 \pm 0.040$ & $3.908 \pm 0.046$ \\
+        CatBoost (matched) & $t_2$ & $0.408 \pm 0.032$ & $2.950 \pm 0.080$ & $3.783 \pm 0.085$ \\
+        XGBoost (library defaults) & $t_1$ & $0.334 \pm 0.031$ & $3.148 \pm 0.052$ & $4.011 \pm 0.070$ \\
+        Random forest & $t_1$ & $0.295 \pm 0.018$ & $3.219 \pm 0.041$ & $4.128 \pm 0.058$ \\
+        MLP (val. early stopping) & $t_1$ & $0.343 \pm 0.020$ & $3.144 \pm 0.029$ & $3.987 \pm 0.025$ \\
+        GPR (3,000-record subsample) & $t_1$ & $0.330 \pm 0.024$ & $3.197 \pm 0.039$ & $4.025 \pm 0.053$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{Model development: strongest validated predictor.}
+Separately from the controlled ablation, we asked how much a validation-tuned and ensembled model improves on the matched configuration (Table~\ref{tab:dev}). For each split and tier, CatBoost depth and L2 regularisation were selected from a six-point grid by validation RMSE (the same grid and budget for every tier), the selected configuration was averaged over three seeds, and the result was averaged with an early-stopped XGBoost model. The ensemble reached $R^2 = 0.416 \pm 0.026$, MAE $= 2.92$ and RMSE $= 3.76$ percentage points for the pooled $t_2$ data (p-i-n $0.300 \pm 0.072$, n-i-p $0.413 \pm 0.013$), 0.008 above the matched CatBoost. This gain comes from tuning, bagging and ensembling and not from any additional feature: the same pipeline gives 0.377 and 0.416 for $t_1$ and $t_2$, so the material-property step ($+0.039$) is again the measurable feature effect. This experiment was not run for $t_3$ (and its results neither replace nor can be merged into Table~\ref{tab:three} or Table~\ref{tab:v4}); the separately tuned CatBoost models of Table~\ref{tab:v4} use a different partition and no bagging or ensembling. We regard $R^2 \approx 0.42$ and MAE $\approx 2.9$ percentage points as the performance of a tuned $t_2$ model on unseen publications supported by this evaluation, with the caveat that the split-to-split standard deviation is 0.03 and the validation-selected configuration changed between splits.
+
+\begin{table}[t]
+    \centering\small
+    \caption{Model-development experiment (DOI-grouped splits; $R^2$, mean $\pm$ s.d. over five splits). Tuned: CatBoost with depth/L2 chosen on the validation set; Bag: three-seed average of the selected configuration; XGB: early-stopped XGBoost; Ens: mean of Bag and XGB. This experiment differs from the matched ablation in estimator and budget, so it must not be used to attribute differences to features, and it is not the same experiment as the common-split evaluation (Tables~\ref{tab:three} and~\ref{tab:v4}); no $t_3$ entries exist.}
+    \label{tab:dev}
     \begin{tabular}{llcccc}
         \toprule
-        Subset & Variant & Feat. & $R^2$ & MAE & RMSE \\
+        Subset & Feature tier & Tuned & Bag & XGB & Ens \\
         \midrule
-        Pooled & $t_1$ + LLM (no material) & 121 & $0.372 \pm 0.026$ & $3.060 \pm 0.053$ & $3.895 \pm 0.061$ \\
-        Pooled & $t_3^{\mathrm{orig}}$ minus 2 completeness flags & 219 & $0.407 \pm 0.028$ & $2.953 \pm 0.075$ & $3.787 \pm 0.078$ \\
-        Pooled & $t_2$ + 32 noise columns & 211 & $0.404 \pm 0.029$ & $2.970 \pm 0.065$ & $3.796 \pm 0.076$ \\
-        p-i-n & $t_1$ + LLM (no material) & 122 & $0.251 \pm 0.071$ & $3.150 \pm 0.058$ & $4.065 \pm 0.136$ \\
-        p-i-n & $t_3^{\mathrm{orig}}$ minus 2 completeness flags & 220 & $0.292 \pm 0.070$ & $3.052 \pm 0.061$ & $3.951 \pm 0.134$ \\
-        p-i-n & $t_2$ + 32 noise columns & 211 & $0.288 \pm 0.072$ & $3.067 \pm 0.063$ & $3.962 \pm 0.144$ \\
-        n-i-p & $t_1$ + LLM (no material) & 120 & $0.378 \pm 0.014$ & $3.050 \pm 0.038$ & $3.907 \pm 0.053$ \\
-        n-i-p & $t_3^{\mathrm{orig}}$ minus 2 completeness flags & 218 & $0.407 \pm 0.012$ & $2.960 \pm 0.024$ & $3.816 \pm 0.051$ \\
-        n-i-p & $t_2$ + 32 noise columns & 210 & $0.402 \pm 0.009$ & $2.976 \pm 0.025$ & $3.830 \pm 0.053$ \\
+        Pooled & Database only ($t_1$) & $0.371 \pm 0.023$ & $0.372 \pm 0.023$ & $0.368 \pm 0.019$ & $0.377 \pm 0.021$ \\
+        Pooled & + material ($t_2$) & $0.408 \pm 0.029$ & $0.410 \pm 0.029$ & $0.409 \pm 0.022$ & $0.416 \pm 0.026$ \\
+        p-i-n & Database only ($t_1$) & $0.235 \pm 0.061$ & $0.241 \pm 0.060$ & $0.235 \pm 0.058$ & $0.249 \pm 0.059$ \\
+        p-i-n & + material ($t_2$) & $0.293 \pm 0.066$ & $0.297 \pm 0.069$ & $0.285 \pm 0.074$ & $0.300 \pm 0.072$ \\
+        n-i-p & Database only ($t_1$) & $0.374 \pm 0.016$ & $0.377 \pm 0.015$ & $0.368 \pm 0.017$ & $0.380 \pm 0.015$ \\
+        n-i-p & + material ($t_2$) & $0.406 \pm 0.018$ & $0.409 \pm 0.017$ & $0.402 \pm 0.011$ & $0.413 \pm 0.013$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The predicted-PCE distributions (Fig.~\ref{fig:dist_trio}) show that all models compress predictions toward the centre of the experimental distribution. Among the 8,224 test records of the first split, 272 reach 20\% PCE or more; for the $t_1$ models of that figure the spread of the predictions is 0.59, 0.60 and 0.59 times that of the experimental values (CatBoost, MLP, GPR), the maximum predictions are 21.6, 19.7 and 19.4\%, and for CatBoost the test devices with PCE $\geq$ 20\% were under-predicted by 5.5 percentage points on average. For matched CatBoost with $t_2$, the spread ratio on that split is 0.63, the maximum prediction 21.5\%, and test devices with PCE $\geq$ 20\% were under-predicted by 5.1 points on average (4.8 points over all 1,328 such test records in the five splits). Regressors trained with a squared-error loss estimate conditional means, so extreme values regress toward the centre; the models are therefore not suitable for identifying record-efficiency devices. Six of 42,142 test predictions ($t_2$, five splits, pooled) were negative (minimum $-1.4\%$), which is unphysical and indicates that bounding predictions at zero is appropriate in use. The 17 records with PCE above 27\% (six publications, up to 36.2\%) are almost certainly outside single-junction AM1.5G conditions or erroneous; excluding them from the test sets changes the pooled $t_2$ $R^2$ by only $+0.003$. Parity and residual plots (Fig.~\ref{fig:parity}) show the same shrinkage as a residual that is negative at high PCE and positive at low PCE.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/fig_pce_dist_trio.png}
+    \caption{Distribution of experimental and predicted PCE on the first DOI-grouped split (pooled, $t_1$) for (a) CatBoost, (b) the early-stopped MLP and (c) the subsample Gaussian process; $t_1$ is the tier for which all three models were run. Axes extend to the 99.5th percentile of experimental PCE; 272 of the 8,224 test records reach 20\% or more.}
+    \label{fig:dist_trio}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/fig_oof_diagnostics.png}
+    \caption{Matched CatBoost ($t_2$, pooled): (a) parity and (b) residuals for the test records of the five DOI-grouped splits stacked (42,142 predictions; records may recur across splits because test sets overlap). The dashed line is $y=x$.}
+    \label{fig:parity}
+\end{figure}
+
+\subsection{Effect of the evaluation protocol}
+\label{sec:splits}
+
+The evaluation protocol had a large influence on measured performance. Table~\ref{tab:split} and Fig.~\ref{fig:split} compare record-level random splitting with DOI-grouped splitting across the feature tiers with identical features, preprocessing, model configurations, filtering and training budgets; only the unit that is split differs. For matched CatBoost the pooled $R^2$ was 0.587 and 0.618 under record-level splitting for $t_1$ and $t_2$, compared with 0.368 and 0.408 under DOI-grouped splitting, a difference of 0.219 and 0.210. MAE rose from 2.23--2.34 to 2.95--3.08 percentage points. The gap is therefore similar for both tiers. The record-level fits needed 7,200--11,700 iterations (DOI-grouped fits stop before 500), and the gap was 0.005--0.007 smaller when the cap was 6,000 iterations, so it is sensitive to training length but not to the cap once converged.
+
+\begin{table}[t]
+    \centering\small
+    \caption{Record-level random versus DOI-grouped splitting for the pooled dataset (mean $\pm$ s.d. over five splits with 20\% of records or publications held out; MAE in PCE percentage points). Features, preprocessing, model configuration and filtering are identical under both protocols; the gap is the mean per-split difference in $R^2$.}
+    \label{tab:split}
+    \begin{tabular}{llccccc}
+        \toprule
+        Model & Feature tier & $R^2$ random & $R^2$ DOI-grouped & Gap & MAE rand. & MAE DOI \\
+        \midrule
+        CatBoost & Database only ($t_1$) & $0.587 \pm 0.009$ & $0.368 \pm 0.024$ & $0.219$ & $2.34$ & $3.08$ \\
+        CatBoost & + material ($t_2$) & $0.618 \pm 0.006$ & $0.408 \pm 0.032$ & $0.210$ & $2.23$ & $2.95$ \\
+        \midrule
+        Ridge & Database only ($t_1$) & $0.363 \pm 0.008$ & $0.307 \pm 0.030$ & $0.056$ & $3.09$ & $3.27$ \\
+        Ridge & + material ($t_2$) & $0.408 \pm 0.008$ & $0.354 \pm 0.032$ & $0.055$ & $2.95$ & $3.13$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/fig_split_effect.png}
+    \caption{Record-level random (hatched) versus DOI-grouped (solid) splits for $t_1$ and $t_2$ with (a) CatBoost and (b) ridge regression (pooled dataset; mean $\pm$ s.d. over five splits).}
+    \label{fig:split}
+\end{figure}
+
+Two properties of the data make a large gap plausible. First, 69\% of the variance of PCE lies between publications (one-way intraclass correlation by DOI, 0.69), with a median of four records per publication. Second, for the earlier representation of $t_2$ plus the 44-predictor literature block (the only one for which this audit was run), 31,591 of 41,107 records (77\%) share their complete predictor vector with at least one other record, but only 162 of 7,733 such groups span more than one publication, so near-duplicate devices are almost entirely within-publication; their PCE values differ by a median standard deviation of 1.2 points within a group. A flexible model can memorise publication-specific patterns that a random split leaves available at test time. This reading is consistent with the linear model: for the pooled data ridge regression shows a much smaller gap (0.055--0.056), but it is not a clean capacity test, because the ridge gap for the p-i-n subset is large (0.11--0.18) and ridge is also a weaker predictor on all splits; we did not run a matched-capacity control. The comparison quantifies sensitivity of the measured performance to the splitting protocol on this dataset; it does not show that all of the difference is leakage of identical devices, because the two protocols also produce test sets with different publication compositions, and the stricter lead-author and forward-in-time protocols of Section~\ref{sec:strict} show how much of the DOI-grouped score survives (a little under lead-author grouping, about 0.06 $R^2$ less going forward in time); it still does not amount to an external test. DOI-grouped evaluation answers a specific question, namely performance on papers not seen in training. It does not remove similarity between papers from the same laboratory, and it is not a prospective or external validation. Earlier PDP studies report a larger drop on newly registered records (Fukasawa et al.: $R^2$ 0.7177 under an 8:2 split to 0.45 on 294 newer records) \cite{fukasawa2024effectiveness}, which is directionally consistent, although the targets, feature sets, dataset versions and test sets differ and the numbers are not comparable.
+
+\subsection{Stricter validation: laboratory proxy and forward-in-time splits}
+\label{sec:strict}
+
+DOI-grouped splitting leaves two obvious routes for residual similarity: papers from the same laboratory and papers close in time. Table~\ref{tab:strict} compares both with DOI-grouped and record-level evaluation (pooled data, all models and tiers matched). Grouping by lead author lowers the CatBoost $t_2$ $R^2$ only slightly, from 0.408 to $0.394 \pm 0.018$ (MAE 2.92), so on this dataset most of the record-level optimism is already removed at the publication level and the same-laboratory effect captured by this coarse proxy is small. Forward-in-time evaluation is clearly stricter: training on earlier and testing on later publications gives $R^2 = 0.345 \pm 0.049$ for $t_2$ (MAE 3.18; individual windows 0.335, 0.398 and 0.302), against $-0.155$ for the training-mean predictor, whose negative $R^2$ reflects a shift of the PCE distribution towards higher efficiencies over time. Ridge regression degrades similarly (0.286). Neither protocol changes the material-property conclusion: the $t_1 \rightarrow t_2$ step is $+0.030$ (lead-author) and $+0.052$ (forward in time) in $R^2$ (per-window values in Table~\ref{tab:temporal}). The temporal result is based on three windows of one dataset snapshot and a partly overlapping training history, so its spread should not be over-interpreted; it indicates that the DOI-grouped estimate of about 0.41 is optimistic for prospective use by roughly 0.06 in $R^2$. These protocols were not run for $t_3$.
+
+\begin{table*}[t]
+    \centering\small
+    \caption{Pooled $R^2$ (mean $\pm$ s.d. over splits) by validation protocol, model and feature tier, with matched features, preprocessing and model settings. Splits: five repeats (record-level, DOI-grouped, lead-author-grouped) or three forward windows. MAE refers to $t_2$ (percentage points). The pooled record-level CatBoost fits are the converged ones (20,000-iteration cap; Section~\ref{sec:splits}).}
+    \label{tab:strict}
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{llrrccc}
+        \toprule
+        Protocol & Model & $N_\mathrm{test}$ & Splits & $t_1$ & $t_2$ & MAE ($t_2$) \\
+        \midrule
+        Record-level & CatBoost & 8,222 & 5 & $0.587 \pm 0.009$ & $0.618 \pm 0.006$ & $2.23$ \\
+        Record-level & Ridge & 8,222 & 5 & $0.363 \pm 0.008$ & $0.408 \pm 0.008$ & $2.95$ \\
+        Record-level & Mean & 8,222 & 5 & $-0.000 \pm 0.000$ & $-0.000 \pm 0.000$ & $4.06$ \\
+        DOI-grouped & CatBoost & 8,428 & 5 & $0.368 \pm 0.024$ & $0.408 \pm 0.032$ & $2.95$ \\
+        DOI-grouped & Ridge & 8,428 & 5 & $0.307 \pm 0.030$ & $0.354 \pm 0.032$ & $3.13$ \\
+        DOI-grouped & Mean & 8,428 & 5 & $-0.001 \pm 0.001$ & $-0.001 \pm 0.001$ & $4.08$ \\
+        Lead-author-grouped & CatBoost & 8,280 & 5 & $0.363 \pm 0.019$ & $0.394 \pm 0.018$ & $2.92$ \\
+        Lead-author-grouped & Ridge & 8,280 & 5 & $0.313 \pm 0.011$ & $0.353 \pm 0.017$ & $3.05$ \\
+        Lead-author-grouped & Mean & 8,280 & 5 & $-0.002 \pm 0.002$ & $-0.002 \pm 0.002$ & $3.98$ \\
+        Forward in time & CatBoost & 6,436 & 3 & $0.293 \pm 0.059$ & $0.345 \pm 0.049$ & $3.18$ \\
+        Forward in time & Ridge & 6,436 & 3 & $0.227 \pm 0.075$ & $0.286 \pm 0.087$ & $3.34$ \\
+        Forward in time & Mean & 6,436 & 3 & $-0.155 \pm 0.027$ & $-0.155 \pm 0.027$ & $4.57$ \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+\begin{table}[t]
+    \centering\small
+    \caption{Forward-in-time windows (pooled CatBoost, $R^2$): latest training date, earliest test date, record counts and tier results.}
+    \label{tab:temporal}
+    \setlength{\tabcolsep}{2pt}\footnotesize
+    \begin{tabular}{rllrrrr}
+        \toprule
+        Win. & Train until & Test from & $n_\mathrm{train}$ & $n_\mathrm{test}$ & $t_1$ & $t_2$ \\
+        \midrule
+        1 & 2017-12-26 & 2018-05-02 & 18,529 & 6,502 & $0.284$ & $0.335$ \\
+        2 & 2018-07-20 & 2018-12-12 & 24,074 & 6,322 & $0.356$ & $0.398$ \\
+        3 & 2019-01-27 & 2019-07-19 & 29,429 & 6,484 & $0.240$ & $0.302$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Contribution of material-property descriptors}
+\label{sec:features}
+
+Adding material-property descriptors ($t_1 \rightarrow t_2$) increased $R^2$ by 0.040 (pooled), 0.047 (p-i-n) and 0.029 (n-i-p) in the five-holdout experiment and lowered RMSE by 0.125, 0.130 and 0.093 percentage points (Table~\ref{tab:delta}), consistent with the larger gain on the reserved publications (Table~\ref{tab:paired3}). The pooled gain had a cluster-bootstrap interval excluding zero in all five splits (two of five for p-i-n and three of five for n-i-p, which have fewer test publications), and $R^2$ improved in all 15 split--subset pairs. Because $t_1$ contains no explicit transport-layer material identities (Section~\ref{sec:integration}), the $t_2$ descriptors convey both which materials were used and their reference properties; each property is a fixed function of the material, so this gain could reflect knowledge of which materials were used rather than their property values. A material-identity control separates the two. Adding only the ETL, HTL and perovskite identities to $t_1$ as native CatBoost categorical features (disjoint DOI-grouped five-fold, three seeds, same CatBoost configuration, 41,107 records) gives $R^2 = 0.406$, against 0.370 for $t_1$ and 0.407 for $t_2$; the 102 descriptor columns add $+0.001$ over identity alone (interval for the paired MSE difference includes zero), and descriptors on top of identity add $+0.004$ (also not distinguishable from zero). The gain of $t_2$ over $t_1$ is therefore attributable to knowing which transport and absorber materials a device contains, not to the physical descriptor values; transferable physical information is not demonstrated by this comparison (a leave-material-out test would be needed). This is consistent with prior work showing that the representation of material and process information strongly affects PCE prediction \cite{fukasawa2024effectiveness}, and it shows that the benefit persists when entire publications are held out.
+
+The same five-holdout protocol was also used for an earlier, superseded LLM-derived representation, a block of 44 literature predictors. Added to $t_2$ it produced no measurable change ($\Delta R^2 = -0.001$ pooled; no interval excluded zero in any of 15 split--subset pairs), and controls (the block without material properties, without two reporting-completeness flags, and $t_2$ plus 32 noise columns) pointed the same way; the details are in the Supplementary Information. That null result, together with the redundancy of the extracted numerical parameters with PDP columns (Section~\ref{sec:extraction}), motivated the more targeted recipe-flag representation $t_3$. It does not bear on the size of the recipe-flag effect, which is evaluated only in Sections~\ref{sec:three} and~\ref{sec:recipe_results}.
+
+\begin{table}[t]
+    \centering\small
+    \caption{Paired difference between $t_1$ and $t_2$ (matched CatBoost, five DOI-grouped splits). $\Delta R^2$ and $\Delta$RMSE are means over the five splits; ``better'' is the number of splits in which $R^2$ improved; ``CI$\neq0$'' is the number of splits in which the 95\% DOI-cluster bootstrap interval of the paired $\Delta R^2$ excludes zero. Test sets overlap across splits, so no pooled significance test is reported.}
+    \label{tab:delta}
+    \begin{tabular}{lcccc}
+        \toprule
+        & \multicolumn{4}{c}{$t_1\!\to\! t_2$} \\
+        \cmidrule(lr){2-5}
+        Subset & $\Delta R^2$ & $\Delta$RMSE & better & CI$\neq0$ \\
+        \midrule
+        Pooled & $+0.040$ & $-0.125$ & 5/5 & 5/5 \\
+        p-i-n & $+0.047$ & $-0.130$ & 5/5 & 2/5 \\
+        n-i-p & $+0.029$ & $-0.093$ & 5/5 & 3/5 \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -585,36 +593,16 @@ Four features of the evidence limit how far it can be pushed. First, the size of
 \subsection{Interpretation of model predictions}
 \label{sec:shap}
 
-\subsubsection{Global importance.}
-SHAP values are attributions for the fitted model and do not demonstrate predictive benefit or causal effects. Perovskite quenching/crystallisation was the highest-ranked predictor in all three models (mean $|$SHAP$|$ 0.727, 0.525 and 1.002 PCE percentage points for the pooled, p-i-n and n-i-p models; Fig.~\ref{fig:beeswarm}). It is the PDP binary field \texttt{Perovskite\_deposition\_quenching\_induced\_crystallisation} (1 if a quenching-induced crystallisation step was reported, 0 if not; 20,657 and 22,731 records of the PDP export, 10 missing). In the pooled model the next features were total ion count (0.265), the missingness indicator of the perovskite photoluminescence maximum (0.229), HTL deposition method (0.212), perovskite annealing time (0.202), average perovskite atomic mass (0.197), average perovskite radius (0.192) and HTL band gap (0.186). In the p-i-n model HTL band gap ranked second (0.506) and ETL deposition method third (0.410). Because material properties are fixed functions of material identity, layer-property features such as HTL band gap also act as identifiers of the material used in that layer. Aggregating importance by feature group (Fig.~\ref{fig:groups}) shows that material-property (33--38\%) and process (36--42\%) variables dominate, followed by composition (13--15\%) and device (6--8\%) descriptors.
-
-The 44 predictors of the original literature block account for 4.0\% (pooled), 3.9\% (p-i-n) and 3.6\% (n-i-p) of the total absolute SHAP attribution, showing that the fitted models use them, although the ablation above shows that this use does not translate into held-out benefit. The highest-ranked literature feature in all three models was \texttt{json\_numeric\_values\_found}, the number of numerical values recovered from a paper (rank 35, 40 and 28 in the pooled, p-i-n and n-i-p models), which reflects how completely a publication reports its experimental details rather than a material or processing parameter. One possible explanation, which we did not test, is that publication-constant features can be used to separate training publications without carrying information that transfers to unseen ones.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/fig_shap_groups.png}
-    \caption{Share of total feature attribution by feature group for the matched $t_3^{\mathrm{orig}}$ CatBoost models on the first DOI-grouped split (1,500 test records). Bars are group-summed mean $|$SHAP$|$ as a fraction of the model total (6.72 pooled, 5.46 p-i-n, 6.51 n-i-p PCE points; 223 features per model). Attribution is not predictive benefit.}
-    \label{fig:groups}
-\end{figure}
-
-\subsubsection{Architecture-specific associations.}
-For p-i-n devices the highest-ranked features were quenching/crystallisation (0.525), HTL band gap (0.506), ETL deposition method (0.410), perovskite thickness (0.234), HTL LUMO (0.229) and Pb fraction (0.168). For n-i-p devices, quenching/crystallisation (1.002) was followed by HTL deposition method (0.303), average perovskite radius (0.285), average perovskite atomic mass (0.220), ETL deposition method (0.202) and perovskite deposition method (0.195). Because the two models were fitted to different records, these differences describe learned associations, not differences in physical effects between architectures.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/shap.png}
-    \caption{Twelve highest-ranked features by mean $|$SHAP$|$ for the (a) pooled, (b) p-i-n and (c) n-i-p matched $t_3^{\mathrm{orig}}$ CatBoost models (first DOI-grouped split). Bar colour denotes feature group (as in Fig.~\ref{fig:groups}); values and the horizontal axes are mean $|$SHAP$|$ in PCE percentage points; the models use the original literature block; \texttt{na} denotes a missingness indicator.}
-    \label{fig:beeswarm}
-\end{figure}
+SHAP values are attributions for the fitted model and do not demonstrate predictive benefit or causal effects. The SHAP analysis was computed for models trained on $t_2$ plus the earlier 44-predictor literature block, not for the recipe-flag model $t_3$; its figures and rankings are therefore given in the Supplementary Information (Figs.~S1 and~S2) and are not evidence about $t_3$. In those models perovskite quenching/crystallisation (the PDP binary field \texttt{Perovskite\_deposition\_quenching\_induced\_crystallisation}) was the highest-ranked predictor in the pooled, p-i-n and n-i-p models, and aggregating importance by feature group showed that material-property (33--38\%) and process (36--42\%) variables dominate, followed by composition (13--15\%) and device (6--8\%) descriptors; the earlier literature block received 3.6--4.0\%. Because material properties are fixed functions of material identity, layer-property features such as HTL band gap also act as identifiers of the material used in that layer, and the rankings of the p-i-n and n-i-p models describe what each model learned from different records, not different physical effects. We did not compute SHAP attributions for the 36 recipe flags.
 
 \subsection{Comparison with previous PDP-based studies}
 
-Table~\ref{tab:previous_pdp_studies} summarises what the two most closely related PDP studies did and reported. The numbers are not comparable with ours: Roberts et al.\ predict short-circuit current density ($J_{\mathrm{SC}}$, RMSE in mA\,cm$^{-2}$), whereas we predict PCE (errors in percentage points), and the record sets, feature sets and test sets also differ. The Fukasawa et al.\ entries are left to be completed. As an indirect, like-for-like reference we ran the \emph{settings} associated with these studies inside our framework (Table~\ref{tab:baselines}): XGBoost with library defaults (the setting of Roberts-style pipelines) and a random forest (the best model of Fukasawa et al.) on the database-only tier $t_1$, evaluated on the same DOI-grouped splits. They reach $R^2 = 0.334$ and 0.295, against 0.368 for matched CatBoost on $t_1$. These are not re-implementations of the original feature engineering (one-hot layered encodings and duplicate averaging for Roberts et al.; Oliynyk composition vectors and zero complement for Fukasawa et al.), and we did not re-run the original pipelines.
+Table~\ref{tab:previous_pdp_studies} summarises what the two most closely related PDP studies did and reported. The numbers are not comparable with ours: Roberts et al.\ predict short-circuit current density ($J_{\mathrm{SC}}$, RMSE in mA\,cm$^{-2}$), whereas we predict PCE (errors in percentage points); $J_{\mathrm{SC}}$ and PCE are different targets, and the record sets, feature sets and test sets also differ. The Fukasawa et al.\ entries are left to be completed. As an indirect, like-for-like reference we ran the \emph{settings} associated with these studies inside our framework (Table~\ref{tab:baselines}): XGBoost with library defaults (the setting of Roberts-style pipelines) and a random forest (the best model of Fukasawa et al.) on the database-only tier $t_1$, evaluated on the same DOI-grouped splits. They reach $R^2 = 0.334$ and 0.295, against 0.368 for matched CatBoost on $t_1$. These are not re-implementations of the original feature engineering (one-hot layered encodings and duplicate averaging for Roberts et al.; Oliynyk composition vectors and zero complement for Fukasawa et al.), and we did not re-run the original pipelines.
 
 \begin{table}[t]
     \centering
     \small
-    \caption{Related PDP-based studies as described in the cited articles, and this study. Targets differ: Roberts et al.\ predict $J_{\mathrm{SC}}$ (RMSE in mA\,cm$^{-2}$) and this study predicts PCE (MAE in percentage points), so their absolute metrics are not directly comparable. The two rows for this study are different evaluations (a controlled five-split ablation with a fixed configuration and the original literature block, and a single reserved-publication set scored with tuned CatBoost and the recipe-flag block) and should not be mixed.}
+    \caption{Related PDP-based studies as described in the cited articles, and this study. Targets differ: Roberts et al.\ predict $J_{\mathrm{SC}}$ (RMSE in mA\,cm$^{-2}$) and this study predicts PCE (MAE and RMSE in percentage points), so their absolute metrics are not directly comparable. The two rows for this study are different evaluations (a single reserved-publication partition with all three tiers, and a five-split repeated holdout with $t_2$) and should not be mixed.}
     \label{tab:previous_pdp_studies}
     \begin{tabular}{p{2.7cm}p{1.2cm}p{3.7cm}p{4.6cm}}
         \toprule
@@ -622,19 +610,20 @@ Table~\ref{tab:previous_pdp_studies} summarises what the two most closely relate
         \midrule
         Roberts et al.\ \cite{roberts2024machine} & $J_{\mathrm{SC}}$ & 80/10/10 train/validation/test; duplicates averaged & XGBoost: $R^2 = 0.35$, RMSE $= 3.58$ mA\,cm$^{-2}$ \\
         Fukasawa et al.\ \cite{fukasawa2024effectiveness} & -- & -- & -- \\
-        This study, controlled ablation & PCE & DOI-grouped repeated holdout (five splits), DOI-disjoint validation & Matched CatBoost, pooled, original-block $t_3^{\mathrm{orig}}$: $R^2 = 0.407 \pm 0.031$, MAE $= 2.96 \pm 0.08$ \\
-        This study, reserved publications & PCE & DOI-grouped holdout (2,619 reserved publications), DOI-disjoint validation & Tuned CatBoost, all 14,125 records, $t_3$: $R^2 = 0.408$, MAE $= 2.94$ \\
+        This study, reserved publications & PCE & DOI-grouped holdout (2,619 reserved publications), DOI-disjoint validation & Matched CatBoost, all 14,125 records, $t_3$: $R^2 = 0.406$, MAE $= 2.95$, RMSE $= 3.79$ (LLM-covered, 5,460 records: $t_3$ $R^2 = 0.366$) \\
+        This study, five-split holdout & PCE & DOI-grouped repeated holdout (five splits), DOI-disjoint validation & Matched CatBoost, pooled, $t_2$: $R^2 = 0.408 \pm 0.032$, MAE $= 2.95 \pm 0.08$, RMSE $= 3.78 \pm 0.09$ \\
         \bottomrule
     \end{tabular}
 \end{table}
 
 \subsection{Limitations}
-Results come from a single database with heterogeneous reporting, and 69\% of the PCE variance lies between publications, so held-out $R^2$ values near 0.4 mean that most between-paper variation is not explained by the available descriptors. The DOI-grouped holdout measures generalization to unseen publications, but the five repeated test sets overlap, so the reported spreads are not those of an independent repeated grouped cross-validation, and the cluster-bootstrap intervals address within-test dependence only. Grouping by DOI does not separate publications from the same research group, which may share materials and recipes across papers; grouping by lead-author surname is only a coarse laboratory proxy, and the forward-in-time evaluation (three windows, Section~\ref{sec:strict}) lowers $R^2$ to about 0.33; neither is an external validation on independently collected devices. The 232 records without a DOI were kept together, which is conservative but not informative about their true publications. Some publications report the same device configuration (1,277 records in 162 groups of identical predictor vectors span more than one DOI), and such cross-publication near-duplicates can still fall on both sides of a DOI-grouped split. LLM-derived features were available for about 37\% of the records (36.2\% for the original block, 36.6\% for the recipe flags), extraction accuracy was assessed only against a second curated source and not against a hand-annotated gold set, and the literature features are defined per publication and therefore cannot distinguish between devices within the same paper. The recipe-flag evidence rests on one reserved partition of about 1,000 covered publications (resolution roughly $\pm 0.01$ $R^2$), the flag block was chosen after development comparisons, the reserved publications had been examined in earlier experiments with other feature representations, and the apparent gain depends on the CatBoost configuration. The controlled ablation, the model-development table, the SHAP analysis and the protocol comparisons use the original literature block, not the recipe flags, and no five-split ablation of the recipe flags was run. Material-property descriptors are material-level reference values, so they identify materials as much as they describe them. The reference Gaussian process was fitted to a subsample and the MLP was not extensively tuned, so Table~\ref{tab:baselines} does not rank model families. Predictions saturate near 21\% PCE, under-predict high-efficiency devices, can be negative, and devices with reported PCE below 1\% were excluded.
+Results come from a single database with heterogeneous reporting, and 69\% of the PCE variance lies between publications, so held-out $R^2$ values near 0.4 mean that most between-paper variation is not explained by the available descriptors. The DOI-grouped holdout measures generalization to unseen publications, but the five repeated test sets overlap, so the reported spreads are not those of an independent repeated grouped cross-validation, and the cluster-bootstrap intervals address within-test dependence only. Grouping by DOI does not separate publications from the same research group, which may share materials and recipes across papers; grouping by lead-author surname is only a coarse laboratory proxy, and the forward-in-time evaluation (three windows, Section~\ref{sec:strict}) lowers $R^2$ to about 0.35; neither is an external validation on independently collected devices. The 232 records without a DOI were kept together, which is conservative but not informative about their true publications. Some publications report the same device configuration (1,277 records in 162 groups of identical predictor vectors of the earlier $t_2$-plus-literature-block representation span more than one DOI), and such cross-publication near-duplicates can still fall on both sides of a DOI-grouped split. LLM-derived features were available for about 37\% of the records (36.6\% for the recipe flags; 36.2\% for the earlier block, from a coverage mask that differs by 32 publications whose cause we did not investigate), extraction accuracy was assessed only against a second curated source for an earlier feature table and not against a hand-annotated gold set, the recipe flags themselves were not validated, and the flags are defined per publication and therefore cannot distinguish between devices within the same paper. The recipe-flag evidence rests on one reserved partition of about 1,000 covered publications (resolution roughly $\pm 0.01$ $R^2$), the flag block was chosen after development comparisons, the reserved publications had been examined in earlier experiments with other feature representations, and the apparent gain depends on the CatBoost configuration; all intervals for the $t_2 \rightarrow t_3$ step include zero. The three-tier comparison is a single partition; the five-holdout ablation, the model-development table, the SHAP analysis, the reference models and the stricter protocols do not include $t_3$, and no five-split ablation of the recipe flags was run. Material-property descriptors are material-level reference values, so they identify materials as much as they describe them. The reference Gaussian process was fitted to a subsample and the MLP was not extensively tuned, so Table~\ref{tab:baselines} does not rank model families. The retrieval route of the historical full-text corpus is not asserted to be exclusively legal (Section~\ref{sec:extraction}), and the extraction model checkpoint is not recorded. Predictions saturate near 21\% PCE, under-predict high-efficiency devices, can be negative, and devices with reported PCE below 1\% were excluded.
+
 
 
 % ---------------- CONCLUSION ----------------
 \section{Conclusion}
-We built and audited a PCE prediction pipeline for the Perovskite Database Project and evaluated it on unseen publications with DOI-grouped, validation-based holdouts. Two findings are supported by the evidence. First, performance on unseen publications is moderate: a fixed CatBoost model reached a pooled $R^2$ of 0.407 (MAE 2.96 percentage points) and a validation-tuned ensemble 0.418 (MAE 2.92), with substantial architecture dependence (n-i-p 0.41, p-i-n 0.30) and a split-to-split standard deviation of about 0.03; simple ridge regression and a properly trained MLP or Gaussian process are within 0.03--0.06 $R^2$. In a controlled, nested comparison, curated material-property descriptors improved $R^2$ by 0.040 (pooled), a gain that adding only the material identities to $t_1$ reproduces ($R^2$ 0.406 versus 0.407), whereas the original block of LLM-derived literature features added no detectable benefit. Our final LLM-derived representation, 36 recipe flags covering additive and precursor identities, transport-layer dopants, process route and device context, is available for 36.6\% of records and was scored once on reserved publications: under matched settings it raised $R^2$ by $+0.0071$ on publications with extraction data and by $+0.0025$ on all records, and with separately tuned settings by $+0.0094$ (covered; $R^2$ 0.361 to 0.371) and $+0.0015$ (all records). All four 95\% intervals include zero, the effect depends on the CatBoost configuration, and the flags were selected on development comparisons, so we regard this as a small, suggestive signal that the additive and recipe identities carry some information the database columns lack, not as an established improvement; larger coverage from full-text extraction would be needed to test it. The SHAP attribution received by the original block (about 4\%) should not be read as predictive value. Second, evaluation by record rather than by publication inflates the measured $R^2$ for a flexible model by 0.21--0.22 on this data (CatBoost: 0.59--0.63 versus 0.37--0.41), whereas a low-capacity ridge model shows a gap of 0.06; because 69\% of PCE variance lies between publications and most near-duplicate devices are within a publication, we recommend reporting DOI-grouped (or stricter) estimates alongside record-level ones for literature-compiled PSC data. Under forward-in-time evaluation $R^2$ falls to 0.335 (MAE 3.21), and lead-author grouping gives 0.395; the results do not establish performance on independently collected external data, for tandem or non-standard devices, or for high-efficiency devices, which are systematically under-predicted. Code, configurations, tests and per-split predictions allow every number in this paper to be regenerated from the supplied table.
+We built and audited a PCE prediction pipeline for the Perovskite Database Project and evaluated it on unseen publications with DOI-grouped, validation-based holdouts. Two findings are supported by the evidence. First, performance on unseen publications is moderate, and it rises with the feature tier in a way that is clear for one step and small for the other. On identical reserved publications and test records with one fixed CatBoost configuration, $R^2$ rose from 0.371 ($t_1$, PDP-derived features) to 0.403 ($t_2$, plus curated material properties) and 0.406 ($t_3$, plus 36 LLM-derived recipe flags) on all 14,125 reserved records, and from 0.318 to 0.359 and 0.366 on the 5,460 records whose publications have extraction data (MAE 3.02, 2.91 and 2.89 percentage points). The sequence is monotonic in $R^2$, MAE and RMSE in both populations. The material-property step is well supported ($\Delta R^2 = +0.042$ covered, +0.032 all records, intervals excluding zero), and in a five-holdout experiment it is reproduced by adding only the material identities to $t_1$ ($R^2$ 0.406 versus 0.407), so it reflects knowing which materials are present. The recipe-flag step is small ($+0.0071$ covered, $+0.0025$ all; $+0.0094$ and $+0.0015$ with separately tuned settings), all four 95\% intervals include zero, the effect depends on the CatBoost configuration, the flags were selected on development comparisons, and the reserved publications had appeared in earlier experiments with other feature sets; we therefore regard it as a small, suggestive signal that the additive and recipe identities carry some information the database columns lack, not as an established improvement. Larger coverage from full-text extraction would be needed to test it, and the five-holdout protocol, reference models and stricter validations were not run for $t_3$. A validation-tuned CatBoost--XGBoost ensemble on $t_2$ reached a pooled $R^2$ of 0.416 (MAE 2.92) in the five-holdout experiment, with substantial architecture dependence (n-i-p 0.41, p-i-n 0.30) and a split-to-split standard deviation of about 0.03; simple ridge regression and a properly trained MLP or Gaussian process are 0.03--0.07 $R^2$ below matched CatBoost at $t_1$. Second, evaluation by record rather than by publication inflates the measured $R^2$ for a flexible model by 0.21--0.22 on this data (CatBoost: 0.59--0.62 versus 0.37--0.41), whereas a low-capacity ridge model shows a gap of 0.06; because 69\% of PCE variance lies between publications and most near-duplicate devices are within a publication, we recommend reporting DOI-grouped (or stricter) estimates alongside record-level ones for literature-compiled PSC data. Under forward-in-time evaluation $R^2$ falls to 0.345 (MAE 3.18), and lead-author grouping gives 0.394; the results do not establish performance on independently collected external data, for tandem or non-standard devices, or for high-efficiency devices, which are systematically under-predicted. Code, configurations, tests and per-split predictions allow every number in this paper to be regenerated from the supplied table.
 
 \section*{Data and code availability}
 The code, configuration files, tests, per-split predictions, metrics and run manifests required to regenerate every table and figure are provided in the accompanying repository, supplied for peer review; it will be archived on Zenodo, and the DOIs of the archived code and data will be given in this statement at acceptance, as the journal requires. The processed modelling table (43,398 PDP records, device-level descriptors, material-property descriptors and publication-level literature features) is included in the repository. The PDP is openly available under a CC BY licence \cite{jacobsson2022open}. Publisher PDFs, their Markdown conversions and the raw LLM output files are not redistributed because they derive from copyrighted full texts; the DOI list is derivable from the PDP. The recovered extraction prompt and settings are given in the Supplementary Information.

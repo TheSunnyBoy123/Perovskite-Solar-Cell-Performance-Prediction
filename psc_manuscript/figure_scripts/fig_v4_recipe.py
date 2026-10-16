@@ -1,4 +1,4 @@
-"""fig_v4_recipe: effect of the 36-flag recipe block on reserved publications (t3_rc minus t2), 95% publication-cluster
+"""fig_v4_recipe: effect of the 36-flag recipe block on reserved publications (t3 minus t2), 95% publication-cluster
 bootstrap intervals. Open symbols: same default settings (comparison A); filled: each tier separately tuned (B).
 Grey bands: range of five DOI-permuted-block controls under default settings.
 Data: results/v4/final/comparisons.json. Output: figures/fig_v4_recipe.{png,pdf}
@@ -26,7 +26,7 @@ def main():
         ax.set_xticks([0, 1]); ax.set_xticklabels(["Same default\nsettings", "Each tier\ntuned"]); ax.set_xlim(-.6, 1.6)
         ax.set_title(title, fontsize=8); ax.grid(axis="y", lw=.4, alpha=.5); despine(ax)
         ax.text(-0.02, 1.08, f"({t})", transform=ax.transAxes, fontweight="bold", fontsize=9)
-    axes[0].set_ylabel(r"$\Delta R^2$ ($t_3^{rc}$ minus $t_2$)"); axes[0].set_ylim(-0.012, 0.026)
+    axes[0].set_ylabel(r"$\Delta R^2$ ($t_3$ minus $t_2$)"); axes[0].set_ylim(-0.012, 0.026)
     fig.tight_layout(w_pad=1.2); save(fig, "fig_v4_recipe")
 
 

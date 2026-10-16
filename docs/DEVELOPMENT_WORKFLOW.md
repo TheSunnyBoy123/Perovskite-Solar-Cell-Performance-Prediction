@@ -1,0 +1,12 @@
+# Development workflow
+
+How future work on this project is versioned. The repository root is `ml_paper/` (it is a separate Git repository inside the larger `UGP/` folder; run Git commands from here).
+
+1. **Start from a clean working tree.** `git status --short` must be empty (or only contain files you intend to change) before beginning a task. Commit or stash leftovers first.
+2. **Use a task branch for substantial changes** (`git switch -c exp/<topic>` or `paper/<topic>`); merge into `main` only after review. Small fixes may go directly to `main`.
+3. **One commit per coherent change**, with a descriptive message (`area: what and why`, e.g. `exp: add t1 arm on reserved split`). Do not mix code, new results and manuscript text in one commit unless they are inseparable.
+4. **Keep results traceable.** Every result file lives next to (or is described by) the script and configuration that produced it (`scripts/`, `configs/`, `results/<experiment>/meta.json` with data and config hashes). Record the commit hash of the code in new result metadata, and re-run `scripts/verify_manuscript_numbers.py` after changing manuscript numbers.
+5. **Never overwrite authoritative results.** Write new outputs to a new directory (as `results/v4/final_t1/` was added beside `results/v4/final/`). If a result must be replaced, keep the previous version (new directory or a tag) and say why in the commit message.
+6. **Review before committing.** Read `git diff` (and `git diff --cached`), run `git diff --check`, and run the relevant checks: `python -m pytest tests`, `scripts/verify_manuscript_numbers.py`, and `scripts/build_paper.sh` for manuscript changes (no undefined references, PDF rebuilt from the committed source).
+7. **Keep raw research data out of Git.** Raw/derived large data, model pickles, per-fold intermediates, full texts and caches are ignored (`.gitignore`); list new large artifacts with a checksum in `docs/ARTIFACT_CHECKSUMS.md` instead. Never commit credentials (`.env`, API keys). Do not push or publish to a remote without an explicit decision.
+8. **Manuscript.** Tier names are fixed: `t1` (PDP features), `t2` (+ material properties), `t3` (+ 36 recipe flags). The earlier 44-predictor literature block is the "earlier literature block" and must not be called t3 in the paper (the run files still use the tier name `t3` for it; see `psc_manuscript/si.tex`). Tables are inline in `ml.tex`; figures are regenerated with `psc_manuscript/make_figures.py` from `results/`.
