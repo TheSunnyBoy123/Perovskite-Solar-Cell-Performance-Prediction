@@ -38,11 +38,14 @@ def _penalty(cols, pen):
 
 class PSCModel:
     def __init__(self, tier="t3", params=None, pen_lit=0.5, seeds=(0, 1, 2, 3, 4)):
-        assert tier in ("t2", "t3")
+        assert tier in ("t1", "t2", "t3")
         self.tier, self.params, self.pen_lit, self.seeds = tier, dict(params or {}), pen_lit, tuple(seeds)
 
+    def _base(self):
+        return "t1" if self.tier == "t1" else "t2"   # recipe flags (t3) are appended to the t2 matrix
+
     def _matrix(self, df, pre):
-        Z = pre.transform(base_frame(df, "t2"))
+        Z = pre.transform(base_frame(df, self._base()))
         if self.tier == "t3":
             Z = pd.concat([Z, rec_columns(df)], axis=1)
         return Z
@@ -51,7 +54,7 @@ class PSCModel:
         """df: PDP-schema records (dataset_json_enriched columns incl. doi_group). One model per seed, each with its
         own DOI-disjoint validation split used only for early stopping; the preprocessor is fit on that seed's train part."""
         self.models_, self.pres_, self.cols_ = [], [], None
-        X = base_frame(df, "t2")
+        X = base_frame(df, self._base())
         R = rec_columns(df) if self.tier == "t3" else None
         for s in self.seeds:
             tr, va, _ = next(make_splits(groups, "doi", 1, 0.001, val_size, 1000 + s))
