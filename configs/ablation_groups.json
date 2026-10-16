@@ -1,0 +1,10 @@
+{
+  "name": "feature_groups_v1",
+  "data": "data/dataset_json_enriched.csv",
+  "archs": ["overall", "pin", "nip"],
+  "protocols": ["doi"],
+  "tiers": ["t1_lit", "t3_nometa", "t2_noise"],
+  "models": ["catboost"],
+  "n_splits": 5, "test_size": 0.2, "val_size": 0.15, "seed": 42,
+  "catboost": {}
+}

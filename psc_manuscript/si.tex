@@ -1,0 +1,130 @@
+\documentclass[10pt]{article}
+\usepackage[T1]{fontenc}\usepackage[margin=2cm]{geometry}\usepackage{booktabs,longtable,lmodern,url,xcolor}
+\usepackage{microtype}\usepackage{hyperref}
+\title{Supplementary Information: Perovskite Solar Cell Performance Prediction with LLM-Derived Feature Augmentation under Leakage-Aware DOI Evaluation}
+\date{}\begin{document}\maketitle\small
+\section*{Table S1. Predictors per tier}
+Column sets shown for a preprocessor fitted on the full filtered data (documentation); in the experiments the \texttt{\_na} indicators and the $>$80\% missing filter are re-derived from each training partition. Tiers are nested: $t_1\subset t_2\subset t_3$.\par
+\subsection*{t1: 77 predictors (77 added relative to the previous tier)}
+\textbf{process} (21): \texttt{ETL\_deposition\_method}, \texttt{HTL\_deposition\_method}, \texttt{Perovskite\_deposition\_method}, \texttt{Perovskite\_thickness\_nm}, \texttt{ETL\_thickness\_nm}, \texttt{HTL\_thickness\_nm}, \texttt{Backcontact\_thickness\_nm}, \texttt{Perov\_anneal\_temp\_C}, \texttt{Perov\_anneal\_time\_min}, \texttt{Perov\_deposition\_steps}, \texttt{Perovskite\_dimension\_list\_of\_layers}, \texttt{Perov\_quenching\_crystallisation}, \texttt{Perovskite\_dimension\_3D\_with\_2D\_capping\_layer}, \texttt{Perovskite\_deposition\_solvent\_annealing}, \texttt{Perovskite\_thickness\_nm\_na}, \texttt{ETL\_thickness\_nm\_na}, \texttt{HTL\_thickness\_nm\_na}, \texttt{Backcontact\_thickness\_nm\_na}, \texttt{Perov\_anneal\_temp\_C\_na}, \texttt{Perov\_anneal\_time\_min\_na}, \texttt{Perovskite\_dimension\_list\_of\_layers\_na}\par\smallskip
+\textbf{device} (9): \texttt{Cell\_architecture}, \texttt{Perovskite\_band\_gap\_measured}, \texttt{is\_flexible\_x}, \texttt{is\_semitransparent}, \texttt{Encapsulation}, \texttt{Add\_lay\_front}, \texttt{Perovskite\_pl\_max\_nm}, \texttt{Perovskite\_band\_gap\_measured\_na}, \texttt{Perovskite\_pl\_max\_nm\_na}\par\smallskip
+\textbf{composition} (47): \texttt{num\_a\_ions}, \texttt{num\_b\_ions}, \texttt{num\_c\_ions}, \texttt{total\_ion\_count}, \texttt{a\_coeff\_sum}, \texttt{b\_coeff\_sum}, \texttt{c\_coeff\_sum}, \texttt{a\_FA\_fraction}, \texttt{a\_MA\_fraction}, \texttt{a\_Cs\_fraction}, \texttt{a\_Rb\_fraction}, \texttt{a\_organic\_fraction}, \texttt{a\_other\_fraction}, \texttt{b\_Pb\_fraction}, \texttt{b\_Sn\_fraction}, \texttt{b\_Bi\_fraction}, \texttt{b\_other\_fraction}, \texttt{halide\_I\_fraction}, \texttt{halide\_Br\_fraction}, \texttt{halide\_Cl\_fraction}, \texttt{halide\_F\_fraction}, \texttt{halide\_other\_fraction}, \texttt{is\_inorganic}, \texttt{is\_leadfree}, \texttt{is\_3D}, \texttt{is\_2D}, \texttt{is\_2D3D\_mixture}, \texttt{Perovskite\_composition\_perovskite\_inspired\_structure}, \texttt{Perovskite\_composition\_perovskite\_ABC3\_structure}, \texttt{a\_coeff\_sum\_na}, \texttt{b\_coeff\_sum\_na}, \texttt{c\_coeff\_sum\_na}, \texttt{a\_FA\_fraction\_na}, \texttt{a\_MA\_fraction\_na}, \texttt{a\_Cs\_fraction\_na}, \texttt{a\_Rb\_fraction\_na}, \texttt{a\_organic\_fraction\_na}, \texttt{a\_other\_fraction\_na}, \texttt{b\_Pb\_fraction\_na}, \texttt{b\_Sn\_fraction\_na}, \texttt{b\_Bi\_fraction\_na}, \texttt{b\_other\_fraction\_na}, \texttt{halide\_I\_fraction\_na}, \texttt{halide\_Br\_fraction\_na}, \texttt{halide\_Cl\_fraction\_na}, \texttt{halide\_F\_fraction\_na}, \texttt{halide\_other\_fraction\_na}\par\smallskip
+\subsection*{t2: 179 predictors (102 added relative to the previous tier)}
+\textbf{material} (102): \texttt{ETL\_band\_gap}, \texttt{ETL\_LUMO}, \texttt{ETL\_HOMO}, \texttt{ETL\_electron\_mobility}, \texttt{ETL\_hole\_mobility}, \texttt{ETL\_dielectric\_constant}, \texttt{ETL\_min\_atomic\_mass}, \texttt{ETL\_max\_atomic\_mass}, \texttt{ETL\_avg\_atomic\_mass}, \texttt{ETL\_min\_radius}, \texttt{ETL\_max\_radius}, \texttt{ETL\_avg\_radius}, \texttt{ETL\_en\_min}, \texttt{ETL\_en\_max}, \texttt{ETL\_en\_avg}, \texttt{HTL\_band\_gap}, \texttt{HTL\_LUMO}, \texttt{HTL\_HOMO}, \texttt{HTL\_electron\_mobility}, \texttt{HTL\_hole\_mobility}, \texttt{HTL\_dielectric\_constant}, \texttt{HTL\_min\_atomic\_mass}, \texttt{HTL\_max\_atomic\_mass}, \texttt{HTL\_avg\_atomic\_mass}, \texttt{HTL\_min\_radius}, \texttt{HTL\_max\_radius}, \texttt{HTL\_avg\_radius}, \texttt{HTL\_en\_min}, \texttt{HTL\_en\_max}, \texttt{HTL\_en\_avg}, \texttt{Perovskite\_band\_gap}, \texttt{Perovskite\_LUMO}, \texttt{Perovskite\_HOMO}, \texttt{Perovskite\_electron\_mobility}, \texttt{Perovskite\_hole\_mobility}, \texttt{Perovskite\_dielectric\_constant}, \texttt{Perovskite\_min\_atomic\_mass}, \texttt{Perovskite\_max\_atomic\_mass}, \texttt{Perovskite\_avg\_atomic\_mass}, \texttt{Perovskite\_min\_radius}, \texttt{Perovskite\_max\_radius}, \texttt{Perovskite\_avg\_radius}, \texttt{Perovskite\_en\_min}, \texttt{Perovskite\_en\_max}, \texttt{Perovskite\_en\_avg}, \texttt{perovskite\_tolerance\_factor}, \texttt{perovskite\_octahedral\_factor}, \texttt{perovskite\_cation\_radius\_ratio}, \texttt{perovskite\_tau\_descriptor}, \texttt{HTL\_hole\_barrier}, \texttt{ETL\_electron\_barrier}, \texttt{ETL\_band\_gap\_na}, \texttt{ETL\_LUMO\_na}, \texttt{ETL\_HOMO\_na}, \texttt{ETL\_electron\_mobility\_na}, \texttt{ETL\_hole\_mobility\_na}, \texttt{ETL\_dielectric\_constant\_na}, \texttt{ETL\_min\_atomic\_mass\_na}, \texttt{ETL\_max\_atomic\_mass\_na}, \texttt{ETL\_avg\_atomic\_mass\_na}, \texttt{ETL\_min\_radius\_na}, \texttt{ETL\_max\_radius\_na}, \texttt{ETL\_avg\_radius\_na}, \texttt{ETL\_en\_min\_na}, \texttt{ETL\_en\_max\_na}, \texttt{ETL\_en\_avg\_na}, \texttt{HTL\_band\_gap\_na}, \texttt{HTL\_LUMO\_na}, \texttt{HTL\_HOMO\_na}, \texttt{HTL\_electron\_mobility\_na}, \texttt{HTL\_hole\_mobility\_na}, \texttt{HTL\_dielectric\_constant\_na}, \texttt{HTL\_min\_atomic\_mass\_na}, \texttt{HTL\_max\_atomic\_mass\_na}, \texttt{HTL\_avg\_atomic\_mass\_na}, \texttt{HTL\_min\_radius\_na}, \texttt{HTL\_max\_radius\_na}, \texttt{HTL\_avg\_radius\_na}, \texttt{HTL\_en\_min\_na}, \texttt{HTL\_en\_max\_na}, \texttt{HTL\_en\_avg\_na}, \texttt{Perovskite\_band\_gap\_na}, \texttt{Perovskite\_LUMO\_na}, \texttt{Perovskite\_HOMO\_na}, \texttt{Perovskite\_electron\_mobility\_na}, \texttt{Perovskite\_hole\_mobility\_na}, \texttt{Perovskite\_dielectric\_constant\_na}, \texttt{Perovskite\_min\_atomic\_mass\_na}, \texttt{Perovskite\_max\_atomic\_mass\_na}, \texttt{Perovskite\_avg\_atomic\_mass\_na}, \texttt{Perovskite\_min\_radius\_na}, \texttt{Perovskite\_max\_radius\_na}, \texttt{Perovskite\_avg\_radius\_na}, \texttt{Perovskite\_en\_min\_na}, \texttt{Perovskite\_en\_max\_na}, \texttt{Perovskite\_en\_avg\_na}, \texttt{perovskite\_tolerance\_factor\_na}, \texttt{perovskite\_octahedral\_factor\_na}, \texttt{perovskite\_cation\_radius\_ratio\_na}, \texttt{perovskite\_tau\_descriptor\_na}, \texttt{HTL\_hole\_barrier\_na}, \texttt{ETL\_electron\_barrier\_na}\par\smallskip
+\subsection*{t3: 223 predictors (44 added relative to the previous tier)}
+\textbf{literature} (44): \texttt{has\_BCP}, \texttt{has\_LiF}, \texttt{has\_PEAI}, \texttt{has\_SAM}, \texttt{has\_C60}, \texttt{has\_PCBM}, \texttt{has\_Spiro}, \texttt{has\_PEDOT}, \texttt{has\_NiOx}, \texttt{has\_SnO2}, \texttt{has\_TiO2}, \texttt{has\_ZnO}, \texttt{has\_PTAA}, \texttt{has\_fullerene}, \texttt{has\_passivation\_layer}, \texttt{is\_flexible\_y}, \texttt{is\_encapsulated}, \texttt{has\_stability\_measurement}, \texttt{used\_antisolvent}, \texttt{used\_glovebox}, \texttt{used\_vacuum\_evaporation}, \texttt{json\_numeric\_values\_found}, \texttt{has\_BCP\_na}, \texttt{has\_LiF\_na}, \texttt{has\_PEAI\_na}, \texttt{has\_SAM\_na}, \texttt{has\_C60\_na}, \texttt{has\_PCBM\_na}, \texttt{has\_Spiro\_na}, \texttt{has\_PEDOT\_na}, \texttt{has\_NiOx\_na}, \texttt{has\_SnO2\_na}, \texttt{has\_TiO2\_na}, \texttt{has\_ZnO\_na}, \texttt{has\_PTAA\_na}, \texttt{has\_fullerene\_na}, \texttt{has\_passivation\_layer\_na}, \texttt{is\_flexible\_y\_na}, \texttt{is\_encapsulated\_na}, \texttt{has\_stability\_measurement\_na}, \texttt{used\_antisolvent\_na}, \texttt{used\_glovebox\_na}, \texttt{used\_vacuum\_evaporation\_na}, \texttt{json\_numeric\_values\_found\_na}\par\smallskip
+\section*{Table S2. Per-split results of the matched CatBoost ablation (DOI-grouped)}\begin{longtable}{lllrrrr}\toprule Subset & Tier & Split & $n_\mathrm{test}$ & $R^2$ & MAE & RMSE\\\midrule\endhead
+nip & t1 & 1 & 5476 & 0.3524 & 3.101 & 3.937\\
+nip & t1 & 2 & 5376 & 0.3780 & 3.067 & 3.928\\
+nip & t1 & 3 & 5688 & 0.3845 & 3.068 & 3.936\\
+nip & t1 & 4 & 5785 & 0.3923 & 2.983 & 3.814\\
+nip & t1 & 5 & 5736 & 0.3652 & 3.091 & 3.976\\
+nip & t2 & 1 & 5476 & 0.4006 & 2.931 & 3.788\\
+nip & t2 & 2 & 5376 & 0.4228 & 2.933 & 3.784\\
+nip & t2 & 3 & 5688 & 0.4030 & 2.999 & 3.876\\
+nip & t2 & 4 & 5785 & 0.4049 & 2.957 & 3.775\\
+nip & t2 & 5 & 5736 & 0.3877 & 3.007 & 3.905\\
+nip & t3 & 1 & 5476 & 0.3939 & 2.960 & 3.809\\
+nip & t3 & 2 & 5376 & 0.4197 & 2.953 & 3.794\\
+nip & t3 & 3 & 5688 & 0.4091 & 2.982 & 3.856\\
+nip & t3 & 4 & 5785 & 0.4071 & 2.943 & 3.768\\
+nip & t3 & 5 & 5736 & 0.3963 & 2.981 & 3.877\\
+overall & t1 & 1 & 8224 & 0.3707 & 3.082 & 3.914\\
+overall & t1 & 2 & 8505 & 0.3345 & 3.101 & 3.958\\
+overall & t1 & 3 & 8269 & 0.3604 & 3.136 & 3.945\\
+overall & t1 & 4 & 8550 & 0.3990 & 3.036 & 3.859\\
+overall & t1 & 5 & 8594 & 0.3767 & 3.051 & 3.862\\
+overall & t2 & 1 & 8224 & 0.4145 & 2.943 & 3.775\\
+overall & t2 & 2 & 8505 & 0.3712 & 2.985 & 3.847\\
+overall & t2 & 3 & 8269 & 0.3787 & 3.067 & 3.888\\
+overall & t2 & 4 & 8550 & 0.4420 & 2.892 & 3.719\\
+overall & t2 & 5 & 8594 & 0.4326 & 2.864 & 3.684\\
+overall & t3 & 1 & 8224 & 0.4089 & 2.966 & 3.793\\
+overall & t3 & 2 & 8505 & 0.3731 & 2.982 & 3.842\\
+overall & t3 & 3 & 8269 & 0.3782 & 3.075 & 3.890\\
+overall & t3 & 4 & 8550 & 0.4408 & 2.893 & 3.723\\
+overall & t3 & 5 & 8594 & 0.4317 & 2.874 & 3.687\\
+pin & t1 & 1 & 2437 & 0.3046 & 3.116 & 3.919\\
+pin & t1 & 2 & 2521 & 0.1653 & 3.166 & 4.151\\
+pin & t1 & 3 & 2723 & 0.2863 & 3.123 & 4.020\\
+pin & t1 & 4 & 2872 & 0.2065 & 3.202 & 4.200\\
+pin & t1 & 5 & 2441 & 0.2596 & 3.231 & 4.134\\
+pin & t2 & 1 & 2437 & 0.3447 & 3.026 & 3.804\\
+pin & t2 & 2 & 2521 & 0.2043 & 3.081 & 4.053\\
+pin & t2 & 3 & 2723 & 0.3437 & 2.994 & 3.855\\
+pin & t2 & 4 & 2872 & 0.2379 & 3.105 & 4.116\\
+pin & t2 & 5 & 2441 & 0.3248 & 3.028 & 3.948\\
+pin & t3 & 1 & 2437 & 0.3592 & 2.980 & 3.762\\
+pin & t3 & 2 & 2521 & 0.1815 & 3.136 & 4.111\\
+pin & t3 & 3 & 2723 & 0.3385 & 3.009 & 3.871\\
+pin & t3 & 4 & 2872 & 0.2571 & 3.105 & 4.064\\
+pin & t3 & 5 & 2441 & 0.3315 & 3.026 & 3.928\\
+\bottomrule\end{longtable}
+\section*{Table S3. Split integrity (all 270 recorded fits)}
+DOI-grouped fits: 135; maximum DOI overlap between test and train: 0, validation and train: 0, test and validation: 0.\par
+Records without DOI: 232 (one block). Publications (normalised DOIs): 7326.\par
+Data SHA-256: \texttt{600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc}; config SHA-256: \texttt{dddb51a44e89fde8}; git HEAD at run time: \texttt{9b1d2ca3e1c7} (working tree dirty: True); CatBoost 1.2.10, scikit-learn 1.6.1, Python 3.13.5.\par
+\section*{Table S4. Literature-feature coverage and constancy within publication}\begin{tabular}{lrr}\toprule Feature & coverage & constant within DOI\\\midrule
+\texttt{contact\_thickness\_nm} & 0.176 & 1.000\\
+\texttt{etl\_anneal\_temp\_C} & 0.053 & 1.000\\
+\texttt{etl\_thickness\_nm} & 0.101 & 1.000\\
+\texttt{has\_BCP} & 0.362 & 1.000\\
+\texttt{has\_C60} & 0.362 & 1.000\\
+\texttt{has\_LiF} & 0.362 & 1.000\\
+\texttt{has\_NiOx} & 0.362 & 1.000\\
+\texttt{has\_PCBM} & 0.362 & 1.000\\
+\texttt{has\_PEAI} & 0.362 & 1.000\\
+\texttt{has\_PEDOT} & 0.362 & 1.000\\
+\texttt{has\_PTAA} & 0.362 & 1.000\\
+\texttt{has\_SAM} & 0.362 & 1.000\\
+\texttt{has\_SnO2} & 0.362 & 1.000\\
+\texttt{has\_Spiro} & 0.362 & 1.000\\
+\texttt{has\_TiO2} & 0.362 & 1.000\\
+\texttt{has\_ZnO} & 0.362 & 1.000\\
+\texttt{has\_fullerene} & 0.362 & 1.000\\
+\texttt{has\_passivation\_layer} & 0.362 & 1.000\\
+\texttt{has\_stability\_measurement} & 0.362 & 1.000\\
+\texttt{htl\_anneal\_temp\_C} & 0.037 & 1.000\\
+\texttt{htl\_thickness\_nm} & 0.081 & 1.000\\
+\texttt{is\_encapsulated} & 0.362 & 1.000\\
+\texttt{is\_flexible\_y} & 0.362 & 1.000\\
+\texttt{json\_numeric\_values\_found} & 0.362 & 1.000\\
+\texttt{perov\_anneal\_temp\_C} & 0.070 & 1.000\\
+\texttt{perov\_anneal\_time\_min} & 0.063 & 1.000\\
+\texttt{perov\_concentration} & 0.051 & 1.000\\
+\texttt{perovskite\_thickness\_nm} & 0.122 & 1.000\\
+\texttt{spin\_speed\_rpm} & 0.100 & 1.000\\
+\texttt{used\_antisolvent} & 0.362 & 1.000\\
+\texttt{used\_glovebox} & 0.362 & 1.000\\
+\texttt{used\_vacuum\_evaporation} & 0.362 & 1.000\\
+\bottomrule\end{tabular}\par\smallskip Coverage values below the median belong to sparsely reported process parameters; all other columns are non-missing exactly for the 14,896 records of publications with an extraction record.
+\section*{Extraction system prompt (verbatim from the recovered script)}\begin{verbatim}You are a materials-science data-extraction assistant.
+
+Given a Markdown document converted from a published paper, extract every
+material reported with its measured or computed properties.
+
+Return ONLY a single JSON object (no markdown fences, no commentary) with this
+top-level schema:
+
+{
+  "source": "DOI: <doi-from-paper>",
+  "materials": [
+    {
+      "formula": "<chemical formula>",
+      "common_name": "<human-readable name>",
+      "type": "<e.g. perovskite, ETL, HTL, metal contact>",
+      ... <all properties you can find: band_gap, PV_performance, deposition_method, etc.>
+    }
+  ]
+}
+
+Rules:
+- Always include units and measurement method when available.
+- Include error bars / standard deviations if reported.
+- For PV performance, separate champion vs average and HTM-free vs with-HTM.
+- If the DOI is embedded in the document, use it for the "source" field.
+- Do NOT invent data. Only extract what is explicitly stated.
+- Return raw JSON only – no surrounding text, no code fences.
+\end{verbatim}
+\section*{Model-development grid}CatBoost depth/L2 pairs: (6,3), (8,3), (10,3), (8,10), (10,10), (8,1); learning rate 0.05; up to 3,000 iterations; early stopping 150 rounds on the validation set; three seeds (42, 7, 123) for the selected configuration; XGBoost: depth 8, learning rate 0.05, 1,500 trees, subsample 0.8, colsample 0.7, $\lambda=3$, early stopping 100 rounds.
+\end{document}

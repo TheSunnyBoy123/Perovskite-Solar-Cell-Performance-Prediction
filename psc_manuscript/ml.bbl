@@ -1,0 +1,168 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{jung2015perovskite}
+H.~S. Jung, N.-G. Park, Perovskite solar cells: From materials to devices,
+  Small 11~(1) (2015) 10--25.
+\newblock \href {https://doi.org/10.1002/smll.201402767}
+  {\path{doi:10.1002/smll.201402767}}.
+
+\bibitem{zuo2016advances}
+C.~Zuo, H.~J. Bolink, H.~Han, J.~Huang, D.~Cahen, L.~Ding, Advances in
+  perovskite solar cells, Advanced Science 3~(7) (2016) 1500324.
+\newblock \href {https://doi.org/10.1002/advs.201500324}
+  {\path{doi:10.1002/advs.201500324}}.
+
+\bibitem{odabasi2019performance}
+{\c{C}}.~Odabasi, R.~Y{\i}ld{\i}r{\i}m, Performance analysis of perovskite
+  solar cells in 2013--2018 using machine-learning tools, Nano Energy 56 (2019)
+  770--791.
+\newblock \href {https://doi.org/10.1016/j.nanoen.2018.11.069}
+  {\path{doi:10.1016/j.nanoen.2018.11.069}}.
+
+\bibitem{bansal2023machine}
+N.~K. Bansal, S.~Mishra, H.~Dixit, S.~Porwal, P.~Singh, T.~Singh, Machine
+  learning in perovskite solar cells: Recent developments and future
+  perspectives, Energy Technology 11~(12) (2023) 2300735.
+\newblock \href {https://doi.org/10.1002/ente.202300735}
+  {\path{doi:10.1002/ente.202300735}}.
+
+\bibitem{li2019predictions}
+J.~Li, B.~Pradhan, S.~Gaur, J.~Thomas, Predictions and strategies learned from
+  machine learning to develop high-performing perovskite solar cells, Advanced
+  Energy Materials 9~(46) (2019) 1901891.
+\newblock \href {https://doi.org/10.1002/aenm.201901891}
+  {\path{doi:10.1002/aenm.201901891}}.
+
+\bibitem{liu2022machine}
+Y.~Liu, W.~Yan, S.~Han, H.~Zhu, Y.~Tu, L.~Guan, X.~Tan, How machine learning
+  predicts and explains the performance of perovskite solar cells, Solar RRL
+  6~(6) (2022) 2101100.
+\newblock \href {https://doi.org/10.1002/solr.202101100}
+  {\path{doi:10.1002/solr.202101100}}.
+
+\bibitem{gok2022predicting}
+E.~C. Gok, M.~O. Yildirim, M.~P.~U. Haris, E.~Eren, M.~Pegu, N.~H. Hemasiri,
+  P.~Huang, S.~Kazim, A.~Uygun~Oksuz, S.~Ahmad, Predicting perovskite bandgap
+  and solar cell performance with machine learning, Solar RRL 6~(2) (2022)
+  2100927.
+\newblock \href {https://doi.org/10.1002/solr.202100927}
+  {\path{doi:10.1002/solr.202100927}}.
+
+\bibitem{jacobsson2022open}
+T.~J. Jacobsson, A.~Hultqvist, A.~Garc{\'i}a-Fern{\'a}ndez, A.~Anand,
+  A.~Al-Ashouri, A.~Hagfeldt, A.~Crovetto, A.~Abate, A.~G. Ricciardulli,
+  V.~Vijayan, A.~Kulkarni, A.~Y. Anderson, B.~P. Darwich, B.~Yang, B.~L. Coles,
+  An open-access database and analysis tool for perovskite solar cells based on
+  the fair data principles, Nature Energy 7 (2022) 107--115.
+\newblock \href {https://doi.org/10.1038/s41560-021-00941-3}
+  {\path{doi:10.1038/s41560-021-00941-3}}.
+
+\bibitem{roberts2024machine}
+N.~Roberts, D.~Jones, A.~Schuy, S.-C. Hsu, L.~Y. Lin, Machine learning for
+  perovskite solar cells: An open-source pipeline, Advanced Physics Research
+  3~(11) (2024) 2400060.
+\newblock \href {https://doi.org/10.1002/apxr.202400060}
+  {\path{doi:10.1002/apxr.202400060}}.
+
+\bibitem{sala2023assessing}
+S.~Sala, E.~Quadrivi, P.~Biagini, R.~Po', Assessing performance and limitations
+  of a device-level machine learning approach for perovskite solar cells with
+  an application to hole transport materials, Solar RRL 7~(20) (2023) 2300490.
+\newblock \href {https://doi.org/10.1002/solr.202300490}
+  {\path{doi:10.1002/solr.202300490}}.
+
+\bibitem{fukasawa2024effectiveness}
+R.~Fukasawa, T.~Asahi, T.~Taniguchi, Effectiveness and limitation of the
+  performance prediction of perovskite solar cells by process informatics,
+  Energy Advances 3 (2024) 812--820.
+\newblock \href {https://doi.org/10.1039/D3YA00617D}
+  {\path{doi:10.1039/D3YA00617D}}.
+
+\bibitem{meredig2018cluster}
+B.~Meredig, E.~Antono, C.~Church, M.~Hutchinson, J.~Ling, S.~Paradiso,
+  B.~Blaiszik, I.~Foster, B.~Gibbons, J.~Hattrick-Simpers, A.~Mehta, L.~Ward,
+  Can machine learning identify the next high-temperature superconductor?
+  examining extrapolation performance for materials discovery, Molecular
+  Systems Design \& Engineering 3 (2018) 819--825.
+\newblock \href {https://doi.org/10.1039/C8ME00012C}
+  {\path{doi:10.1039/C8ME00012C}}.
+
+\bibitem{kapoor2023leakage}
+S.~Kapoor, A.~Narayanan, Leakage and the reproducibility crisis in
+  machine-learning-based science, Patterns 4~(9) (2023) 100804.
+\newblock \href {https://doi.org/10.1016/j.patter.2023.100804}
+  {\path{doi:10.1016/j.patter.2023.100804}}.
+
+\bibitem{hussain2023leveraging}
+W.~Hussain, S.~Sawar, M.~Sultan, Leveraging machine learning to consolidate the
+  diversity in experimental results of perovskite solar cells, RSC Advances 13
+  (2023) 22529--22537.
+\newblock \href {https://doi.org/10.1039/d3ra02305b}
+  {\path{doi:10.1039/d3ra02305b}}.
+
+\bibitem{stanev2018superconductor}
+V.~Stanev, C.~Oses, A.~G. Kusne, E.~Rodriguez, J.~Paglione, S.~Curtarolo,
+  I.~Takeuchi, Machine learning modeling of superconducting critical
+  temperature, npj Computational Materials 4 (2018) 29.
+\newblock \href {https://doi.org/10.1038/s41524-018-0085-8}
+  {\path{doi:10.1038/s41524-018-0085-8}}.
+
+\bibitem{kauwe2020extraordinary}
+S.~K. Kauwe, J.~Graser, R.~Murdock, T.~D. Sparks, Can machine learning find
+  extraordinary materials?, Computational Materials Science 174 (2020) 109498.
+\newblock \href {https://doi.org/10.1016/j.commatsci.2019.109498}
+  {\path{doi:10.1016/j.commatsci.2019.109498}}.
+
+\bibitem{xiong2020forward}
+Z.~Xiong, Y.~Cui, Z.~Liu, Y.~Zhao, M.~Hu, J.~Hu, Evaluating explorative
+  prediction power of machine learning algorithms for materials discovery using
+  k-fold forward cross-validation, Computational Materials Science 171 (2020)
+  109203.
+\newblock \href {https://doi.org/10.1016/j.commatsci.2019.109203}
+  {\path{doi:10.1016/j.commatsci.2019.109203}}.
+
+\bibitem{sheridan2013timesplit}
+R.~P. Sheridan, Time-split cross-validation as a method for estimating the
+  goodness of prospective prediction, Journal of Chemical Information and
+  Modeling 53 (2013) 783--790.
+\newblock \href {https://doi.org/10.1021/ci400084k}
+  {\path{doi:10.1021/ci400084k}}.
+
+\bibitem{roberts2017crossvalidation}
+D.~R. Roberts, V.~Bahn, S.~Ciuti, M.~S. Boyce, J.~Elith, G.~Guillera-Arroita,
+  S.~Hauenstein, J.~J. Lahoz-Monfort, B.~Schr{\"o}der, W.~Thuiller, D.~I.
+  Warton, B.~A. Wintle, F.~Hartig, C.~F. Dormann, Cross-validation strategies
+  for data with temporal, spatial, hierarchical, or phylogenetic structure,
+  Ecography 40 (2017) 913--929.
+\newblock \href {https://doi.org/10.1111/ecog.02881}
+  {\path{doi:10.1111/ecog.02881}}.
+
+\bibitem{opendataloaderpdf}
+{OpenDataLoader Project}, {OpenDataLoader PDF},
+  \url{https://github.com/opendataloader-project/opendataloader-pdf},
+  open-source software repository, accessed October 2026.
+
+\bibitem{jain2013materialsproject}
+A.~Jain, S.~P. Ong, G.~Hautier, W.~Chen, W.~D. Richards, S.~Dacek, S.~Cholia,
+  D.~Gunter, D.~Skinner, G.~Ceder, K.~A. Persson, Commentary: The {Materials
+  Project}: A materials genome approach to accelerating materials innovation,
+  APL Materials 1~(1) (2013) 011002.
+\newblock \href {https://doi.org/10.1063/1.4812323}
+  {\path{doi:10.1063/1.4812323}}.
+
+\bibitem{prokhorenkova2018catboost}
+L.~Prokhorenkova, G.~Gusev, A.~Vorobev, A.~V. Dorogush, A.~Gulin, {CatBoost}:
+  unbiased boosting with categorical features, in: Advances in Neural
+  Information Processing Systems, Vol.~31, 2018.
+
+\bibitem{shappaper}
+S.~M. Lundberg, S.-I. Lee, A unified approach to interpreting model
+  predictions, in: Advances in Neural Information Processing Systems, Vol.~30,
+  2017.
+
+\end{thebibliography}

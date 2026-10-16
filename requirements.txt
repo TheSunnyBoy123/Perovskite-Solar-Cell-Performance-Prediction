@@ -1,0 +1,12 @@
+numpy
+pandas
+scikit-learn
+catboost
+xgboost
+torch
+shap
+matplotlib
+scipy
+requests
+pytest
+pymupdf   # only for scripts/build_workflow_figure.py

@@ -1,0 +1,21 @@
+{
+ "name": "lx_stack_dev_s43",
+ "data": "data/dataset_json_enriched.csv",
+ "arch": "overall",
+ "protocol": "kfold",
+ "n_splits": 5,
+ "test_size": 0.2,
+ "val_size": 0.15,
+ "seed": 43,
+ "subset": "lx_covered",
+ "partition": "dev",
+ "blocks": [
+  "chem",
+  "x"
+ ],
+ "control_seeds": [
+  0,
+  1,
+  2
+ ]
+}

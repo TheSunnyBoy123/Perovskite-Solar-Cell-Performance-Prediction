@@ -1,0 +1,2 @@
+{"name": "model_dev_v1", "archs": ["overall", "pin", "nip"], "tiers": ["t1", "t2", "t3"],
+ "n_splits": 5, "test_size": 0.2, "val_size": 0.15, "seed": 42}

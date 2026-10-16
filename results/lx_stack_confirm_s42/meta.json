@@ -1,0 +1,22 @@
+{
+ "config": {
+  "name": "lx_stack_confirm_s42",
+  "data": "data/dataset_json_enriched.csv",
+  "arch": "overall",
+  "protocol": "kfold",
+  "n_splits": 5,
+  "test_size": 0.2,
+  "val_size": 0.15,
+  "seed": 42,
+  "subset": "lx_covered",
+  "partition": "confirm",
+  "blocks": [
+   "x"
+  ],
+  "control_seeds": [
+   0,
+   1,
+   2
+  ]
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "name": "identity_kfold_s42",
+ "data": "data/dataset_json_enriched.csv",
+ "archs": [
+  "overall"
+ ],
+ "protocols": [
+  "kfold"
+ ],
+ "tiers": [
+  "t1",
+  "t1_id",
+  "t2",
+  "t2_id"
+ ],
+ "models": [
+  "catboost"
+ ],
+ "n_splits": 5,
+ "test_size": 0.2,
+ "val_size": 0.15,
+ "seed": 42,
+ "catboost": {}
+}

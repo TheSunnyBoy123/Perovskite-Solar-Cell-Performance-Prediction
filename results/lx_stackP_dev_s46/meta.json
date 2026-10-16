@@ -1,0 +1,26 @@
+{
+ "config": {
+  "name": "lx_stackP_dev_s46",
+  "data": "data/dataset_json_enriched.csv",
+  "arch": "overall",
+  "protocol": "kfold",
+  "n_splits": 5,
+  "test_size": 0.2,
+  "val_size": 0.15,
+  "seed": 46,
+  "subset": "lx_covered",
+  "partition": "dev",
+  "blocks": [
+   "x"
+  ],
+  "control_seeds": [
+   0,
+   1,
+   2
+  ],
+  "stage2_mode": "paper",
+  "stage2": {
+   "iterations": 600
+  }
+ }
+}

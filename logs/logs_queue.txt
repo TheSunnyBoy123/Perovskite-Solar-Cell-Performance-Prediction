@@ -1,0 +1,135 @@
+[overall] n=41107 n_doi_groups=7327
+doi    overall t1_lit catboost s1 R2=0.3771 MAE=3.055 nf=121 [9.2s]
+doi    overall t1_lit catboost s2 R2=0.3336 MAE=3.070 nf=121 [15.4s]
+doi    overall t1_lit catboost s3 R2=0.3610 MAE=3.140 nf=121 [7.5s]
+doi    overall t1_lit catboost s4 R2=0.3963 MAE=3.037 nf=121 [14.1s]
+doi    overall t1_lit catboost s5 R2=0.3939 MAE=2.996 nf=121 [18.5s]
+doi    overall t3_nometa catboost s1 R2=0.4081 MAE=2.963 nf=219 [10.8s]
+doi    overall t3_nometa catboost s2 R2=0.3767 MAE=2.960 nf=219 [16.6s]
+doi    overall t3_nometa catboost s3 R2=0.3794 MAE=3.069 nf=219 [9.3s]
+doi    overall t3_nometa catboost s4 R2=0.4373 MAE=2.906 nf=219 [12.4s]
+doi    overall t3_nometa catboost s5 R2=0.4318 MAE=2.869 nf=219 [22.5s]
+doi    overall t2_noise catboost s1 R2=0.4097 MAE=2.962 nf=211 [11.8s]
+doi    overall t2_noise catboost s2 R2=0.3717 MAE=2.983 nf=211 [8.9s]
+doi    overall t2_noise catboost s3 R2=0.3761 MAE=3.074 nf=211 [10.2s]
+doi    overall t2_noise catboost s4 R2=0.4378 MAE=2.918 nf=211 [10.4s]
+doi    overall t2_noise catboost s5 R2=0.4229 MAE=2.912 nf=211 [9.8s]
+[pin] n=12684 n_doi_groups=2251
+doi    pin     t1_lit catboost s1 R2=0.3173 MAE=3.078 nf=121 [5.2s]
+doi    pin     t1_lit catboost s2 R2=0.1501 MAE=3.186 nf=123 [3.5s]
+doi    pin     t1_lit catboost s3 R2=0.2953 MAE=3.099 nf=123 [3.0s]
+doi    pin     t1_lit catboost s4 R2=0.2043 MAE=3.212 nf=123 [5.3s]
+doi    pin     t1_lit catboost s5 R2=0.2877 MAE=3.175 nf=121 [6.2s]
+doi    pin     t3_nometa catboost s1 R2=0.3522 MAE=2.998 nf=219 [3.1s]
+doi    pin     t3_nometa catboost s2 R2=0.1877 MAE=3.103 nf=221 [7.3s]
+doi    pin     t3_nometa catboost s3 R2=0.3428 MAE=2.990 nf=221 [4.3s]
+doi    pin     t3_nometa catboost s4 R2=0.2553 MAE=3.126 nf=221 [4.2s]
+doi    pin     t3_nometa catboost s5 R2=0.3234 MAE=3.045 nf=219 [9.4s]
+doi    pin     t2_noise catboost s1 R2=0.3570 MAE=2.995 nf=211 [4.7s]
+doi    pin     t2_noise catboost s2 R2=0.1834 MAE=3.142 nf=211 [7.6s]
+doi    pin     t2_noise catboost s3 R2=0.3373 MAE=3.013 nf=211 [4.2s]
+doi    pin     t2_noise catboost s4 R2=0.2476 MAE=3.110 nf=211 [6.8s]
+doi    pin     t2_noise catboost s5 R2=0.3164 MAE=3.073 nf=211 [7.7s]
+[nip] n=28340 n_doi_groups=5182
+doi    nip     t1_lit catboost s1 R2=0.3550 MAE=3.086 nf=121 [6.4s]
+doi    nip     t1_lit catboost s2 R2=0.3847 MAE=3.056 nf=121 [9.1s]
+doi    nip     t1_lit catboost s3 R2=0.3842 MAE=3.050 nf=119 [9.0s]
+doi    nip     t1_lit catboost s4 R2=0.3917 MAE=2.988 nf=121 [5.1s]
+doi    nip     t1_lit catboost s5 R2=0.3748 MAE=3.073 nf=119 [4.0s]
+doi    nip     t3_nometa catboost s1 R2=0.3969 MAE=2.945 nf=219 [9.0s]
+doi    nip     t3_nometa catboost s2 R2=0.4274 MAE=2.937 nf=219 [9.1s]
+doi    nip     t3_nometa catboost s3 R2=0.4057 MAE=2.986 nf=217 [14.4s]
+doi    nip     t3_nometa catboost s4 R2=0.4062 MAE=2.945 nf=219 [11.1s]
+doi    nip     t3_nometa catboost s5 R2=0.3980 MAE=2.987 nf=217 [9.6s]
+doi    nip     t2_noise catboost s1 R2=0.3992 MAE=2.950 nf=211 [10.5s]
+doi    nip     t2_noise catboost s2 R2=0.4172 MAE=2.964 nf=211 [11.8s]
+doi    nip     t2_noise catboost s3 R2=0.4003 MAE=3.005 nf=209 [12.7s]
+doi    nip     t2_noise catboost s4 R2=0.4033 MAE=2.962 nf=211 [8.7s]
+doi    nip     t2_noise catboost s5 R2=0.3920 MAE=2.999 nf=209 [8.9s]
+[overall] n=41107 n_doi_groups=7327
+doi    overall t1 xgb_default s1 R2=0.3635 MAE=3.086 nf=77 [0.8s]
+doi    overall t1 rf       s1 R2=0.3097 MAE=3.206 nf=77 [4.1s]
+doi    overall t1 mlp      s1 R2=0.3500 MAE=3.179 nf=77 [7.2s]
+doi    overall t1 gpr_sub  s1 R2=0.3570 MAE=3.145 nf=77 [27.5s]
+doi    overall t1 xgb_default s2 R2=0.2810 MAE=3.208 nf=77 [0.4s]
+doi    overall t1 rf       s2 R2=0.2704 MAE=3.212 nf=77 [4.4s]
+doi    overall t1 mlp      s2 R2=0.3139 MAE=3.144 nf=77 [7.2s]
+doi    overall t1 gpr_sub  s2 R2=0.2973 MAE=3.215 nf=77 [34.9s]
+doi    overall t1 xgb_default s3 R2=0.3359 MAE=3.184 nf=77 [0.4s]
+doi    overall t1 rf       s3 R2=0.2959 MAE=3.260 nf=77 [4.3s]
+doi    overall t1 mlp      s3 R2=0.3411 MAE=3.164 nf=77 [8.8s]
+doi    overall t1 gpr_sub  s3 R2=0.3158 MAE=3.249 nf=77 [28.4s]
+doi    overall t1 xgb_default s4 R2=0.3449 MAE=3.159 nf=77 [0.4s]
+doi    overall t1 rf       s4 R2=0.2861 MAE=3.256 nf=77 [4.5s]
+doi    overall t1 mlp      s4 R2=0.3690 MAE=3.129 nf=77 [7.2s]
+doi    overall t1 gpr_sub  s4 R2=0.3435 MAE=3.201 nf=77 [33.2s]
+doi    overall t1 xgb_default s5 R2=0.3458 MAE=3.102 nf=77 [0.6s]
+doi    overall t1 rf       s5 R2=0.3143 MAE=3.159 nf=77 [5.0s]
+doi    overall t1 mlp      s5 R2=0.3386 MAE=3.107 nf=77 [19.7s]
+doi    overall t1 gpr_sub  s5 R2=0.3357 MAE=3.177 nf=77 [32.5s]
+doi    overall t3 xgb_default s1 R2=0.3895 MAE=2.995 nf=223 [0.7s]
+doi    overall t3 rf       s1 R2=0.3478 MAE=3.081 nf=223 [14.4s]
+doi    overall t3 mlp      s1 R2=0.3793 MAE=3.037 nf=223 [16.0s]
+doi    overall t3 gpr_sub  s1 R2=0.3734 MAE=3.076 nf=223 [35.7s]
+doi    overall t3 xgb_default s2 R2=0.3444 MAE=3.020 nf=223 [1.3s]
+doi    overall t3 rf       s2 R2=0.3289 MAE=3.091 nf=223 [15.7s]
+doi    overall t3 mlp      s2 R2=0.3539 MAE=3.056 nf=223 [9.7s]
+doi    overall t3 gpr_sub  s2 R2=0.3081 MAE=3.176 nf=223 [36.4s]
+doi    overall t3 xgb_default s3 R2=0.3584 MAE=3.106 nf=223 [0.9s]
+doi    overall t3 rf       s3 R2=0.3441 MAE=3.118 nf=223 [15.2s]
+doi    overall t3 mlp      s3 R2=0.3535 MAE=3.122 nf=223 [9.7s]
+doi    overall t3 gpr_sub  s3 R2=0.3367 MAE=3.192 nf=223 [33.7s]
+doi    overall t3 xgb_default s4 R2=0.4065 MAE=2.970 nf=223 [0.9s]
+doi    overall t3 rf       s4 R2=0.3531 MAE=3.087 nf=223 [16.3s]
+doi    overall t3 mlp      s4 R2=0.4059 MAE=2.992 nf=223 [10.9s]
+doi    overall t3 gpr_sub  s4 R2=0.3780 MAE=3.100 nf=223 [35.3s]
+doi    overall t3 xgb_default s5 R2=0.3865 MAE=2.965 nf=223 [0.7s]
+doi    overall t3 rf       s5 R2=0.3856 MAE=2.990 nf=223 [13.8s]
+doi    overall t3 mlp      s5 R2=0.3883 MAE=3.001 nf=223 [13.6s]
+doi    overall t3 gpr_sub  s5 R2=0.3642 MAE=3.103 nf=223 [39.2s]
+overall R2 split1 test: 0.4089
+                           feature  mean_abs_shap        group
+1  Perov_quenching_crystallisation       0.727344      process
+2                  total_ion_count       0.264567  composition
+3          Perovskite_pl_max_nm_na       0.228567       device
+4            HTL_deposition_method       0.211552      process
+5            Perov_anneal_time_min       0.201652      process
+6       Perovskite_avg_atomic_mass       0.197318     material
+7            Perovskite_avg_radius       0.192204     material
+8                     HTL_band_gap       0.185849     material
+pin R2 split1 test: 0.3592
+                           feature  mean_abs_shap        group
+1  Perov_quenching_crystallisation       0.524754      process
+2                     HTL_band_gap       0.505942     material
+3            ETL_deposition_method       0.409795      process
+4          Perovskite_thickness_nm       0.233637      process
+5                         HTL_LUMO       0.229155     material
+6                    b_Pb_fraction       0.168453  composition
+7      Backcontact_thickness_nm_na       0.144230      process
+8            HTL_deposition_method       0.142373      process
+nip R2 split1 test: 0.3939
+                           feature  mean_abs_shap     group
+1  Perov_quenching_crystallisation       1.001724   process
+2            HTL_deposition_method       0.302961   process
+3            Perovskite_avg_radius       0.284589  material
+4       Perovskite_avg_atomic_mass       0.219526  material
+5            ETL_deposition_method       0.201534   process
+6     Perovskite_deposition_method       0.195401   process
+7          Perovskite_pl_max_nm_na       0.158258    device
+8      Backcontact_thickness_nm_na       0.148771   process
+       arch        group  n_features  sum_mean_abs_shap   share
+0   overall  composition          47             0.9876  0.1470
+1   overall       device           9             0.5353  0.0797
+2   overall   literature          44             0.2709  0.0403
+3   overall     material         102             2.5321  0.3769
+4   overall      process          21             2.3927  0.3561
+5       pin  composition          47             0.8025  0.1470
+6       pin       device           9             0.3101  0.0568
+7       pin   literature          44             0.2102  0.0385
+8       pin     material         102             2.0782  0.3808
+9       pin      process          21             2.0563  0.3768
+10      nip  composition          47             0.8769  0.1347
+11      nip       device           9             0.4835  0.0743
+12      nip   literature          44             0.2332  0.0358
+13      nip     material         102             2.1610  0.3319
+14      nip      process          21             2.7556  0.4233

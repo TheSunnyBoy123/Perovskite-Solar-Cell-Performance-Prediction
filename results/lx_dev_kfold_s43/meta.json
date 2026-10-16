@@ -1,0 +1,46 @@
+{
+  "config": {
+    "name": "lx_dev_kfold_s43",
+    "data": "data/dataset_json_enriched.csv",
+    "archs": [
+      "overall"
+    ],
+    "protocols": [
+      "kfold"
+    ],
+    "tiers": [
+      "t2",
+      "t3",
+      "t3x",
+      "t3x_proc",
+      "t3x_chem",
+      "t3x_ctx",
+      "t3x_char",
+      "t3x_meta",
+      "t3b",
+      "t2_lxperm_s0",
+      "t2_lxperm_s1",
+      "t2_lxperm_s2",
+      "t2_lxnoise_s0",
+      "t2_lxnoise_s1",
+      "t2_lxnoise_s2"
+    ],
+    "models": [
+      "catboost"
+    ],
+    "n_splits": 5,
+    "test_size": 0.2,
+    "val_size": 0.15,
+    "seed": 43,
+    "subset": "lx_covered",
+    "partition": "dev",
+    "catboost": {}
+  },
+  "config_sha256": "91d766325abdf388847c8fd0ce1067e426f03800e1fe48f1a6e24dbf279c15cb",
+  "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+  "git_head": "9b1d2ca3e1c71d5b392533dc38efb6a4606b2e52",
+  "git_dirty": true,
+  "python": "3.13.5",
+  "catboost": "1.2.10",
+  "sklearn": "1.6.1"
+}

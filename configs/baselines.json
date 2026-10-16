@@ -1,0 +1,10 @@
+{
+  "name": "baselines_v1",
+  "data": "data/dataset_json_enriched.csv",
+  "archs": ["overall"],
+  "protocols": ["doi"],
+  "tiers": ["t1", "t3"],
+  "models": ["xgb_default", "rf", "mlp", "gpr_sub"],
+  "n_splits": 5, "test_size": 0.2, "val_size": 0.15, "seed": 42,
+  "catboost": {}
+}

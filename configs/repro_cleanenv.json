@@ -1,0 +1,28 @@
+{
+ "name": "repro_cleanenv",
+ "data": "data/dataset_json_enriched.csv",
+ "archs": [
+  "overall",
+  "pin",
+  "nip"
+ ],
+ "protocols": [
+  "doi",
+  "random"
+ ],
+ "tiers": [
+  "t1",
+  "t2",
+  "t3"
+ ],
+ "models": [
+  "mean",
+  "ridge",
+  "catboost"
+ ],
+ "n_splits": 5,
+ "test_size": 0.2,
+ "val_size": 0.15,
+ "seed": 42,
+ "catboost": {}
+}

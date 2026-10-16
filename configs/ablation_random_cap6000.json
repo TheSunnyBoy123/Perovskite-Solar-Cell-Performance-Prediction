@@ -1,0 +1,27 @@
+{
+ "name": "ablation_random_cap6000",
+ "data": "data/dataset_json_enriched.csv",
+ "archs": [
+  "overall",
+  "pin",
+  "nip"
+ ],
+ "protocols": [
+  "random"
+ ],
+ "tiers": [
+  "t1",
+  "t2",
+  "t3"
+ ],
+ "models": [
+  "catboost"
+ ],
+ "n_splits": 5,
+ "test_size": 0.2,
+ "val_size": 0.15,
+ "seed": 42,
+ "catboost": {
+  "iterations": 6000
+ }
+}

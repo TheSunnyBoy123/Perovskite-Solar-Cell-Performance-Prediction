@@ -1,0 +1,36 @@
+{
+  "config": {
+    "name": "ablation_random_cap6000",
+    "data": "data/dataset_json_enriched.csv",
+    "archs": [
+      "overall",
+      "pin",
+      "nip"
+    ],
+    "protocols": [
+      "random"
+    ],
+    "tiers": [
+      "t1",
+      "t2",
+      "t3"
+    ],
+    "models": [
+      "catboost"
+    ],
+    "n_splits": 5,
+    "test_size": 0.2,
+    "val_size": 0.15,
+    "seed": 42,
+    "catboost": {
+      "iterations": 6000
+    }
+  },
+  "config_sha256": "9c47402d0dfb360fd678437eb2b2b8b19eab67724eb702843bed2ade8d1387fc",
+  "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+  "git_head": "9b1d2ca3e1c71d5b392533dc38efb6a4606b2e52",
+  "git_dirty": true,
+  "python": "3.13.5",
+  "catboost": "1.2.10",
+  "sklearn": "1.6.1"
+}

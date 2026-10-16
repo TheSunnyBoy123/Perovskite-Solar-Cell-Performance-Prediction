@@ -1,0 +1,6 @@
+variant,arch,fold,n_train,n_test,n_doi_train,n_doi_test,doi_overlap,r2,mae,rmse,n_feats,elapsed_s,n_no_doi_train,n_no_doi_test
+no-na-flags,overall,1,32712,8395,5896,1475,0,0.3881,2.964,3.857,123,33.9,232,0
+no-na-flags,overall,2,32545,8562,5896,1475,0,0.407,2.976,3.828,123,57.0,232,0
+no-na-flags,overall,3,33108,7999,5896,1475,0,0.385,2.996,3.833,123,76.0,232,0
+no-na-flags,overall,4,32922,8185,5896,1475,0,0.4156,2.877,3.695,123,99.3,232,0
+no-na-flags,overall,5,32797,8310,5896,1475,0,0.3849,3.014,3.855,123,123.7,232,0

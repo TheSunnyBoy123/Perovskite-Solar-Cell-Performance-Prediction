@@ -1,0 +1,41 @@
+# OS / editor / caches
+.DS_Store
+__pycache__/
+*.pyc
+.pytest_cache/
+catboost_info/
+.ipynb_checkpoints/
+*.log
+!psc_manuscript/ml.log.keep
+
+# secrets
+.env
+.env.*
+*.key
+*credentials*
+*secret*
+
+# LaTeX build products (the final PDFs ml.pdf / si.pdf are tracked)
+psc_manuscript/.texbuild/
+psc_manuscript/*.aux
+psc_manuscript/*.blg
+psc_manuscript/*.out
+psc_manuscript/*.spl
+psc_manuscript/*.synctex.gz
+psc_manuscript/*.bak
+
+# raw / large research data (not versioned; see docs/ARTIFACT_CHECKSUMS.md)
+data/dataset_json_enriched.csv
+data/fulltext/
+data/pdfs/
+*.pdf.raw
+# model binaries (regenerate with scripts/v4_save_bundle.py)
+models/*.pkl
+legacy/models_original/
+
+# bulky intermediates (per-fold predictions / archives; summaries & jsonl are tracked)
+results/**/*.npz
+results/repro_cleanenv/
+results/v4/*.npy
+results_handoff.zip
+*.zip

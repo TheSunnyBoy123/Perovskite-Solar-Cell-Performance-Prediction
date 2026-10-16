@@ -1,0 +1,33 @@
+{
+  "config": {
+    "name": "identity_kfold_s42",
+    "data": "data/dataset_json_enriched.csv",
+    "archs": [
+      "overall"
+    ],
+    "protocols": [
+      "kfold"
+    ],
+    "tiers": [
+      "t1",
+      "t1_id",
+      "t2",
+      "t2_id"
+    ],
+    "models": [
+      "catboost"
+    ],
+    "n_splits": 5,
+    "test_size": 0.2,
+    "val_size": 0.15,
+    "seed": 42,
+    "catboost": {}
+  },
+  "config_sha256": "d1c9684f4d8b500b582d2f1395a4993ca5722cc1c9bfa7216364584e202f3ff5",
+  "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+  "git_head": "unknown",
+  "git_dirty": true,
+  "python": "3.13.7",
+  "catboost": "1.2.10",
+  "sklearn": "1.6.1"
+}

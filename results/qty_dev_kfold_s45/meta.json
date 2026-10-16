@@ -1,0 +1,43 @@
+{
+  "config": {
+    "name": "qty_dev_kfold_s45",
+    "data": "data/dataset_json_enriched.csv",
+    "archs": [
+      "overall"
+    ],
+    "protocols": [
+      "kfold"
+    ],
+    "tiers": [
+      "t1",
+      "t2",
+      "t3",
+      "t3qq",
+      "t3qq_cat",
+      "t3_qq",
+      "t2_lxsperm_s0",
+      "t2_lxsperm_s1",
+      "t2_lxsperm_s2",
+      "t2_lxsnoise_s0",
+      "t2_lxsnoise_s1",
+      "t2_lxsnoise_s2"
+    ],
+    "models": [
+      "catboost"
+    ],
+    "n_splits": 5,
+    "test_size": 0.2,
+    "val_size": 0.15,
+    "seed": 45,
+    "subset": "qty_covered",
+    "partition": "qdev",
+    "catboost": {}
+  },
+  "config_sha256": "92256d79b7f0db2416b855cf685d18d3b6b9c5e082728ad93a596a020c178d9b",
+  "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+  "git_head": "unknown",
+  "git_dirty": true,
+  "python": "3.13.7",
+  "catboost": "1.2.10",
+  "sklearn": "1.6.1"
+}

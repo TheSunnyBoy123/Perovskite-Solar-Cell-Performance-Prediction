@@ -1,0 +1,30 @@
+{
+ "name": "lx3_full_kfold_s44",
+ "data": "data/dataset_json_enriched.csv",
+ "archs": [
+  "overall"
+ ],
+ "protocols": [
+  "kfold"
+ ],
+ "tiers": [
+  "t1",
+  "t2",
+  "t3",
+  "t3x",
+  "t3q",
+  "t1_t3q",
+  "t2_lxqperm_s0",
+  "t2_lxqperm_s1",
+  "t2_lxqnoise_s0",
+  "t2_lxqnoise_s1"
+ ],
+ "models": [
+  "catboost"
+ ],
+ "n_splits": 5,
+ "test_size": 0.2,
+ "val_size": 0.15,
+ "seed": 44,
+ "catboost": {}
+}

@@ -1,0 +1,260 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage[many]{tcolorbox} % Added 'many' option for enhanced styles
+\usepackage{hyperref}
+
+% Color Definitions
+\definecolor{primary}{HTML}{1E3A8A}    % Deep Blue
+\definecolor{secondary}{HTML}{0F766E}  % Teal
+
+% --- EXPLICIT ENVIRONMENT DEFINITIONS ---
+\newtcolorbox{questionbox}[1][]{
+    enhanced,
+    colback=secondary!10,
+    colframe=secondary,
+    boxrule=1pt,
+    arc=4pt,
+    fonttitle=\large\bfseries,
+    title=Question,
+    left=10pt, right=10pt, top=8pt, bottom=8pt,
+    #1
+}
+
+\newtcolorbox{solutionbox}[1][]{
+    enhanced,
+    colback=white,
+    colframe=primary,
+    boxrule=1.5pt,
+    arc=6pt,
+    fonttitle=\large\bfseries,
+    title=Comprehensive Solution,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop fuzzy shadow,
+    #1
+}
+
+
+\begin{document}
+\begin{center}
+    {\Huge\bfseries\textcolor{primary}{MSE 421A: Iron \& Steel Making}\par}
+    \vspace{0.5cm}
+    {\Large\bfseries Complete Solutions Manual\par}
+    \vspace{0.5cm}
+    {\large PYQ End-Semester Examination (2021-2022: Spring)\par}
+    \vspace{1cm}
+\end{center}
+
+\section{PYQ End-Semester Examination (2021-2022)}
+
+% --- QUESTION 1 ---
+\subsection{Question 1: Fundamentals (True/False)}
+\begin{questionbox}
+State whether the following statements are True or False:
+\begin{enumerate}
+    \item[(a)] LD process of steelmaking is an autogenous process.
+    \item[(b)] Rhomboidity refers to the distortion of the mold in continuous casting.
+    \item[(c)] Reducibility of pellets is generally higher than that of lump ores.
+    \item[(d)] Residence time of liquid steel in the tundish is of the order of tens of seconds.
+    \item[(e)] Deoxidation of crude steel is carried out in the ladle during tapping.
+    \item[(f)] Calcium treatment of steel in the ladle does not play any role in improving the cleanliness of steel.
+    \item[(g)] The deoxidizing strength of aluminium is better than that of silicon at steelmaking temperatures.
+    \item[(h)] Injection of coal dust through the tuyeres increases the raceway adiabatic flame temperature (RAFT).
+    \item[(i)] Higher silicon content in blast furnace hot metal leads to a higher temperature during primary steelmaking.
+    \item[(j)] High top-pressure decreases the productivity of a blast furnace.
+    \item[(k)] External desiliconization of blast furnace hot metal is often carried out in the blast furnace runner.
+    \item[(l)] Decrease in the availability of metallurgical grade coal is a motivation behind the development of alternative ironmaking technologies.
+\end{enumerate}
+\end{questionbox}
+
+\begin{solutionbox}
+\begin{enumerate}
+    \item[(a)] \textbf{True.} The LD process relies entirely on the exothermic oxidation of impurities (C, Si, Mn) to heat the bath; no external fuel is needed.
+    \item[(b)] \textbf{True.} It refers to the geometric distortion of a square billet mold/cast shape into a rhombus due to uneven cooling.
+    \item[(c)] \textbf{True.} Pellets have uniformly distributed micro-porosity, allowing reducing gases to penetrate much faster than in dense lump ores.
+    \item[(d)] \textbf{False.} The residence time is typically on the order of minutes (e.g., 5-15 minutes) to allow inclusions to float out.
+    \item[(e)] \textbf{True.} Deoxidants are added during tapping to use the kinetic energy of the pour for excellent mixing.
+    \item[(f)] \textbf{False.} Calcium treatment modifies solid alumina inclusions into liquid calcium aluminates, which easily float out, drastically improving cleanliness.
+    \item[(g)] \textbf{True.} Al forms $Al_2O_3$, which is thermodynamically much more stable than $SiO_2$, driving dissolved oxygen to much lower levels.
+    \item[(h)] \textbf{False.} Coal dust cracking is highly endothermic, which absorbs heat and decreases the RAFT.
+    \item[(i)] \textbf{True.} Silicon oxidation is heavily exothermic; more Si provides more fuel for the LD process, raising the bath temperature.
+    \item[(j)] \textbf{False.} High top-pressure allows more blast volume without fluidizing the bed, thus increasing productivity.
+    \item[(k)] \textbf{True.} Iron oxide (mill scale) is often added to the hot metal runner to selectively oxidize silicon before it reaches the steelmaking vessel.
+    \item[(l)] \textbf{True.} Alternative processes like DRI/Corex are designed to use non-coking coal or natural gas specifically because good metallurgical coal is scarce.
+\end{enumerate}
+\end{solutionbox}
+
+% --- QUESTION 2 ---
+\subsection{Question 2: Short Justifications}
+\begin{questionbox}
+Answer in ONE or TWO words and justify in ONE sentence:
+\begin{enumerate}
+    \item[(a)] Along with oxygen, which gas is introduced through the tuyeres in Q-BOP?
+    \item[(b)] During which part of the blow in LD is there a chance of phosphorus reversion?
+    \item[(c)] What is the most dominant reaction mechanism in an LD process?
+    \item[(d)] During cored-wired injection, which element other than Al is commonly added?
+    \item[(e)] Other than oxygen, which gas is added during AOD?
+    \item[(f)] In a dry air blast BF, which gas other than CO is present exiting the raceway?
+    \item[(g)] Which material maintains permeability in the cohesive zone of a BF?
+\end{enumerate}
+\end{questionbox}
+
+\begin{solutionbox}
+\begin{enumerate}
+    \item[(a)] \textbf{Hydrocarbons (Natural Gas/Propane).} They undergo endothermic cracking at the tuyere tip to prevent the tuyere from melting due to the intense oxygen-iron reaction heat.
+    \item[(b)] \textbf{End-blow.} As the temperature peaks at the end of the blow, the exothermic dephosphorization reaction is thermodynamically reversed.
+    \item[(c)] \textbf{Emulsion.} The high-speed jet shears the slag and metal, creating a massive interfacial area of metal droplets in the slag for rapid kinetics.
+    \item[(d)] \textbf{Calcium (Ca).} It has a high vapor pressure and low solubility, so it must be injected deep into the bath via wire to prevent instant vaporization.
+    \item[(e)] \textbf{Argon.} It dilutes the CO gas produced, lowering its partial pressure, which thermodynamically allows Carbon to be oxidized before Chromium.
+    \item[(f)] \textbf{Nitrogen ($N_2$).} It enters with the air blast and passes through the raceway mostly unreacted as an inert sensible heat carrier.
+    \item[(g)] \textbf{Coke.} It is the only charge material that remains solid at cohesive zone temperatures, providing the "coke slits" for gas ascent.
+\end{enumerate}
+\end{solutionbox}
+
+% --- QUESTION 3 ---
+\subsection{Question 3: Thermodynamics of Carbon Dissolution}
+\begin{questionbox}
+(a) For $C(s) = \underline{C}_{(1 wt.\%)}$, $\Delta G^\circ = 22590 - 42.26T$ J/mol. Calculate $\gamma_C^\circ$ at infinite dilution in liquid Fe at 1873K with respect to pure solid carbon. \\
+(b) Using $C(s) + CO_2(g) = 2CO(g)$ ($\Delta G^\circ = 170700 - 174.46T$), calculate $p_{CO}/(p_{CO}+p_{CO_2})$ in equilibrium with 1.0 wt.\% C in liquid iron at 1873K (Total P = 1 atm). \\
+(c) Show that using the standard state reaction $\underline{C} + CO_2 = 2CO$ yields the same result.
+\end{questionbox}
+
+\begin{solutionbox}
+\textbf{(a) Activity Coefficient ($\gamma_C^\circ$):} \\
+At 1873K, $\Delta G^\circ_{diss} = 22590 - 42.26(1873) = -56563$ J/mol.
+The standard free energy of dissolution relates to the Henrian activity coefficient by $\Delta G^\circ_{diss} = RT \ln \gamma_C^\circ$.
+$\ln \gamma_C^\circ = \frac{-56563}{8.314 \times 1873} = -3.633 \implies \gamma_C^\circ = \exp(-3.633) = \mathbf{0.0264}$.
+
+\textbf{(b) Equilibrium Gas Ratio (Solid Standard State):} \\
+Boudouard Reaction: $C(s) + CO_2(g) \rightleftharpoons 2CO(g)$.
+At 1873K, $\Delta G^\circ = 170700 - 174.46(1873) = -156063$ J/mol.
+Equilibrium Constant $K = \exp\left(\frac{156063}{15564}\right) = 22590$.
+$K = \frac{p_{CO}^2}{a_C \cdot p_{CO_2}}$. Since the C is in solution, its activity relative to solid C is $a_C = \gamma_C^\circ [\%C] = 0.0264 \times 1.0 = 0.0264$.
+$\frac{p_{CO}^2}{p_{CO_2}} = K \cdot a_C = 22590 \times 0.0264 = 596.4$.
+Given $p_{CO} + p_{CO_2} = 1 \implies p_{CO_2} = 1 - p_{CO}$.
+$\frac{p_{CO}^2}{1 - p_{CO}} = 596.4 \implies p_{CO}^2 + 596.4 p_{CO} - 596.4 = 0$.
+Solving the quadratic equation: $p_{CO} \approx 0.9983$ atm. $p_{CO_2} \approx 0.0017$ atm.
+Ratio $\frac{p_{CO}}{1} = \mathbf{0.9983}$.
+
+\textbf{(c) Using 1 wt\% Standard State:} \\
+Reaction: $\underline{C} + CO_2(g) \rightleftharpoons 2CO(g)$.
+$\Delta G^\circ_{new} = \Delta G^\circ_{Boudouard} - \Delta G^\circ_{diss} = -156063 - (-56563) = -99500$ J/mol.
+$K_{new} = \exp\left(\frac{99500}{15564}\right) = 596.4$.
+$K_{new} = \frac{p_{CO}^2}{h_C \cdot p_{CO_2}}$. Since we are in the 1wt\% standard state, $h_C = [\%C] = 1.0$.
+$\frac{p_{CO}^2}{p_{CO_2}} = K_{new} \times 1.0 = 596.4$.
+This is the exact same mathematical equation as derived in part (b), thus yielding the identical ratio of $\mathbf{0.9983}$.
+\end{solutionbox}
+
+% --- QUESTION 5 ---
+\subsection{Question 5: Slag-Metal Equilibrium \& Charge Balance}
+\begin{questionbox}
+(a) $Fe(l) + \underline{O} = FeO(l)$ with $\log K = \frac{6150}{T} - 2.604$. Slag is 55\% CaO, 23\% $SiO_2$, 18\% FeO, 4\% $P_2O_5$. Calculate [wt\% O] at 1873K ($\gamma_{FeO} = 1.3$). \\
+(b) Calculate $L_P$ and equilibrium P contents using the empirical correlation. \\
+(c) Perform an LD mass balance for 100 tonnes of steel (0\% C, 0\% Si). Scrap is 10\% of HM weight. Calculate weights of HM, Scrap, Lime, and Slag.
+\end{questionbox}
+
+\begin{solutionbox}
+\textbf{(a) Oxygen Equilibrium:}
+At 1873K, $\log K = \frac{6150}{1873} - 2.604 = 3.283 - 2.604 = 0.679 \implies K = 4.775$.
+Slag moles per 100g: CaO = 0.982, $SiO_2$ = 0.383, FeO = 0.25, $P_2O_5$ = 0.028. Total = 1.643.
+$X_{FeO} = \frac{0.25}{1.643} = 0.152$.
+$a_{FeO} = \gamma_{FeO} \cdot X_{FeO} = 1.3 \times 0.152 = 0.198$.
+$K = \frac{a_{FeO}}{h_O} \implies [wt\% O] = h_O = \frac{0.198}{4.775} = \mathbf{0.0414\%}$.
+
+\textbf{(b) Phosphorus Partition:}
+$\log L_P = \frac{21740}{1873} - 9.87 + 0.071(55) + 2.5 \log(0.0414)$.
+$\log L_P = 11.607 - 9.87 + 3.905 - 3.456 = 2.186 \implies L_P = 153.5$.
+$wt\% P$ in slag = $4\% \times \frac{62}{142} = 1.746\%$.
+$[wt\% P]$ in metal = $\frac{1.746}{153.5} = \mathbf{0.0114\%}$.
+
+\textbf{(c) Mass Balance (100 tonnes Steel):}
+Let $W_{HM}$ = Hot Metal weight, $W_S$ = Scrap weight. Given $W_S = 0.1 W_{HM}$.
+Steel contains Fe, O, and P.
+$Fe_{steel} = 100,000 \text{ kg} \times (1 - 0.000414 - 0.000114) = 99,947 \text{ kg}$.
+Fe in HM = $W_{HM} \times (1 - 0.01 - 0.0017 - 0.0453) = 0.943 W_{HM}$.
+Fe in Scrap = $W_S \times (1 - 0.0005) = 0.9995 (0.1 W_{HM}) = 0.09995 W_{HM}$.
+Total Fe input = $0.943 W_{HM} + 0.09995 W_{HM} = 1.04295 W_{HM}$.
+Fe lost to slag = Slag Weight $\times 0.18 \times \frac{56}{72} = 0.14 W_{slag}$.
+$1.04295 W_{HM} - 0.14 W_{slag} = 99,947$. (Eq 1)
+
+Silicon Balance ($SiO_2$ in slag comes entirely from HM Si):
+Si in HM = $0.01 W_{HM}$. $SiO_2$ generated = $0.01 W_{HM} \times \frac{60}{28} = 0.0214 W_{HM}$.
+$W_{slag} = \frac{SiO_2}{0.23} = \frac{0.0214 W_{HM}}{0.23} = 0.093 W_{HM}$.
+Substitute $W_{slag}$ into Eq 1:
+$1.04295 W_{HM} - 0.14(0.093 W_{HM}) = 99,947 \implies 1.0299 W_{HM} = 99,947$.
+$W_{HM} = \mathbf{97,045 \text{ kg}}$.
+$W_S = 0.1 \times 97,045 = \mathbf{9,704 \text{ kg}}$.
+$W_{slag} = 0.093 \times 97,045 = \mathbf{9,025 \text{ kg}}$.
+Lime Weight (CaO) = $W_{slag} \times 0.55 = 9025 \times 0.55 = \mathbf{4,963 \text{ kg}}$.
+\end{solutionbox}
+
+% --- QUESTION 6 ---
+\subsection{Question 6: Decarburization Kinetics}
+\begin{questionbox}
+Stage-II LD decarb: bath drops from 4.0\% to 0.5\% C in 12 min in 160t converter.
+(a) Steady state rate in kg/s and mol/s.
+(b) Interfacial area A required if $r_c = k_m(C_{FeO}^b - C_{FeO}^i)$ with $k_m = 10^{-5}$ m/s.
+(c) Check against quiescent area for bath depth 1.6m.
+(d) Droplet emulsion mechanism: calculate \% of steel bath in emulsion (droplet dia = 2mm).
+\end{questionbox}
+\begin{solutionbox}
+\textbf{(a) Decarb Rate:}
+Mass removed = $160,000 \text{ kg} \times (0.040 - 0.005) = 5600 \text{ kg}$.
+Time = $12 \times 60 = 720$ s. Rate = $5600 / 720 = \mathbf{7.77 \text{ kg/s}}$.
+Molar rate = $7777.7 \text{ g/s} / 12 = \mathbf{648.15 \text{ mol/s}}$. \\
+\textbf{(b) Area Required:}
+$C_{FeO}^b = \frac{0.15 \times 3300}{0.072} = 6875 \text{ mol/m}^3$. $C_{FeO}^i \approx 0$.
+$r_c = 10^{-5} \times 6875 = 0.06875 \text{ mol}/(m^2\cdot s)$.
+$A = 648.15 / 0.06875 = \mathbf{9427.6 \text{ m}^2}$. \\
+\textbf{(c) Quiescent Area:}
+Volume = $160000 / 7200 = 22.22 \text{ m}^3$.
+Area = $22.22 / 1.6 = \mathbf{13.88 \text{ m}^2}$. This is nowhere near the required 9427 $m^2$. \\
+\textbf{(d) Emulsion Mechanism:}
+Droplet Volume $V_d = \frac{\pi}{6}(0.002)^3 = 4.18 \times 10^{-9} \text{ m}^3$.
+Droplet Area $A_d = \pi(0.002)^2 = 1.25 \times 10^{-5} \text{ m}^2$.
+Required droplets $N = \frac{9427.6}{1.25 \times 10^{-5}} = 7.54 \times 10^8$.
+Volume of steel in droplets = $N \times V_d = 3.15 \text{ m}^3$.
+$\%$ of bath = $(3.15 / 22.22) \times 100 = \mathbf{14.2\%}$.
+\end{solutionbox}
+
+% --- QUESTION 7 ---
+\subsection{Question 7: Complex Deoxidation}
+\begin{questionbox}
+100-tonne ladle at 1873K. Initial O = 600 ppm, final = 200 ppm. SiMn forms 1:1 molar $SiO_2$:MnO slag. Calculate slag weight and SiMn weight.
+\end{questionbox}
+\begin{solutionbox}
+$\Delta O = 600 - 200 = 400$ ppm.
+Mass O removed = $100,000 \times 400 \times 10^{-6} = 40 \text{ kg} = \frac{40}{16} = 2.5$ kmol O.
+Deox Reactions: $\underline{Si} + 2\underline{O} \to SiO_2$ and $\underline{Mn} + \underline{O} \to MnO$.
+For every 1 kmol of $SiO_2$ and $MnO$ formed, 3 kmols of O are consumed.
+Let $x$ be the kmols of $SiO_2$ (and $MnO$). $3x = 2.5 \implies x = 0.833$ kmol.
+Slag Weight = $(0.833 \times 60) + (0.833 \times 71) = 50 + 59.1 = \mathbf{109.1 \text{ kg}}$.
+SiMn Weight = $(0.833 \times 28) + (0.833 \times 55) = 23.3 + 45.8 = \mathbf{69.1 \text{ kg}}$.
+\end{solutionbox}
+
+% --- QUESTION 8 ---
+\subsection{Question 8: Plume Velocity and Heat Loss}
+\begin{questionbox}
+150-tonne ladle, L/R = 2:1. Ar = 40 $Nm^3/h$.
+(a) Dimensions and Cooling rate (Wall flux 5kW/$m^2$, Top 50kW/$m^2$).
+(b) Actual Q at mid depth and plume velocity $U_p = 4.4 Q^{1/3} L^{1/4} R^{-1/3}$.
+\end{questionbox}
+\begin{solutionbox}
+\textbf{(a) Dimensions \& Heat Loss:}
+$V = \frac{150000}{7200} = 20.83 \text{ m}^3$. $V = \pi R^2 (2R) = 2\pi R^3 \implies R = 1.49 \text{ m}$.
+Dia = $\mathbf{2.98 \text{ m}}$, Depth L = $\mathbf{2.98 \text{ m}}$.
+Wall Area = $2\pi R L = 27.9 \text{ m}^2$. Top Area = $\pi R^2 = 6.97 \text{ m}^2$.
+Heat Loss Rate = $(27.9 \times 5) + (6.97 \times 50) = 488 \text{ kW}$.
+Cooling Rate = $\frac{488000}{150000 \times 680} = 0.00478 \text{ K/s} = \mathbf{0.287 \text{ K/min}}$.
+
+\textbf{(b) Plume Velocity:}
+$Q_{NTP} = 40/3600 = 0.0111 \text{ m}^3/s$.
+$P_{mid} = 101325 + 7200(9.8)(1.49) = 206459 \text{ Pa} \approx 2.03 \text{ atm}$.
+Actual $Q = 0.0111 \times \frac{1873}{298} \times \frac{1}{2.03} = \mathbf{0.0343 \text{ m}^3/s}$.
+$U_p = 4.4(0.0343)^{1/3}(2.98)^{1/4}(1.49)^{-1/3} = \mathbf{1.64 \text{ m/s}}$.
+\end{solutionbox}
+
+\end{document}

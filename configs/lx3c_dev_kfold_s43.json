@@ -1,0 +1,30 @@
+{
+ "name": "lx3c_dev_kfold_s43",
+ "data": "data/dataset_json_enriched.csv",
+ "archs": [
+  "overall"
+ ],
+ "protocols": [
+  "kfold"
+ ],
+ "tiers": [
+  "t2",
+  "t3q_cat",
+  "t2_lxcperm_s0",
+  "t2_lxcperm_s1",
+  "t2_lxcperm_s2",
+  "t2_lxcnoise_s0",
+  "t2_lxcnoise_s1",
+  "t2_lxcnoise_s2"
+ ],
+ "models": [
+  "catboost"
+ ],
+ "n_splits": 5,
+ "test_size": 0.2,
+ "val_size": 0.15,
+ "seed": 43,
+ "subset": "lx_covered",
+ "partition": "dev",
+ "catboost": {}
+}

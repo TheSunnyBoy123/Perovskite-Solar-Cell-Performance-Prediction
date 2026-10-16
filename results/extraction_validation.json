@@ -1,0 +1,155 @@
+{
+ "n_dois_with_llm_features": 2699,
+ "numeric": {
+  "perovskite_thickness_nm": {
+   "n_dois": 507,
+   "spearman": 0.7851472219965161,
+   "within_10pct": 0.7830374753451677,
+   "within_25pct": 0.8678500986193294,
+   "median_rel_err": 0.0,
+   "records_both": 2848,
+   "exact_equal_where_both": 0.7264747191011236,
+   "llm_value_where_pdp_missing_frac_of_records": 0.052525993883792046
+  },
+  "etl_thickness_nm": {
+   "n_dois": 433,
+   "spearman": 0.6316132797102586,
+   "within_10pct": 0.5912240184757506,
+   "within_25pct": 0.651270207852194,
+   "median_rel_err": 0.0,
+   "records_both": 2273,
+   "exact_equal_where_both": 0.5895292564892213,
+   "llm_value_where_pdp_missing_frac_of_records": 0.045944954128440366
+  },
+  "htl_thickness_nm": {
+   "n_dois": 338,
+   "spearman": 0.8970504831049689,
+   "within_10pct": 0.7781065088757396,
+   "within_25pct": 0.8224852071005917,
+   "median_rel_err": 0.0,
+   "records_both": 1752,
+   "exact_equal_where_both": 0.7756849315068494,
+   "llm_value_where_pdp_missing_frac_of_records": 0.038409785932721714
+  },
+  "contact_thickness_nm": {
+   "n_dois": 1263,
+   "spearman": 0.6681416528234443,
+   "within_10pct": 0.8163103721298496,
+   "within_25pct": 0.8661916072842438,
+   "median_rel_err": 0.0,
+   "records_both": 6662,
+   "exact_equal_where_both": 0.8240768537976584,
+   "llm_value_where_pdp_missing_frac_of_records": 0.0141651376146789
+  },
+  "perov_anneal_temp_C": {
+   "n_dois": 455,
+   "spearman": 0.70783724767587,
+   "within_10pct": 0.8461538461538461,
+   "within_25pct": 0.8945054945054945,
+   "median_rel_err": 0.0,
+   "records_both": 2542,
+   "exact_equal_where_both": 0.7832415420928402,
+   "llm_value_where_pdp_missing_frac_of_records": 0.00817125382262997
+  },
+  "perov_anneal_time_min": {
+   "n_dois": 406,
+   "spearman": 0.44105455831911744,
+   "within_10pct": 0.7339901477832512,
+   "within_25pct": 0.7536945812807881,
+   "median_rel_err": 0.0,
+   "records_both": 2190,
+   "exact_equal_where_both": 0.7388127853881279,
+   "llm_value_where_pdp_missing_frac_of_records": 0.0094434250764526
+  }
+ },
+ "flags": {
+  "has_SnO2": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.09447943682845499,
+   "precision": 0.538860103626943,
+   "recall": 0.8156862745098039,
+   "accuracy": 0.9166357910337162,
+   "kappa": 0.6039163865877814
+  },
+  "has_TiO2": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.5602074842534271,
+   "precision": 0.9387755102040817,
+   "recall": 0.8214285714285714,
+   "accuracy": 0.8699518340125972,
+   "kappa": 0.7405172350039564
+  },
+  "has_ZnO": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.04779547980733605,
+   "precision": 0.5566037735849056,
+   "recall": 0.9147286821705426,
+   "accuracy": 0.9610967024824009,
+   "kappa": 0.6726266457039283
+  },
+  "has_C60": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.0640978140051871,
+   "precision": 0.49834983498349833,
+   "recall": 0.8728323699421965,
+   "accuracy": 0.9355316783994072,
+   "kappa": 0.6019734109905533
+  },
+  "has_PCBM": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.25268618006669136,
+   "precision": 0.7505112474437627,
+   "recall": 0.5381231671554252,
+   "accuracy": 0.8380881808077065,
+   "kappa": 0.5269912208901987
+  },
+  "has_BCP": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.001852537977028529,
+   "precision": 0.01818181818181818,
+   "recall": 1.0,
+   "accuracy": 0.8999629492404594,
+   "kappa": 0.03219251763018425
+  },
+  "has_LiF": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.0014820303816228233,
+   "precision": 0.05,
+   "recall": 0.5,
+   "accuracy": 0.9851796961837718,
+   "kappa": 0.08845283528657141
+  },
+  "has_Spiro": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.5513153019636903,
+   "precision": 0.9447513812154696,
+   "recall": 0.8044354838709677,
+   "accuracy": 0.8662467580585402,
+   "kappa": 0.7341614388267012
+  },
+  "has_PEDOT": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.19562801037421268,
+   "precision": 0.8146167557932263,
+   "recall": 0.865530303030303,
+   "accuracy": 0.9351611708040015,
+   "kappa": 0.7987361486623247
+  },
+  "has_NiOx": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.07224898110411264,
+   "precision": 0.8481675392670157,
+   "recall": 0.8307692307692308,
+   "accuracy": 0.9770285290848463,
+   "kappa": 0.8270093577746445
+  },
+  "has_PTAA": {
+   "n_dois": 2699,
+   "prevalence_pdp": 0.056317154501667285,
+   "precision": 0.8344370860927153,
+   "recall": 0.8289473684210527,
+   "accuracy": 0.981104112634309,
+   "kappa": 0.8216734702866845
+  }
+ }
+}

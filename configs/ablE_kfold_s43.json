@@ -1,0 +1,34 @@
+{
+ "name": "ablE_kfold_s43",
+ "data": "data/dataset_json_enriched.csv",
+ "archs": [
+  "overall",
+  "nip",
+  "pin"
+ ],
+ "protocols": [
+  "kfold"
+ ],
+ "tiers": [
+  "t2",
+  "t3",
+  "t3x",
+  "t3b",
+  "t3x_meta",
+  "t3x_char",
+  "t2_lxperm_s0",
+  "t2_lxperm_s1",
+  "t2_lxperm_s2",
+  "t2_lxnoise_s0",
+  "t2_lxnoise_s1",
+  "t2_lxnoise_s2"
+ ],
+ "models": [
+  "catboost"
+ ],
+ "n_splits": 5,
+ "test_size": 0.2,
+ "val_size": 0.15,
+ "seed": 43,
+ "catboost": {}
+}

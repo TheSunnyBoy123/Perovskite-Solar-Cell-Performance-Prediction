@@ -1,0 +1,225 @@
+s1 stack_base                   R2=0.2596 lam=0.0 s2it=0
+s1 stack_x                      R2=0.2685 lam=1.0 s2it=6
+s1 stack_x_perm_s0              R2=0.2675 lam=1.0 s2it=2
+s1 stack_x_perm_s1              R2=0.2669 lam=1.0 s2it=13
+s1 stack_x_perm_s2              R2=0.2674 lam=1.0 s2it=139
+s1 stack_x_noise_s0             R2=0.2711 lam=1.0 s2it=30
+s1 stack_x_noise_s1             R2=0.2622 lam=1.0 s2it=134
+s1 stack_x_noise_s2             R2=0.2663 lam=1.0 s2it=47
+fold 1 done 166s
+s2 stack_base                   R2=0.3786 lam=0.0 s2it=0
+s2 stack_x                      R2=0.3754 lam=1.0 s2it=0
+s2 stack_x_perm_s0              R2=0.3548 lam=1.0 s2it=336
+s2 stack_x_perm_s1              R2=0.3757 lam=1.0 s2it=0
+s2 stack_x_perm_s2              R2=0.3616 lam=1.0 s2it=143
+s2 stack_x_noise_s0             R2=0.3759 lam=1.0 s2it=26
+s2 stack_x_noise_s1             R2=0.3768 lam=1.0 s2it=17
+s2 stack_x_noise_s2             R2=0.3763 lam=1.0 s2it=1
+fold 2 done 15s
+s3 stack_base                   R2=0.2905 lam=0.0 s2it=0
+s3 stack_x                      R2=0.2946 lam=1.0 s2it=37
+s3 stack_x_perm_s0              R2=0.2952 lam=1.0 s2it=3
+s3 stack_x_perm_s1              R2=0.2954 lam=1.0 s2it=2
+s3 stack_x_perm_s2              R2=0.2958 lam=1.0 s2it=0
+s3 stack_x_noise_s0             R2=0.2879 lam=1.0 s2it=112
+s3 stack_x_noise_s1             R2=0.2955 lam=1.0 s2it=1
+s3 stack_x_noise_s2             R2=0.2973 lam=1.0 s2it=105
+fold 3 done 12s
+s4 stack_base                   R2=0.3436 lam=0.0 s2it=0
+s4 stack_x                      R2=0.3500 lam=1.0 s2it=151
+s4 stack_x_perm_s0              R2=0.3402 lam=1.0 s2it=80
+s4 stack_x_perm_s1              R2=0.3339 lam=1.0 s2it=277
+s4 stack_x_perm_s2              R2=0.3446 lam=1.0 s2it=70
+s4 stack_x_noise_s0             R2=0.3323 lam=1.0 s2it=136
+s4 stack_x_noise_s1             R2=0.3370 lam=1.0 s2it=49
+s4 stack_x_noise_s2             R2=0.3409 lam=1.0 s2it=48
+fold 4 done 7s
+s5 stack_base                   R2=0.2643 lam=0.0 s2it=0
+s5 stack_x                      R2=0.2603 lam=0.75 s2it=40
+s5 stack_x_perm_s0              R2=0.2614 lam=0.75 s2it=73
+s5 stack_x_perm_s1              R2=0.2649 lam=1.0 s2it=2
+s5 stack_x_perm_s2              R2=0.2655 lam=1.0 s2it=6
+s5 stack_x_noise_s0             R2=0.2575 lam=1.0 s2it=34
+s5 stack_x_noise_s1             R2=0.2635 lam=1.0 s2it=24
+s5 stack_x_noise_s2             R2=0.2369 lam=1.0 s2it=60
+fold 5 done 9s
+s1 stack_base                   R2=0.2476 lam=0.0 s2it=0
+s1 stack_x                      R2=0.2612 lam=1.0 s2it=105
+s1 stack_x_perm_s0              R2=0.2503 lam=1.0 s2it=0
+s1 stack_x_perm_s1              R2=0.2344 lam=1.0 s2it=173
+s1 stack_x_perm_s2              R2=0.2513 lam=1.0 s2it=16
+s1 stack_x_noise_s0             R2=0.2504 lam=1.0 s2it=3
+s1 stack_x_noise_s1             R2=0.2486 lam=1.0 s2it=7
+s1 stack_x_noise_s2             R2=0.2521 lam=1.0 s2it=17
+fold 1 done 7s
+s2 stack_base                   R2=0.3554 lam=0.0 s2it=0
+s2 stack_x                      R2=0.3559 lam=0.5 s2it=156
+s2 stack_x_perm_s0              R2=0.3554 lam=0 s2it=121
+s2 stack_x_perm_s1              R2=0.3554 lam=0 s2it=5
+s2 stack_x_perm_s2              R2=0.3619 lam=0.75 s2it=231
+s2 stack_x_noise_s0             R2=0.3446 lam=0.75 s2it=232
+s2 stack_x_noise_s1             R2=0.3554 lam=0 s2it=1
+s2 stack_x_noise_s2             R2=0.3608 lam=1.0 s2it=61
+fold 2 done 31s
+s3 stack_base                   R2=0.3396 lam=0.0 s2it=0
+s3 stack_x                      R2=0.3411 lam=1.0 s2it=0
+s3 stack_x_perm_s0              R2=0.3390 lam=1.0 s2it=41
+s3 stack_x_perm_s1              R2=0.3423 lam=1.0 s2it=1
+s3 stack_x_perm_s2              R2=0.3378 lam=1.0 s2it=52
+s3 stack_x_noise_s0             R2=0.3461 lam=1.0 s2it=36
+s3 stack_x_noise_s1             R2=0.3426 lam=1.0 s2it=2
+s3 stack_x_noise_s2             R2=0.3409 lam=1.0 s2it=0
+fold 3 done 236s
+s4 stack_base                   R2=0.3271 lam=0.0 s2it=0
+s4 stack_x                      R2=0.3234 lam=1.0 s2it=86
+s4 stack_x_perm_s0              R2=0.3271 lam=0 s2it=12
+s4 stack_x_perm_s1              R2=0.3271 lam=0 s2it=5
+s4 stack_x_perm_s2              R2=0.3285 lam=0.75 s2it=106
+s4 stack_x_noise_s0             R2=0.3341 lam=0.5 s2it=144
+s4 stack_x_noise_s1             R2=0.3271 lam=0 s2it=0
+s4 stack_x_noise_s2             R2=0.3183 lam=1.0 s2it=91
+fold 4 done 28s
+s5 stack_base                   R2=0.3473 lam=0.0 s2it=0
+s5 stack_x                      R2=0.3484 lam=0.5 s2it=8
+s5 stack_x_perm_s0              R2=0.3473 lam=0.5 s2it=15
+s5 stack_x_perm_s1              R2=0.3473 lam=0.5 s2it=0
+s5 stack_x_perm_s2              R2=0.3474 lam=0.5 s2it=0
+s5 stack_x_noise_s0             R2=0.3475 lam=0.5 s2it=0
+s5 stack_x_noise_s1             R2=0.3477 lam=1.0 s2it=31
+s5 stack_x_noise_s2             R2=0.3469 lam=0.75 s2it=19
+fold 5 done 109s
+s1 stack_base                   R2=0.3105 lam=0.0 s2it=0
+s1 stack_x                      R2=0.2976 lam=0.75 s2it=107
+s1 stack_x_perm_s0              R2=0.2966 lam=1.0 s2it=2
+s1 stack_x_perm_s1              R2=0.2946 lam=1.0 s2it=10
+s1 stack_x_perm_s2              R2=0.3003 lam=1.0 s2it=38
+s1 stack_x_noise_s0             R2=0.3023 lam=0.75 s2it=11
+s1 stack_x_noise_s1             R2=0.2842 lam=1.0 s2it=73
+s1 stack_x_noise_s2             R2=0.2934 lam=1.0 s2it=54
+fold 1 done 34s
+s2 stack_base                   R2=0.1468 lam=0.0 s2it=0
+s2 stack_x                      R2=0.1378 lam=1.0 s2it=282
+s2 stack_x_perm_s0              R2=0.1523 lam=0.5 s2it=0
+s2 stack_x_perm_s1              R2=0.1518 lam=0.5 s2it=0
+s2 stack_x_perm_s2              R2=0.1522 lam=0.5 s2it=1
+s2 stack_x_noise_s0             R2=0.1508 lam=0.5 s2it=4
+s2 stack_x_noise_s1             R2=0.1370 lam=1.0 s2it=204
+s2 stack_x_noise_s2             R2=0.1530 lam=0.75 s2it=6
+fold 2 done 1048s
+s3 stack_base                   R2=0.2514 lam=0.0 s2it=0
+s3 stack_x                      R2=0.2711 lam=1.0 s2it=96
+s3 stack_x_perm_s0              R2=0.2586 lam=1.0 s2it=97
+s3 stack_x_perm_s1              R2=0.2594 lam=1.0 s2it=73
+s3 stack_x_perm_s2              R2=0.2566 lam=1.0 s2it=175
+s3 stack_x_noise_s0             R2=0.2639 lam=1.0 s2it=0
+s3 stack_x_noise_s1             R2=0.2517 lam=1.0 s2it=201
+s3 stack_x_noise_s2             R2=0.2657 lam=1.0 s2it=39
+fold 3 done 6s
+s4 stack_base                   R2=0.3968 lam=0.0 s2it=0
+s4 stack_x                      R2=0.3979 lam=1.0 s2it=14
+s4 stack_x_perm_s0              R2=0.3975 lam=0.75 s2it=1
+s4 stack_x_perm_s1              R2=0.3949 lam=1.0 s2it=122
+s4 stack_x_perm_s2              R2=0.3971 lam=0.75 s2it=1
+s4 stack_x_noise_s0             R2=0.3961 lam=1.0 s2it=1
+s4 stack_x_noise_s1             R2=0.3975 lam=0.5 s2it=0
+s4 stack_x_noise_s2             R2=0.3963 lam=1.0 s2it=4
+fold 4 done 12s
+s5 stack_base                   R2=0.3600 lam=0.0 s2it=0
+s5 stack_x                      R2=0.3632 lam=0.5 s2it=0
+s5 stack_x_perm_s0              R2=0.3637 lam=0.75 s2it=7
+s5 stack_x_perm_s1              R2=0.3634 lam=0.5 s2it=0
+s5 stack_x_perm_s2              R2=0.3646 lam=0.75 s2it=0
+s5 stack_x_noise_s0             R2=0.3634 lam=0.5 s2it=1
+s5 stack_x_noise_s1             R2=0.3595 lam=1.0 s2it=25
+s5 stack_x_noise_s2             R2=0.3634 lam=0.5 s2it=0
+fold 5 done 133s
+s1 stack_base                   R2=0.3551 lam=0.0 s2it=0
+s1 stack_x                      R2=0.3662 lam=1.0 s2it=2
+s1 stack_x_perm_s0              R2=0.3656 lam=1.0 s2it=0
+s1 stack_x_perm_s1              R2=0.3653 lam=1.0 s2it=2
+s1 stack_x_perm_s2              R2=0.3664 lam=1.0 s2it=6
+s1 stack_x_noise_s0             R2=0.3664 lam=1.0 s2it=12
+s1 stack_x_noise_s1             R2=0.3655 lam=1.0 s2it=0
+s1 stack_x_noise_s2             R2=0.3656 lam=1.0 s2it=1
+fold 1 done 139s
+s2 stack_base                   R2=0.3798 lam=0.0 s2it=0
+s2 stack_x                      R2=0.3798 lam=0 s2it=50
+s2 stack_x_perm_s0              R2=0.3798 lam=0 s2it=10
+s2 stack_x_perm_s1              R2=0.3798 lam=0 s2it=5
+s2 stack_x_perm_s2              R2=0.3798 lam=0 s2it=0
+s2 stack_x_noise_s0             R2=0.3860 lam=0.5 s2it=65
+s2 stack_x_noise_s1             R2=0.3798 lam=0 s2it=18
+s2 stack_x_noise_s2             R2=0.3774 lam=0.75 s2it=81
+fold 2 done 19s
+s3 stack_base                   R2=0.2693 lam=0.0 s2it=0
+s3 stack_x                      R2=0.2691 lam=1.0 s2it=0
+s3 stack_x_perm_s0              R2=0.2693 lam=1.0 s2it=0
+s3 stack_x_perm_s1              R2=0.2698 lam=1.0 s2it=13
+s3 stack_x_perm_s2              R2=0.2691 lam=1.0 s2it=0
+s3 stack_x_noise_s0             R2=0.2689 lam=1.0 s2it=4
+s3 stack_x_noise_s1             R2=0.2608 lam=1.0 s2it=22
+s3 stack_x_noise_s2             R2=0.2685 lam=1.0 s2it=0
+fold 3 done 7s
+s4 stack_base                   R2=0.3046 lam=0.0 s2it=0
+s4 stack_x                      R2=0.2895 lam=1.0 s2it=378
+s4 stack_x_perm_s0              R2=0.3048 lam=0.5 s2it=10
+s4 stack_x_perm_s1              R2=0.3051 lam=0.25 s2it=0
+s4 stack_x_perm_s2              R2=0.2980 lam=0.5 s2it=55
+s4 stack_x_noise_s0             R2=0.2954 lam=1.0 s2it=113
+s4 stack_x_noise_s1             R2=0.3066 lam=0.5 s2it=86
+s4 stack_x_noise_s2             R2=0.3063 lam=1.0 s2it=119
+fold 4 done 62s
+s5 stack_base                   R2=0.3104 lam=0.0 s2it=0
+s5 stack_x                      R2=0.3104 lam=0.5 s2it=2
+s5 stack_x_perm_s0              R2=0.3025 lam=0.75 s2it=111
+s5 stack_x_perm_s1              R2=0.3106 lam=0.5 s2it=19
+s5 stack_x_perm_s2              R2=0.3105 lam=0.25 s2it=2
+s5 stack_x_noise_s0             R2=0.3104 lam=0.25 s2it=36
+s5 stack_x_noise_s1             R2=0.3074 lam=0.75 s2it=59
+s5 stack_x_noise_s2             R2=0.3078 lam=0.75 s2it=76
+fold 5 done 19s
+s1 stack_base                   R2=0.3271 lam=0.0 s2it=0
+s1 stack_x                      R2=0.3230 lam=1.0 s2it=0
+s1 stack_x_perm_s0              R2=0.3227 lam=1.0 s2it=0
+s1 stack_x_perm_s1              R2=0.3229 lam=1.0 s2it=0
+s1 stack_x_perm_s2              R2=0.3207 lam=1.0 s2it=2
+s1 stack_x_noise_s0             R2=0.3233 lam=1.0 s2it=1
+s1 stack_x_noise_s1             R2=0.3221 lam=1.0 s2it=1
+s1 stack_x_noise_s2             R2=0.3225 lam=1.0 s2it=50
+fold 1 done 6s
+s2 stack_base                   R2=0.3680 lam=0.0 s2it=0
+s2 stack_x                      R2=0.3708 lam=0.5 s2it=167
+s2 stack_x_perm_s0              R2=0.3680 lam=0 s2it=2
+s2 stack_x_perm_s1              R2=0.3680 lam=0 s2it=2
+s2 stack_x_perm_s2              R2=0.3680 lam=0 s2it=138
+s2 stack_x_noise_s0             R2=0.3680 lam=0 s2it=2
+s2 stack_x_noise_s1             R2=0.3693 lam=0.25 s2it=46
+s2 stack_x_noise_s2             R2=0.3596 lam=0.75 s2it=196
+fold 2 done 17s
+s3 stack_base                   R2=0.3328 lam=0.0 s2it=0
+s3 stack_x                      R2=0.3348 lam=1.0 s2it=8
+s3 stack_x_perm_s0              R2=0.3338 lam=0.25 s2it=0
+s3 stack_x_perm_s1              R2=0.3338 lam=0.25 s2it=0
+s3 stack_x_perm_s2              R2=0.3328 lam=0 s2it=0
+s3 stack_x_noise_s0             R2=0.3290 lam=1.0 s2it=125
+s3 stack_x_noise_s1             R2=0.3338 lam=0.25 s2it=0
+s3 stack_x_noise_s2             R2=0.3323 lam=0.75 s2it=93
+fold 3 done 6s
+s4 stack_base                   R2=0.2138 lam=0.0 s2it=0
+s4 stack_x                      R2=0.2242 lam=1.0 s2it=5
+s4 stack_x_perm_s0              R2=0.2129 lam=1.0 s2it=108
+s4 stack_x_perm_s1              R2=0.2231 lam=1.0 s2it=0
+s4 stack_x_perm_s2              R2=0.2244 lam=1.0 s2it=31
+s4 stack_x_noise_s0             R2=0.2226 lam=1.0 s2it=0
+s4 stack_x_noise_s1             R2=0.2228 lam=1.0 s2it=0
+s4 stack_x_noise_s2             R2=0.2232 lam=1.0 s2it=17
+fold 4 done 17s
+s5 stack_base                   R2=0.2510 lam=0.0 s2it=0
+s5 stack_x                      R2=0.2390 lam=0.5 s2it=326
+s5 stack_x_perm_s0              R2=0.2615 lam=0.75 s2it=393
+s5 stack_x_perm_s1              R2=0.2510 lam=0 s2it=13
+s5 stack_x_perm_s2              R2=0.2510 lam=0 s2it=46
+s5 stack_x_noise_s0             R2=0.2398 lam=0.5 s2it=362
+s5 stack_x_noise_s1             R2=0.2395 lam=0.5 s2it=216
+s5 stack_x_noise_s2             R2=0.2475 lam=0.25 s2it=242
+fold 5 done 59s

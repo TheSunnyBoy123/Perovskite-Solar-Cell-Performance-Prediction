@@ -1,0 +1,20 @@
+{
+ "t2": {
+  "depth": 10,
+  "learning_rate": 0.05,
+  "l2_leaf_reg": 1.0,
+  "colsample_bylevel": 0.7,
+  "min_data_in_leaf": 20,
+  "subsample": 0.6,
+  "random_strength": 2.0
+ },
+ "t3": {
+  "depth": 9,
+  "learning_rate": 0.05,
+  "l2_leaf_reg": 30.0,
+  "colsample_bylevel": 0.55,
+  "min_data_in_leaf": 20,
+  "subsample": 1.0,
+  "random_strength": 2.0
+ }
+}

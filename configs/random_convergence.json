@@ -1,0 +1,25 @@
+{
+ "name": "random_convergence_cap20000",
+ "data": "data/dataset_json_enriched.csv",
+ "archs": [
+  "overall"
+ ],
+ "protocols": [
+  "random"
+ ],
+ "tiers": [
+  "t1",
+  "t2",
+  "t3"
+ ],
+ "models": [
+  "catboost"
+ ],
+ "n_splits": 5,
+ "test_size": 0.2,
+ "val_size": 0.15,
+ "seed": 42,
+ "catboost": {
+  "iterations": 20000
+ }
+}
