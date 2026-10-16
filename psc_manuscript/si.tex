@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 \usepackage[T1]{fontenc}\usepackage[margin=2cm]{geometry}\usepackage{booktabs,longtable,lmodern,url,xcolor,graphicx}
 \usepackage{microtype}\usepackage{hyperref}
-\title{Supplementary Information: Perovskite Solar Cell Performance Prediction with LLM-Derived Feature Augmentation under Leakage-Aware DOI Evaluation}
+\title{Supplementary Information: Publication-Level Generalization in Perovskite Solar Cell Prediction: DOI-Grouped Evaluation with Literature-Derived Recipe Features}
 \date{}\begin{document}\maketitle\small
 \noindent\textbf{Tier naming.} Throughout the main paper and this document, $t_1$ = PDP-derived device, processing and composition features; $t_2$ = $t_1$ + curated material-property descriptors; $t_3$ = $t_2$ + the 36 LLM-derived recipe flags. An earlier, superseded 44-predictor literature representation (the ``earlier literature block'') is \emph{not} $t_3$; where its results are shown they are labelled ``$t_2$ + earlier lit.\ block''. In the underlying run files and result tables of the repository this block carries the tier name \texttt{t3}; this document relabels it and never mixes its numbers with the recipe-flag results.\par
 \section*{Table S1. Predictors per tier}
@@ -157,6 +157,120 @@ Negative controls (default settings; $\Delta R^2$ relative to $t_2$ under the sa
 LLM-covered: five DOI-permuted flag blocks -0.0049 to +0.0015; coverage indicator only +0.0015.
 all reserved: five DOI-permuted flag blocks -0.0028 to +0.0007; coverage indicator only +0.0011.
 \par
+\section*{Table S8. Predictor and target-leakage audit}
+Target: PDP field \texttt{JV\_default\_PCE} (renamed \texttt{final\_pce}), documented in the PDP column metadata as the selected power conversion efficiency of the J--V section; identical to the PDP field in all 41,107 filtered rows (and in all 43,398 exported rows). The full per-predictor audit (predictor, tier, source field, derivation, handling, leakage risk) is in \texttt{results/revision/leakage\_audit.json}.\par
+\begin{tabular}{lrrr}\toprule Tier (added predictors) & none & low & moderate\\\midrule
+t1 & 72 & 5 & 0\\
+t2 & 102 & 0 & 0\\
+t3 & 0 & 36 & 0\\
+\bottomrule\end{tabular}\par\smallskip
+Predictors of $t_1$ rated low risk and retained: \texttt{Add\_lay\_front}, \texttt{Backcontact\_thickness\_nm}, \texttt{Encapsulation}, \texttt{Perovskite\_band\_gap\_measured}, \texttt{Perovskite\_pl\_max\_nm}. These are device-context or film-characterisation fields (the absorber band gap, the photoluminescence maximum, encapsulation, an additional front layer, back-contact thickness) and not J--V, EQE, stability or stabilised-performance results. Material-property predictors ($t_2$) are catalogue reference values and the recipe flags ($t_3$) are paper-level identity flags; $t_3$ flags are rated low because they are constant within a publication and could encode publication identity.\par
+Checks: no predictor of the three tiers matches the outcome pattern \texttt{(\^{}JV\_\textbar{}\allowbreak EQE\textbar{}\allowbreak Stabilis\textbar{}\allowbreak Stability\textbar{}\allowbreak hysteresis\textbar{}\allowbreak PCE\textbar{}\allowbreak \textbackslash{}bVoc\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bJsc\textbackslash{}b\textbar{}\allowbreak \^{}FF\$\textbar{}\allowbreak efficien\textbar{}\allowbreak certif\textbar{}\allowbreak final\_pce\textbar{}\allowbreak champion\textbar{}\allowbreak average\_pce)} (hits: 0); the processed table contains five outcome-adjacent columns (\texttt{Stability\_measured}, \texttt{EQE\_measured}, \texttt{JV\_hysteresis\_index}, \texttt{Cell\_area\_measured\_cm2}, \texttt{Stabilised\_performance\_measured}), all excluded in code; 118 fields of the full PDP export whose names match this pattern (J--V, EQE, stability and stabilised-performance fields among them) were never carried into the processed table. The largest absolute Spearman correlation of any numeric $t_2$ predictor with the target is 0.35 (\texttt{Perovskite\_avg\_radius}), so no predictor is a near-copy of the target.\par
+\section*{Table S9. Illumination sensitivity on the reserved publications (test-set exclusion, no retraining)}
+The full PDP export records the light spectrum and intensity. All 17 filtered records with PCE $>$ 27\% (six publications) have intensity $\leq$ 0.31 (standard illumination is 100 on this scale); 12 are labelled indoor light and 5 have no spectrum label. In the filtered data 41 records have a spectrum other than AM1.5 and 249 an intensity outside 90--110. Matched default CatBoost, mean of five seed models.\par\smallskip
+\begin{tabular}{llrcccc}\toprule Population & Test records & $n$ & $R^2$ $t_1$ & $R^2$ $t_2$ & $R^2$ $t_3$ & MAE $t_3$\\\midrule
+LLM-covered & all & 5,460 & 0.3177 & 0.3593 & 0.3664 & 2.892\\
+LLM-covered & PCE $\leq$ 27\% & 5,458 & 0.3188 & 0.3602 & 0.3671 & 2.888\\
+LLM-covered & AM1.5, 90--110 only & 5,442 & 0.3215 & 0.3625 & 0.3696 & 2.879\\
+All reserved & all & 14,125 & 0.3712 & 0.4035 & 0.4060 & 2.949\\
+All reserved & PCE $\leq$ 27\% & 14,117 & 0.3729 & 0.4063 & 0.4088 & 2.941\\
+All reserved & AM1.5, 90--110 only & 14,045 & 0.3758 & 0.4099 & 0.4124 & 2.930\\
+\bottomrule\end{tabular}\par
+\section*{Table S10. Publication-weighted sensitivity metrics (reserved publications)}
+Each reserved record receives weight $1/n_p$, where $n_p$ is the number of reserved records of its publication within the population; weighted $R^2=1-\sum w_ie_i^2/\sum w_i(y_i-\bar y_w)^2$ with the weighted mean $\bar y_w$; weighted MAE and RMSE are weighted means. This is equivalent to averaging the error within each publication and then across publications. Paired intervals: publication-cluster bootstrap (2000 resamples, rng seed 0).\par\smallskip
+\begin{tabular}{llcccc}\toprule Population & Tier & $R^2$ record-wtd & $R^2$ publication-wtd & MAE pub.-wtd & RMSE pub.-wtd\\\midrule
+LLM-covered & $t_1$ & 0.318 & 0.357 & 3.032 & 3.809\\
+LLM-covered & $t_2$ & 0.359 & 0.406 & 2.900 & 3.663\\
+LLM-covered & $t_3$ & 0.366 & 0.410 & 2.889 & 3.651\\
+All reserved & $t_1$ & 0.371 & 0.399 & 3.050 & 3.846\\
+All reserved & $t_2$ & 0.403 & 0.436 & 2.938 & 3.727\\
+All reserved & $t_3$ & 0.406 & 0.437 & 2.937 & 3.722\\
+\midrule
+\end{tabular}\par\smallskip
+\begin{tabular}{llc}\toprule Population & Publication-weighted paired $\Delta R^2$ & value [95\% interval]\\\midrule
+LLM-covered & $t_2-t_1$ & $+0.0483$ [$+0.0314$, $+0.0664$]\\
+LLM-covered & $t_3-t_2$ & $+0.0040$ [$-0.0020$, $+0.0100$]\\
+All reserved & $t_2-t_1$ & $+0.0366$ [$+0.0271$, $+0.0464$]\\
+All reserved & $t_3-t_2$ & $+0.0016$ [$-0.0012$, $+0.0045$]\\
+\bottomrule\end{tabular}\par
+\section*{Table S11. Extracted versus non-extracted publications (all 41,107 filtered records)}
+`Covered' means that the publication has one of the 2,835 extraction records. Year is the PDP \texttt{Ref\_publication\_date} field. Descriptive only.\par\smallskip
+\begin{tabular}{lrrrrrrrr}\toprule Group & records & publ. & PCE mean & median & p10 & p90 & share $\geq$20\% & n-i-p share\\\midrule
+covered (extraction record exists) & 15,027 & 2,731 & 12.34 & 12.89 & 5.53 & 18.21 & 2.6\% & 69.0\%\\
+not covered & 26,080 & 4,596 & 12.47 & 13.08 & 5.03 & 18.56 & 3.6\% & 68.9\%\\
+\bottomrule\end{tabular}\par\smallskip
+\begin{tabular}{lrr}\toprule Year & records & covered share\\\midrule
+2013 & 223 & 15.7\%\\
+2014 & 1,468 & 24.5\%\\
+2015 & 3,392 & 34.0\%\\
+2016 & 5,946 & 35.2\%\\
+2017 & 7,556 & 38.6\%\\
+2018 & 10,128 & 44.8\%\\
+2019 & 10,122 & 37.5\%\\
+2020 & 1,502 & 8.9\%\\
+2021 & 183 & 0.0\%\\
+2022 & 406 & 0.0\%\\
+2024 & 137 & 0.0\%\\
+\bottomrule\end{tabular}\hspace{1.5cm}\begin{tabular}{lrr}\toprule PCE bin (\%) & records & covered share\\\midrule
+(0, 8] & 8,465 & 35.8\%\\
+(8, 12] & 9,201 & 39.0\%\\
+(12, 16] & 12,407 & 37.1\%\\
+(16, 20] & 9,780 & 35.1\%\\
+(20, 40] & 1,254 & 29.4\%\\
+\bottomrule\end{tabular}\par\smallskip
+Years with fewer than 100 records are omitted from the table. A two-sample Kolmogorov--Smirnov test of the PCE distributions of covered and uncovered records gives $D = 0.025$ ($p = 1.2e-05$), a small difference that is detectable only because of the sample size. Reserved partition: mean PCE 12.34 (covered) versus 12.39 (all).\par
+\section*{Table S12. Recipe flags without the first-feature-use penalty (reserved publications, matched default CatBoost)}
+$t_3$ refitted once with the penalty on the flag columns set to 0 instead of 0.5 (same development records, seeds, validation splits and configuration); scored on the same reserved records. The reserved publications had been examined before this run, so it is a robustness check and not independent confirmation. On development folds the penalties 0, 0.5 and 2 gave mean $\Delta R^2$ of $+0.0052$, $+0.0070$ and $+0.0038$ (12, 12 and 11 of 15 folds positive).\par\smallskip
+\begin{tabular}{llcccc}\toprule Population & Variant & $R^2$ & MAE & RMSE & $\Delta R^2$ vs $t_2$ [95\% interval]\\\midrule
+LLM-covered & $t_2$ & 0.3593 & 2.911 & 3.747 & \\
+LLM-covered & $t_3$, penalty 0.5 (main) & 0.3664 & 2.892 & 3.726 & $+0.0071$ [$-0.0007$, $+0.0157$]\\
+LLM-covered & $t_3$, no penalty & 0.3682 & 2.885 & 3.720 & $+0.0089$ [$+0.0008$, $+0.0177$]\\
+All reserved & $t_2$ & 0.4035 & 2.955 & 3.794 & \\
+All reserved & $t_3$, penalty 0.5 (main) & 0.4060 & 2.949 & 3.787 & $+0.0025$ [$-0.0011$, $+0.0062$]\\
+All reserved & $t_3$, no penalty & 0.4069 & 2.944 & 3.784 & $+0.0034$ [$-0.0004$, $+0.0072$]\\
+\bottomrule\end{tabular}\par
+\section*{Table S13. Definitions of the 36 recipe flags}
+Each flag is 1 if the (case-insensitive) pattern occurs in the non-outcome string content of the publication's extracted material records (HTL and ETL flags: only records of that role, additive or other), and 0 otherwise. Patterns are broad lexical matches: for example \texttt{rc\_pea\_family} also matches ``ammonium'' and hence methylammonium compounds (only 104 of its 1,723 positive publications contain a spacer-specific term). Source: \texttt{src/psc/litfeat4.py}.\par\smallskip
+{\footnotesize\begin{longtable}{p{3cm}p{2.6cm}p{10.5cm}}\toprule Flag & Group & Pattern\\\midrule\endhead
+\texttt{rc\_cl\_source} & additive/precursor & \texttt{pbcl2\textbar{}\allowbreak macl\textbackslash{}b\textbar{}\allowbreak nh4cl\textbar{}\allowbreak ch3nh3cl\textbar{}\allowbreak methylammonium chloride\textbar{}\allowbreak lead chloride\textbar{}\allowbreak cscl\textbar{}\allowbreak chloride\textbar{}\allowbreak mapbi3-?x?cl\textbar{}\allowbreak i3-?xclx\textbar{}\allowbreak \textbackslash{}bcl\textbackslash{}b}\\
+\texttt{rc\_acetate} & additive/precursor & \texttt{acetate\textbar{}\allowbreak pb\textbackslash{}(ac\textbackslash{})\textbar{}\allowbreak pbac2\textbar{}\allowbreak \textbackslash{}bmaac\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bpbac\textbar{}\allowbreak ch3coo}\\
+\texttt{rc\_scn} & additive/precursor & \texttt{scn\textbar{}\allowbreak thiocyanate}\\
+\texttt{rc\_snf2} & additive/precursor & \texttt{snf2\textbar{}\allowbreak tin\textbackslash{}(ii\textbackslash{}) fluoride\textbar{}\allowbreak tin fluoride}\\
+\texttt{rc\_ava} & additive/precursor & \texttt{5-?ava\textbar{}\allowbreak aminovaleric\textbar{}\allowbreak 5-aminovaleric}\\
+\texttt{rc\_hx\_acid} & additive/precursor & \texttt{\textbackslash{}bhi\textbackslash{}b\textbar{}\allowbreak hydroiodic\textbar{}\allowbreak hydrobromic\textbar{}\allowbreak \textbackslash{}bhbr\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bhcl\textbackslash{}b\textbar{}\allowbreak hypophosph\textbar{}\allowbreak \textbackslash{}bhpa\textbackslash{}b\textbar{}\allowbreak formic acid\textbar{}\allowbreak acetic acid}\\
+\texttt{rc\_alkali} & additive/precursor & \texttt{\textbackslash{}brbi\textbackslash{}b\textbar{}\allowbreak rubidium\textbar{}\allowbreak \textbackslash{}bki\textbackslash{}b\textbar{}\allowbreak potassium\textbar{}\allowbreak \textbackslash{}bnai\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bli[ib]r?\textbackslash{}b}\\
+\texttt{rc\_cs} & additive/precursor & \texttt{\textbackslash{}bcsi\textbackslash{}b\textbar{}\allowbreak cesium\textbar{}\allowbreak caesium\textbar{}\allowbreak \textbackslash{}bcsbr\textbackslash{}b\textbar{}\allowbreak cspb}\\
+\texttt{rc\_pea\_family} & additive/precursor & \texttt{\textbackslash{}bpe(a)?i\textbackslash{}b\textbar{}\allowbreak phenethyl\textbar{}\allowbreak phenylethyl\textbar{}\allowbreak \textbackslash{}bbai\textbackslash{}b\textbar{}\allowbreak butylammonium\textbar{}\allowbreak \textbackslash{}boai\textbackslash{}b\textbar{}\allowbreak octylammonium\textbar{}\allowbreak \textbackslash{}bgai\textbackslash{}b\textbar{}\allowbreak guanidin\textbar{}\allowbreak \textbackslash{}bnh4i\textbar{}\allowbreak ammonium}\\
+\texttt{rc\_lewis\_base} & additive/precursor & \texttt{urea\textbar{}\allowbreak thiourea\textbar{}\allowbreak pyridine\textbar{}\allowbreak phosph\textbar{}\allowbreak sulfoxide\textbar{}\allowbreak formamide(?!.*iodide)}\\
+\texttt{rc\_water\_add} & additive/precursor & \texttt{\textbackslash{}bh2o\textbackslash{}b\textbar{}\allowbreak deionized\textbar{}\allowbreak di water}\\
+\texttt{rc\_polymer} & additive/precursor & \texttt{\textbackslash{}bpeg\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bpvp\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bpmma\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bps\textbackslash{}b\textbar{}\allowbreak polystyrene\textbar{}\allowbreak polyethylene\textbar{}\allowbreak \textbackslash{}bpei\textbackslash{}b\textbar{}\allowbreak polymer}\\
+\texttt{rc\_carbon} & additive/precursor & \texttt{graphene\textbar{}\allowbreak \textbackslash{}brgo\textbackslash{}b\textbar{}\allowbreak cnt\textbar{}\allowbreak nanotube\textbar{}\allowbreak fullerene\textbar{}\allowbreak \textbackslash{}bc60\textbackslash{}b\textbar{}\allowbreak pcbm}\\
+\texttt{rc\_dio} & additive/precursor & \texttt{diiodooctane\textbar{}\allowbreak \textbackslash{}bdio\textbackslash{}b\textbar{}\allowbreak 1,8-diiodo}\\
+\texttt{rc\_htl\_tbp} & HTL dopant & \texttt{\textbackslash{}btbp\textbackslash{}b\textbar{}\allowbreak t-bp\textbar{}\allowbreak tert-?butyl ?pyridine\textbar{}\allowbreak 4-?tert}\\
+\texttt{rc\_htl\_litfsi} & HTL dopant & \texttt{li-?tfs[ia]\textbar{}\allowbreak lithium bis\textbar{}\allowbreak li salt\textbar{}\allowbreak lin\textbackslash{}(cf3so2\textbackslash{})2n\textbar{}\allowbreak litfsi}\\
+\texttt{rc\_htl\_fk} & HTL dopant & \texttt{fk-?(209\textbar{}\allowbreak 102\textbar{}\allowbreak 269\textbar{}\allowbreak 211)\textbar{}\allowbreak co\textbackslash{}(iii\textbackslash{})\textbar{}\allowbreak cobalt}\\
+\texttt{rc\_htl\_f4tcnq} & HTL dopant & \texttt{f4-?tcnq\textbar{}\allowbreak tcnq}\\
+\texttt{rc\_htl\_cu} & HTL dopant & \texttt{cu\textbackslash{}(tfsi\textbackslash{})2\textbar{}\allowbreak cu\textbackslash{}(oac\textbackslash{})2\textbar{}\allowbreak cu:\textbar{}\allowbreak copper}\\
+\texttt{rc\_htl\_borate} & HTL dopant & \texttt{tpfb\textbar{}\allowbreak borate\textbar{}\allowbreak \textbackslash{}bbcf\textbackslash{}b\textbar{}\allowbreak b\textbackslash{}(c6f5\textbackslash{})3}\\
+\texttt{rc\_etl\_ticl4} & ETL treatment & \texttt{ticl4}\\
+\texttt{rc\_etl\_dopant} & ETL treatment & \texttt{\textbackslash{}bnb\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bmg:\textbar{}\allowbreak mg-?doped\textbar{}\allowbreak zn-?doped\textbar{}\allowbreak ni-?doped\textbar{}\allowbreak \textbackslash{}bli-doped\textbar{}\allowbreak y-doped\textbar{}\allowbreak nb-?doped\textbar{}\allowbreak sn-doped\textbar{}\allowbreak doped}\\
+\texttt{rc\_antisolvent} & process route & \texttt{anti-?solvent\textbar{}\allowbreak quench}\\
+\texttt{rc\_vacuum} & process route & \texttt{vacuum\textbar{}\allowbreak evaporat\textbar{}\allowbreak co-?evaporat\textbar{}\allowbreak vapou?r\textbar{}\allowbreak sublim}\\
+\texttt{rc\_two\_step} & process route & \texttt{two-?step\textbar{}\allowbreak sequential\textbar{}\allowbreak dipping\textbar{}\allowbreak \textbackslash{}bdip\textbackslash{}b}\\
+\texttt{rc\_hot\_cast} & process route & \texttt{hot-?cast}\\
+\texttt{rc\_solvent\_anneal} & process route & \texttt{solvent anneal\textbar{}\allowbreak dmf vapou?r\textbar{}\allowbreak vapou?r anneal}\\
+\texttt{rc\_n2\_box} & process route & \texttt{glove ?box\textbar{}\allowbreak nitrogen\textbar{}\allowbreak \textbackslash{}bn2\textbackslash{}b\textbar{}\allowbreak argon}\\
+\texttt{rc\_ambient} & process route & \texttt{ambient\textbar{}\allowbreak humid\textbar{}\allowbreak \textbackslash{}bair\textbackslash{}b}\\
+\texttt{rc\_flexible} & device context & \texttt{\textbackslash{}bpet\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bpen\textbackslash{}b\textbar{}\allowbreak flexible\textbar{}\allowbreak polyimide}\\
+\texttt{rc\_tandem} & device context & \texttt{tandem\textbar{}\allowbreak silicon\textbar{}\allowbreak \textbackslash{}bsi\textbackslash{}b}\\
+\texttt{rc\_lead\_free} & device context & \texttt{snI3\textbar{}\allowbreak sni2\textbar{}\allowbreak bismuth\textbar{}\allowbreak \textbackslash{}bbii3\textbar{}\allowbreak antimony\textbar{}\allowbreak germanium\textbar{}\allowbreak tin-?based\textbar{}\allowbreak lead-?free}\\
+\texttt{rc\_inorganic} & device context & \texttt{cspbi\textbar{}\allowbreak cspbbr\textbar{}\allowbreak cssni\textbar{}\allowbreak inorganic}\\
+\texttt{rc\_mesoscopic} & device context & \texttt{mesoporous\textbar{}\allowbreak mp-?tio2\textbar{}\allowbreak scaffold\textbar{}\allowbreak carbon electrode}\\
+\texttt{rc\_undoped} & undoped/interface & \texttt{undoped\textbar{}\allowbreak pristine\textbar{}\allowbreak without (additive\textbar{}\allowbreak dopant)\textbar{}\allowbreak dopant-free\textbar{}\allowbreak dopant free}\\
+\texttt{rc\_interface\_pass} & undoped/interface & \texttt{passivat\textbar{}\allowbreak interlayer\textbar{}\allowbreak surface treatment\textbar{}\allowbreak post-?treatment\textbar{}\allowbreak modif}\\
+\bottomrule\end{longtable}}
+\section*{Material-descriptor implementation notes}
+\noindent\textbf{Perovskite geometry descriptors.} Fixed effective radii (pm): A-site FA 253, MA 217, Cs 188, Rb 172; B-site Pb 119, Sn 110, Bi 103; X-site I 220, Br 196, Cl 181, F 133. Site radius = fraction-weighted mean over the listed species of that site, divided by the sum of their fractions; $\mu=r_B/r_X$, $t=(r_A+r_X)/[\sqrt2(r_B+r_X)]$, $r_A/r_X$, $\tau=r_X/r_B-(1-(r_A/r_B)\ln(r_A/r_B))$ (script \texttt{opus/evaluate\_tolerance\_factor.py}; the stored octahedral and tolerance factors were reproduced to floating-point precision from the ion-fraction columns). \textbf{Layer averages.} \texttt{*\_avg\_radius}, \texttt{*\_avg\_atomic\_mass} and \texttt{*\_en\_avg} are atom-count-weighted means of covalent radii (pm), atomic masses and Pauling electronegativities over the elements of a hand-entered formula (script \texttt{opus/fill\_atomic\_data.py}); \texttt{min}/\texttt{max} are the extremes over the elements. For MAPbI$_3$ (C$_1$H$_6$N$_1$Pb$_1$I$_3$) the average radius is $(77+6\cdot31+71+146+3\cdot139)/12=74.75$ pm, matching the stored value.\par
 \section*{Extraction system prompt (verbatim from the recovered script)}\begin{verbatim}You are a materials-science data-extraction assistant.
 
 Given a Markdown document converted from a published paper, extract every

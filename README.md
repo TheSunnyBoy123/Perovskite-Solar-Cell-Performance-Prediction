@@ -20,10 +20,11 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt     # tested with Python 3.13, catboost 1.2.10, xgboost 3.2, scikit-learn 1.6, torch 2.10
 ```
 
-## Full-text retrieval (legal routes only; optional, not needed to reproduce the modelling results)
+## Full-text retrieval (optional, not needed to reproduce the modelling results)
+`scripts/retrieve_fulltext.py` is a release script (open-access first, manual institutional fallback, per-DOI route log). It is not the script that produced the historical corpus; see `docs/RETRIEVAL_PROVENANCE_DECISION.md`.
 ```bash
 UNPAYWALL_EMAIL=you@institution.edu python scripts/retrieve_fulltext.py --dois dois.txt --out retrieval/
-# Unpaywall -> OpenAlex -> Crossref open links -> retrieval/manual_queue.csv (download through your own legal access)
+# Unpaywall -> OpenAlex -> Crossref open links -> retrieval/manual_queue.csv (download through your own institutional access)
 ```
 
 ## Reproduce (from `ml_paper/`)
@@ -56,7 +57,7 @@ All experiments are resumable (completed cells are skipped).
 * Five repeated holdouts (`GroupShuffleSplit`, test 20 % of DOIs, seed 42); within each training partition a DOI-disjoint validation set (15 % of training DOIs) is used for early stopping / model selection. The test partition is never seen before final scoring. Repeated holdout test sets **overlap**; this is not k-fold CV.
 * Record-level comparison: `ShuffleSplit` with identical fractions and the same models/budgets.
 * All imputation statistics, the >80 %-missing column filter and the `_na` indicator set are learned on the training partition only.
-* Tiers are nested by construction (`psc.data.TIER_DROP`, asserted in tests): t1 = database + composition (77 columns incl. `_na`), t2 = t1 + 102 material-property columns, t3 = t2 + 44 LLM literature columns.
+* Tiers are nested by construction (`psc.data.TIER_DROP`, asserted in tests): t1 = database + composition (77 columns incl. `_na`), t2 = t1 + 102 material-property columns, t3 = t2 + the 36 LLM-derived recipe flags (215 columns in the common-split models; the earlier 44-column literature block is not t3).
 
 ## Data
 `data/dataset_json_enriched.csv` (43,398 PDP records x 156 columns; `data/pdp_ref_metadata.csv` adds lead author and publication date from the PDP export) is the merged table of the PDP export (Jacobsson et al., Nat. Energy 2022), material-property catalogue and LLM-extracted paper-level features. See `docs/DATA.md` for provenance, redistribution limits and what is not included (PDFs, Markdown, raw LLM JSON).
@@ -69,3 +70,9 @@ See `docs/V4_REPORT.md` for results and limits. Reproduce: `python scripts/build
 
 ## Three-tier (t1/t2/t3) common-split comparison
 `python scripts/v4_final.py` (t2/t3 arms, controls; `results/v4/final/`) and `python scripts/v4_t1_baseline.py` (adds t1 on the identical reserved publications and writes `results/v4/final_t1/metrics_3tier.csv`, `comparisons_3tier.json`). `python scripts/verify_manuscript_numbers.py` checks the manuscript numbers against these files. Excluded large artifacts: `docs/ARTIFACT_CHECKSUMS.md`; versioning rules: `docs/DEVELOPMENT_WORKFLOW.md`. Tier names: t1 = PDP features, t2 = + material properties, t3 = + 36 LLM recipe flags; the earlier 44-predictor literature block is *not* t3 (run files still call it `t3`).
+
+## Final revision analyses
+`python scripts/revision_analyses.py` (no retraining; writes `results/revision/`): predictor/target-leakage audit (`leakage_audit.json`), illumination sensitivity, publication-weighted metrics, covered vs uncovered publications, PCE<1% exclusion. `python scripts/v4_penalty0_reserved.py` refits t3 without the first-feature-use penalty on the reserved split (`results/revision/penalty0/`). `python scripts/make_annotation_worksheet.py` writes a blank human-review worksheet for the recipe flags to `docs/validation/` (git-ignored; no validation result). `docs/REVIEW_ACTION_MATRIX.md` maps every review concern to its action. `python scripts/make_si.py` rebuilds `psc_manuscript/si.tex` including these tables (S8-S13).
+
+## Data and code statement (supplied vs not supplied)
+Supplied: code, configs, tests, run manifests, per-split and reserved-split predictions and metrics; `data/dataset_json_enriched.csv` (processed table, 43,398 records; in the review package but git-ignored for size, SHA-256 in run manifests); `data/lit_v4.json` (per-DOI derived tokens, aggregate numerics, layer records and the 36 recipe flags); `data/lit_v2.csv`, `data/lit_v3.csv`, `data/pdp_ref_metadata.csv`. Not supplied: publisher PDFs, Markdown conversions, raw LLM JSON, the standalone material-property catalogue file, and the annotation worksheet (it contains spans of raw LLM output).

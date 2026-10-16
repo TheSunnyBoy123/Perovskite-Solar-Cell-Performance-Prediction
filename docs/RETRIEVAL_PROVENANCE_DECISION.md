@@ -1,15 +1,12 @@
-# Retrieval provenance: facts and open decision
+# Retrieval provenance note (supersedes the earlier "open decision" version)
 
-**Recorded facts** (from `legacy/NOTES_retrieval_history.md`, recovered from the project sandbox during the audit)
-* `simple_download.py`: tries OpenAlex open-access locations first, then Sci-Hub (`sci-hub.ru`, `sci-hub.st`).
-* `doi2pdf_fixed.py`, `download_pdfs.py`: Sci-Hub-based downloaders; the sandbox README also describes manual download into `pdfs/`.
-* PDF to Markdown: OpenDataLoader PDF / marker endpoint.
-* The released `scripts/retrieve_fulltext.py` is legal-route only (Unpaywall/OpenAlex open-access, Crossref publisher links, manual institutional download) and logs the route per DOI. It was written for release and is **not** the script that produced the historical corpus.
-* The route by which each of the 3,299 historical PDFs was obtained is **not logged**; therefore nothing in the repository proves the corpus was obtained legally, or the opposite for any specific PDF.
+**Author-provided account (used in the manuscript).** Papers were identified by DOI. Full texts were retrieved over the institutional network using the institution's subscriptions and open-access availability. When automated retrieval failed, some papers were obtained manually through institutional access. Sci-Hub was dropped and was not used to obtain the study corpus.
 
-**What the manuscript says** (`ml.tex`, Section 2.2.1): describes the released script as legal-only, states that the historical corpus was collected with earlier recovered scripts (OpenAlex first, then Sci-Hub mirrors, plus manual downloads) with no per-PDF route log, and makes no claim of exclusively legal retrieval. PDFs, Markdown and raw LLM JSON are not redistributed; only derived paper-level features are.
+**Why the stale statement existed.** `legacy/NOTES_retrieval_history.md` records that scripts recovered from `sandbox/` (`simple_download.py`, `doi2pdf_fixed.py`, `download_pdfs.py`) contain OpenAlex-then-Sci-Hub fallbacks. The audit read their presence as evidence of how the corpus was obtained. Those files and notes are preserved unchanged as project history.
 
-**Decision needed from the authors**
-1. Final wording of the provenance statement (keep the explicit disclosure, or replace with a different accurate description).
-2. Whether the derived features may be released/used under publisher terms and journal policy.
-3. Whether to regenerate the extraction from a corpus retrieved through documented legal routes (not done here; no data were deleted or regenerated).
+**What is and is not established.** The route for each of the 3,299 PDFs was not logged, so neither account can be verified per document from the repository. The manuscript therefore states the author account and explicitly says that per-PDF routes were not logged. It makes no legal assurance.
+
+**Actions that remain with the authors (outside the results).**
+1. Because the recovered scripts do include Sci-Hub fallbacks, confirm that none of the 3,299 PDFs came through them (for example by checking download logs or file provenance) or amend the Methods.
+2. Institutional network access is not by itself proof of text-and-data-mining permission. Confirm with the library or the publishers whether LLM-based extraction of these texts is covered, and whether journal policy requires a statement.
+3. PDFs, Markdown and raw LLM JSON are not redistributed; only derived artifacts are (see the Data and code availability statement).

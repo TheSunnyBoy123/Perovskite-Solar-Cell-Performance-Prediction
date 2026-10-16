@@ -29,5 +29,5 @@ SHA-256 is recorded in every `results/*/meta.json`.
 Reviewer access: deposit this directory (code, CSV, results, tests) in a private Zenodo record or anonymised GitHub repository before submission; Digital Discovery requires DOIs for code and data in the Data Availability Statement.
 
 ## Known gaps
-* The retrieval route for the 3,299 PDFs and the exact Qwen model checkpoint/version are not recorded anywhere in the repository; they must be supplied by the authors.
+* The per-PDF retrieval route for the 3,299 PDFs (see docs/RETRIEVAL_PROVENANCE_DECISION.md) and the exact Qwen model checkpoint/version are not recorded in the repository.
 * No hand-annotated gold set exists, so extraction precision/recall cannot be reported (see TODO register).
