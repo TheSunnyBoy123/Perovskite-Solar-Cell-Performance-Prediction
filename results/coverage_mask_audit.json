@@ -1,0 +1,14 @@
+{
+ "mask_A_records": 14896,
+ "mask_A_publications": 2699,
+ "mask_B_records": 15027,
+ "mask_B_publications": 2731,
+ "A_minus_B_publications": 0,
+ "B_minus_A_publications": 32,
+ "B_minus_A_records": 131,
+ "extraction_records_total": 2835,
+ "extraction_records_with_zero_materials": 33,
+ "zero_material_records_matching_filtered_data": 32,
+ "zero_material_in_B_minus_A": 32,
+ "B_minus_A_all_have_zero_materials": true
+}
