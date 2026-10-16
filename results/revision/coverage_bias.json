@@ -1,0 +1,179 @@
+{
+ "summary": [
+  {
+   "group": "covered (extraction record exists)",
+   "n_records": 15027,
+   "n_publications": 2731,
+   "pce_mean": 12.339480268849405,
+   "pce_median": 12.89,
+   "pce_p10": 5.53,
+   "pce_p90": 18.21,
+   "pce_sd": 4.75627936670484,
+   "frac_pce_ge_20": 0.025953284088640446,
+   "median_year": 2018.0,
+   "frac_nip": 0.6902908098755574,
+   "frac_pin": 0.309043721301657
+  },
+  {
+   "group": "not covered",
+   "n_records": 26080,
+   "n_publications": 4596,
+   "pce_mean": 12.468240414110427,
+   "pce_median": 13.08,
+   "pce_p10": 5.03,
+   "pce_p90": 18.56,
+   "pce_sd": 4.987396796445248,
+   "frac_pce_ge_20": 0.035544478527607365,
+   "median_year": 2018.0,
+   "frac_nip": 0.6889187116564417,
+   "frac_pin": 0.30828220858895705
+  }
+ ],
+ "coverage_by_year": [
+  {
+   "year": 2009,
+   "n_records": 2,
+   "covered_fraction": 0.0,
+   "n_publications": 1
+  },
+  {
+   "year": 2011,
+   "n_records": 6,
+   "covered_fraction": 0.0,
+   "n_publications": 1
+  },
+  {
+   "year": 2012,
+   "n_records": 18,
+   "covered_fraction": 0.5555555555555556,
+   "n_publications": 4
+  },
+  {
+   "year": 2013,
+   "n_records": 223,
+   "covered_fraction": 0.15695067264573992,
+   "n_publications": 42
+  },
+  {
+   "year": 2014,
+   "n_records": 1468,
+   "covered_fraction": 0.24455040871934605,
+   "n_publications": 296
+  },
+  {
+   "year": 2015,
+   "n_records": 3392,
+   "covered_fraction": 0.3402122641509434,
+   "n_publications": 671
+  },
+  {
+   "year": 2016,
+   "n_records": 5946,
+   "covered_fraction": 0.35200134544231415,
+   "n_publications": 1096
+  },
+  {
+   "year": 2017,
+   "n_records": 7556,
+   "covered_fraction": 0.38565378507146636,
+   "n_publications": 1381
+  },
+  {
+   "year": 2018,
+   "n_records": 10128,
+   "covered_fraction": 0.44786729857819907,
+   "n_publications": 1714
+  },
+  {
+   "year": 2019,
+   "n_records": 10122,
+   "covered_fraction": 0.3746295198577356,
+   "n_publications": 1757
+  },
+  {
+   "year": 2020,
+   "n_records": 1502,
+   "covered_fraction": 0.08921438082556592,
+   "n_publications": 282
+  },
+  {
+   "year": 2021,
+   "n_records": 183,
+   "covered_fraction": 0.0,
+   "n_publications": 35
+  },
+  {
+   "year": 2022,
+   "n_records": 406,
+   "covered_fraction": 0.0,
+   "n_publications": 41
+  },
+  {
+   "year": 2023,
+   "n_records": 18,
+   "covered_fraction": 0.0,
+   "n_publications": 3
+  },
+  {
+   "year": 2024,
+   "n_records": 137,
+   "covered_fraction": 0.0,
+   "n_publications": 3
+  }
+ ],
+ "coverage_by_architecture": [
+  {
+   "arch": "nip",
+   "n_records": 28340,
+   "covered_fraction": 0.3660197600564573
+  },
+  {
+   "arch": "other",
+   "n_records": 83,
+   "covered_fraction": 0.12048192771084337
+  },
+  {
+   "arch": "pin",
+   "n_records": 12684,
+   "covered_fraction": 0.3661305581835383
+  }
+ ],
+ "coverage_by_pce_bin": [
+  {
+   "final_pce": "(0, 8]",
+   "n_records": 8465,
+   "covered_fraction": 0.3584170112226816
+  },
+  {
+   "final_pce": "(8, 12]",
+   "n_records": 9201,
+   "covered_fraction": 0.39006629714161506
+  },
+  {
+   "final_pce": "(12, 16]",
+   "n_records": 12407,
+   "covered_fraction": 0.37067784315305874
+  },
+  {
+   "final_pce": "(16, 20]",
+   "n_records": 9780,
+   "covered_fraction": 0.35132924335378324
+  },
+  {
+   "final_pce": "(20, 40]",
+   "n_records": 1254,
+   "covered_fraction": 0.2942583732057416
+  }
+ ],
+ "ks_pce_covered_vs_not": {
+  "statistic": 0.02512318572989891,
+  "p": 1.1649498228407205e-05
+ },
+ "reserved_split": {
+  "covered_mean_pce": 12.341007326007325,
+  "all_mean_pce": 12.391105840707965,
+  "covered_var": 21.90794601826135,
+  "all_var": 24.13671042313403
+ },
+ "note": "Descriptive only. 'covered' = the publication has a record among the 2,835 extraction records. Year is the PDP Ref_publication_date field (earliest value per publication for the publication-level table)."
+}

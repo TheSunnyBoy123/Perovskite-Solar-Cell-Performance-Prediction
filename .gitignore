@@ -39,3 +39,4 @@ results/repro_cleanenv/
 results/v4/*.npy
 results_handoff.zip
 *.zip
+docs/validation/recipe_flag_annotation_worksheet.csv
