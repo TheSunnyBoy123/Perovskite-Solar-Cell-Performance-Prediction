@@ -16,7 +16,7 @@ T = H / "tables"
 sys.path.insert(0, str(ROOT / "src"))
 rel = lambda p: str(Path(p).resolve().relative_to(ROOT))
 ARCH = {"overall": "pooled", "pin": "p-i-n", "nip": "n-i-p"}
-ORIG = "original 44-predictor literature block (32 base columns + indicators; paper-level; 36.2% of records)"
+ORIG = "t2 + earlier 44-predictor literature representation E (superseded; 32 base columns + indicators; paper-level; 36.2% of records)"
 rjl = lambda n: pd.DataFrame([json.loads(l) for l in open(R / n / "runs.jsonl")])
 sd = lambda s: float(s.std(ddof=1)) if len(s) > 1 else np.nan
 
@@ -77,7 +77,7 @@ for r in D.itertuples():
         delta_r2_mean=r.d_r2, delta_r2_sd=r.d_r2_sd, splits_r2_better=r.r2_better_splits, delta_mae_mean=r.d_mae, delta_mae_sd=r.d_mae_sd,
         delta_rmse_mean=r.d_rmse, delta_rmse_sd=r.d_rmse_sd, splits_ci_excludes_zero=(b.r2_ci_excl0 if b is not None else np.nan),
         source=rel(R / "ablation_v1/paired_tier_diffs.csv") + (" ; " + rel(R / "ablation_v1/paired_bootstrap_summary_doi_catboost.csv") if b is not None else ""),
-        notes="per-split DOI-cluster bootstrap CI (1000 resamples); t3 = original literature block"))
+        notes="per-split DOI-cluster bootstrap CI (1000 resamples); t2+E = t2 plus the earlier 44-predictor literature representation E"))
 pd.DataFrame(rows).to_csv(T / "original_tier_ablation.csv", index=False)
 # split-level n for the main DOI-grouped catboost cells
 runs = rjl("ablation_v1"); sp = runs[(runs.protocol == "doi") & (runs.model == "catboost")].copy()
@@ -121,7 +121,7 @@ pg.to_csv(T / "evaluation_protocols_gap_ablation_v1.csv", index=False)
 FA = json.load(open(R / "feature_audit.json")); LV = json.load(open(ROOT / "data/lit_v4.json"))["papers"]
 rows = []
 for k, v in FA["lit_coverage_per_feature"].items():
-    rows.append(dict(representation="original literature block", feature=k, coverage_fraction_of_41107_records=v, coverage_fraction_of_covered_papers="", n_papers_with_value="", source=rel(R / "feature_audit.json")))
+    rows.append(dict(representation="earlier literature block E", feature=k, coverage_fraction_of_41107_records=v, coverage_fraction_of_covered_papers="", n_papers_with_value="", source=rel(R / "feature_audit.json")))
 flag_names = [k for k in next(iter(LV.values()))["recipe"] if k != "n_materials" and not k.startswith("s_")]
 for k in flag_names:
     vals = pd.Series([p["recipe"][k] for p in LV.values()])
@@ -138,7 +138,7 @@ import psc.data as pdata, psc.v4 as v4m
 df = pdata.load_dataset(); df["part"] = df.doi_group.map(v4m.v4_partition)
 summ = [dict(representation="dataset counts", feature="all records", n_records=len(df), n_dois_incl_no_doi_block=df.doi_group.nunique(), source="psc.data.load_dataset()"),
         dict(representation="V4 (lx_covered)", feature="covered records", n_records=int(df.lx_covered.sum()), n_dois_incl_no_doi_block=df[df.lx_covered == 1].doi_group.nunique(), coverage_fraction_of_41107_records=float(df.lx_covered.mean()), source="psc.data (lx_covered) ; psc.v4"),
-        dict(representation="original literature block (feature_audit)", feature="records with any lit feature", n_records=int(round(FA["records_with_any_lit_feature"] * FA["n_records"])), n_dois_incl_no_doi_block=FA["dois_with_any_lit_feature"], coverage_fraction_of_41107_records=FA["records_with_any_lit_feature"], source=rel(R / "feature_audit.json"),
+        dict(representation="earlier literature block E (feature_audit)", feature="records with any lit feature", n_records=int(round(FA["records_with_any_lit_feature"] * FA["n_records"])), n_dois_incl_no_doi_block=FA["dois_with_any_lit_feature"], coverage_fraction_of_41107_records=FA["records_with_any_lit_feature"], source=rel(R / "feature_audit.json"),
              notes="differs from lx_covered (36.6%, 2,731 DOIs): see RESULTS_REPORT section I, unresolved"),]
 for p, g in df.groupby("part"):
     summ.append(dict(representation=f"V4 partition {p}", feature="records", n_records=len(g), n_dois_incl_no_doi_block=g.doi_group.nunique(), n_covered_records=int(g.lx_covered.sum()), n_covered_dois=g[g.lx_covered == 1].doi_group.nunique(), source="psc.v4.v4_partition (salt psc-v4, dev_frac 0.65)"))
@@ -159,7 +159,7 @@ for sc in ("covered", "full"):
     pass
 FG = rjl("feature_groups_v1")
 for (arch, tier), g in FG.groupby(["arch", "tier"]):
-    addc("feature-group control (5 DOI-grouped holdouts)", {"t1_lit": "t1 + original literature block (no material properties)", "t3_nometa": "original t3 minus 2 reporting-completeness flags", "t2_noise": "t2 + 32 N(0,1) noise columns"}[tier], f"ablation holdouts {ARCH[arch]}",
+    addc("feature-group control (5 DOI-grouped holdouts)", {"t1_lit": "t1 + earlier literature representation E (no material properties)", "t3_nometa": "t2+E minus 2 reporting-completeness flags", "t2_noise": "t2 + 32 N(0,1) noise columns"}[tier], f"ablation holdouts {ARCH[arch]}",
          dict(reference="", r2_mean=g.r2.mean(), r2_sd=sd(g.r2), mae_mean=g.mae.mean(), rmse_mean=g.rmse.mean(), n_splits=len(g), n_features=g.n_features.mean(), n_records=g.n_test.mean()), rel(R / "feature_groups_v1/runs.jsonl"))
 def csvrows(path, experiment, fr, part, cols):
     d = pd.read_csv(R / path)
@@ -196,3 +196,35 @@ rows += [
  dict(study="Hussain et al., RSC Adv. (2023)", target="PCE", estimator="", split_protocol="not stated in the article", source="docs/LIT_VERIFICATION.md", notes="values not recorded in project artifacts")]
 pd.DataFrame(rows).to_csv(T / "baseline_studies.csv", index=False)
 print("tables written:", sorted(p.name for p in T.glob("*.csv")))
+
+
+# ======================================================================= V4 common-split three-tier table (t1/t2/t3 on identical reserved publications)
+import json as _json
+M3 = pd.read_csv(R / "v4/final_t1/metrics_3tier.csv"); C3 = _json.load(open(R / "v4/final_t1/comparisons_3tier.json"))
+rows3 = []
+for r in M3.itertuples():
+    rows3.append(dict(row_type="tier metrics", population={"covered": "LLM-covered", "full": "all reserved"}[r.scope], tier=r.tier, comparison="", feature_representation={"t1": "t1 (PDP features)", "t2": "t2 (t1 + material properties)", "t3": "t3 (t2 + V4 36 recipe flags)"}[r.tier],
+        estimator_config="matched default CatBoost", n_seeds=5, n_test_records=r.n, n_test_dois=r.dois, r2=r.r2, r2_ci_lo=r.r2_lo, r2_ci_hi=r.r2_hi, mae=r.mae, rmse=r.rmse,
+        delta_r2="", delta_ci_lo="", delta_ci_hi="", seeds_positive="", split="v4final (reserved, DOI-disjoint from v4dev)", source="results/v4/final_t1/metrics_3tier.csv (t1 new; t2/t3 = results/v4/final default arms)"))
+for sc, pop in (("covered", "LLM-covered"), ("full", "all reserved")):
+    m = M3[M3.scope == sc].set_index("tier")
+    for k, (a_, b_) in {"t2_minus_t1": ("t1", "t2"), "t3_minus_t2": ("t2", "t3"), "t3_minus_t1": ("t1", "t3")}.items():
+        v = C3[sc][k]
+        rows3.append(dict(row_type="paired difference", population=pop, tier="", comparison=k.replace("_minus_", " - "), feature_representation="", estimator_config="matched default CatBoost", n_seeds=5,
+            n_test_records=int(m.n.iloc[0]), n_test_dois=int(m.dois.iloc[0]), r2="", r2_ci_lo="", r2_ci_hi="", mae=m.loc[b_, "mae"] - m.loc[a_, "mae"], rmse=m.loc[b_, "rmse"] - m.loc[a_, "rmse"],
+            delta_r2=v["dR2"], delta_ci_lo=v["lo"], delta_ci_hi=v["hi"], seeds_positive=f"{v['seeds_pos']}/{v['n_seeds']}", split="v4final (reserved, DOI-disjoint from v4dev)",
+            source="results/v4/final_t1/comparisons_3tier.json (mae/rmse columns = difference of point metrics, derived)"))
+pd.DataFrame(rows3).to_csv(T / "v4_three_tier_common_split.csv", index=False)
+
+# ======================================================================= relabel the earlier 44-predictor block (run-file tier code 't3') as t2+E
+EARLY_MAP = {"t3": "t2+E", "t3-t2": "(t2+E)-t2", "t3-t1": "(t2+E)-t1"}
+for fn in ("original_tier_ablation.csv", "original_tier_ablation_per_split.csv", "model_development.csv", "baseline_studies.csv", "evaluation_protocols.csv",
+           "evaluation_protocols_gap_ablation_v1.csv", "evaluation_protocols_temporal_windows.csv"):
+    d = pd.read_csv(T / fn)
+    if "run_file_tier" not in d.columns:
+        d.insert(list(d.columns).index("tier") + 1, "run_file_tier", d["tier"])
+    d["tier"] = d["run_file_tier"].replace(EARLY_MAP)
+    d.to_csv(T / fn, index=False)
+d = pd.read_csv(T / "control_experiments.csv")
+d["feature_representation"] = d["feature_representation"].astype(str).str.replace(" : t3", " : E (earlier 44-predictor block; run-file code t3)", regex=False).str.replace("alternative literature blocks vs t2", "earlier alternative literature blocks vs t2", regex=False).replace("nan", "")
+d.to_csv(T / "control_experiments.csv", index=False)

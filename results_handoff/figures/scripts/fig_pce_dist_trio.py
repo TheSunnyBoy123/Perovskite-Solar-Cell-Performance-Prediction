@@ -1,4 +1,4 @@
-"""fig_pce_dist_trio: experimental vs predicted PCE histograms, first DOI-grouped split (pooled, t3):
+"""fig_pce_dist_trio: experimental vs predicted PCE histograms, first DOI-grouped split (pooled, t1; MLP and GPR baselines were run for t1 and the earlier block only):
 (a) CatBoost, (b) early-stopped MLP, (c) subsample GPR.
 Data: results/ablation_v1/preds and results/baselines_v1/preds (*_1.npz). Output: figures/fig_pce_dist_trio.{png,pdf}
 """
@@ -10,9 +10,9 @@ PRED_COL = ["#4A78A8", "#54A24B", "#C0504D"]
 
 
 def main():
-    panels = [RES / "ablation_v1/preds/doi_overall_t3_catboost_1.npz",
-              RES / "baselines_v1/preds/doi_overall_t3_mlp_1.npz",
-              RES / "baselines_v1/preds/doi_overall_t3_gpr_sub_1.npz"]
+    panels = [RES / "ablation_v1/preds/doi_overall_t1_catboost_1.npz",
+              RES / "baselines_v1/preds/doi_overall_t1_mlp_1.npz",
+              RES / "baselines_v1/preds/doi_overall_t1_gpr_sub_1.npz"]
     fig = plt.figure(figsize=(7.2, 4.6))
     gs = fig.add_gridspec(2, 2, hspace=.42, wspace=.28)
     axes = [fig.add_subplot(gs[0, :]), fig.add_subplot(gs[1, 0]), fig.add_subplot(gs[1, 1])]

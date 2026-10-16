@@ -5,10 +5,10 @@
 ## Which results are which
 | what | representation | where |
 |---|---|---|
-| **Final model (V4)** — t3 = t2 + 36 recipe flags; reserved-publication evaluation (`v4final`: 14,125 records / 2,619 DOIs; covered subset 5,460 / 1,005), same-settings and separately tuned | **V4 recipe flags** | `RESULTS_REPORT.md` §C; `tables/v4_main_results.csv`; `figures/fig_v4_recipe.png` |
-| Earlier five-split fixed-configuration ablation (t1 / t2 / original literature block) | **ORIGINAL 44-predictor block** (called `t3` in old files) | §D; `tables/original_tier_ablation*.csv` |
-| Model-development table (Tuned / Bag / XGB / Ensemble) | ORIGINAL block only; no V4 entries exist | §E; `tables/model_development.csv` |
-| Record-level vs DOI-grouped, lead-author, forward-in-time, reference models, SHAP, prediction errors | ORIGINAL block | §G |
+| **Final model (V4)** — t1 / t2 / t3 on identical reserved publications (`v4final`: 14,125 records / 2,619 DOIs; covered subset 5,460 / 1,005), matched default CatBoost; t3 = t2 + 36 recipe flags; plus separately tuned t2 vs t3 | **V4 recipe flags** | `RESULTS_REPORT.md` §C (C.0 three-tier); `tables/v4_three_tier_common_split.csv`, `tables/v4_main_results.csv`; `figures/fig_v4_recipe.png` |
+| Earlier five-split fixed-configuration ablation (t1 / t2 / t2+E) | **earlier 44-predictor representation E** (code `t3` in old run files; written `t2+E` here, never t3) | §D; `tables/original_tier_ablation*.csv` |
+| Model-development table (Tuned / Bag / XGB / Ensemble) | earlier representation E (t2+E) only; no V4 entries exist | §E; `tables/model_development.csv` |
+| Record-level vs DOI-grouped, lead-author, forward-in-time, reference models, SHAP, prediction errors | earlier representation E (t2+E) for the literature tier; reference models at t1 | §G |
 | Feature construction, coverage, extraction validation, lx2/lx3/quantity explorations | both (labelled) | §F; `tables/feature_coverage.csv`, `control_experiments.csv` |
 
 ## Authoritative sources (inside `ml_paper/`)

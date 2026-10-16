@@ -1,4 +1,4 @@
-"""fig_shap_groups: share of total mean |SHAP| by feature group, matched t3 (original block) CatBoost, first DOI-grouped split.
+"""fig_shap_groups: share of total mean |SHAP| by feature group, matched CatBoost trained on t2 + the earlier 44-predictor literature block (NOT t3), first DOI-grouped split.
 Data: results/shap/shap_groups.csv (columns arch, group, sum_mean_abs_shap, share). Output: figures/fig_shap_groups.{png,pdf}
 """
 from style import *

@@ -52,9 +52,9 @@ check("dev +0.0070, 12/15 folds (pen_05.csv)", close(x.mean(), 0.0070, 5e-4) and
 tn = json.load(open(R / "v4/tune.json")); check("t3 tuning MSE lower than t2 in 6/24 configs", sum(a_["mse"] > b_["mse"] for a_, b_ in zip(tn["t2"], tn["t3"])) == 6)
 # 3. tier / headline numbers
 O = pd.read_csv(T / "original_tier_ablation.csv"); o = O[(O.row_type == "tier metrics") & (O.protocol == "doi") & (O.estimator == "catboost") & (O.subset == "pooled")].set_index("tier")
-check("original pooled R2 0.368/0.408/0.407 (+-0.024/0.032/0.031)", close(o.r2_mean["t1"], 0.368, 5e-4) and close(o.r2_mean["t2"], 0.408, 5e-4) and close(o.r2_mean["t3"], 0.407, 5e-4) and close(o.r2_sd["t3"], 0.031, 5e-4))
+check("earlier-block pooled R2 t1/t2/t2+E 0.368/0.408/0.407 (+-0.024/0.032/0.031)", close(o.r2_mean["t1"], 0.368, 5e-4) and close(o.r2_mean["t2"], 0.408, 5e-4) and close(o.r2_mean["t2+E"], 0.407, 5e-4) and close(o.r2_sd["t2+E"], 0.031, 5e-4))
 M2 = pd.read_csv(T / "model_development.csv"); e = M2[(M2.subset == "pooled") & M2.estimator.str.startswith("mean of")].set_index("tier")
-check("model-dev pooled ensemble 0.377/0.416/0.418", close(e.r2_mean["t1"], 0.377, 5e-4) and close(e.r2_mean["t2"], 0.416, 5e-4) and close(e.r2_mean["t3"], 0.418, 5e-4))
+check("model-dev pooled ensemble 0.377/0.416/0.418", close(e.r2_mean["t1"], 0.377, 5e-4) and close(e.r2_mean["t2"], 0.416, 5e-4) and close(e.r2_mean["t2+E"], 0.418, 5e-4))
 check("model-dev table has 36 rows (3 subsets x 3 tiers x 4 models)", len(M2) == 36)
 # raw check: model_dev table vs manuscript-input table fragment (read-only)
 frag = ROOT / "psc_manuscript/tables/model_dev.tex"
@@ -64,16 +64,32 @@ if frag.exists():
     check("model_dev.tex pooled t1 row matches CSV", [tuple(map(float, x)) for x in m[:4]] == [(round(a_, 3), round(b_, 3)) for a_, b_ in [(M2[(M2.subset == "pooled") & (M2.tier == "t1")].iloc[i].r2_mean, M2[(M2.subset == "pooled") & (M2.tier == "t1")].iloc[i].r2_sd) for i in range(4)]])
 E = pd.read_csv(T / "evaluation_protocols.csv")
 def pool(proto, est, tier): return E[E.protocol.str.startswith(proto) & (E.estimator == est) & (E.subset == "pooled") & (E.tier == tier)].r2_mean.iloc[0]
-check("record-level CatBoost 0.587/0.618/0.627 (converged)", close(pool("record", "catboost", "t1"), 0.587, 5e-4) and close(pool("record", "catboost", "t2"), 0.618, 5e-4) and close(pool("record", "catboost", "t3"), 0.627, 5e-4))
-check("lead-author t3 0.395; forward t3 0.335", close(pool("lead", "catboost", "t3"), 0.395, 5e-4) and close(pool("forward", "catboost", "t3"), 0.335, 5e-4))
+check("record-level CatBoost 0.587/0.618/0.627 (converged)", close(pool("record", "catboost", "t1"), 0.587, 5e-4) and close(pool("record", "catboost", "t2"), 0.618, 5e-4) and close(pool("record", "catboost", "t2+E"), 0.627, 5e-4))
+check("lead-author t2+E 0.395; forward t2+E 0.335", close(pool("lead", "catboost", "t2+E"), 0.395, 5e-4) and close(pool("forward", "catboost", "t2+E"), 0.335, 5e-4))
 # 4. representation labels
 bad = []
-for f_ in ("original_tier_ablation.csv", "model_development.csv", "evaluation_protocols.csv", "baseline_studies.csv"):
-    d_ = pd.read_csv(T / f_); d_ = d_[d_.tier.astype(str) == "t3"] if "tier" in d_ else d_.iloc[0:0]
-    bad += [f_ for r in d_.itertuples() if "original" not in str(r.feature_representation).lower()]
-check("every 't3' row outside v4_main_results is labelled ORIGINAL block", not bad, str(set(bad)))
+for f_ in ("original_tier_ablation.csv", "original_tier_ablation_per_split.csv", "model_development.csv", "evaluation_protocols.csv", "evaluation_protocols_gap_ablation_v1.csv", "evaluation_protocols_temporal_windows.csv", "baseline_studies.csv"):
+    d_ = pd.read_csv(T / f_)
+    bad += [f_ for t_ in d_["tier"].astype(str) if t_ in ("t3", "t3-t2", "t3-t1")]                         # no plain t3 label may remain in earlier-protocol files
+    if "feature_representation" in d_:
+        bad += [f_ for r in d_[d_.tier.astype(str) == "t2+E"].itertuples() if "earlier" not in str(r.feature_representation).lower()]
+    bad += [f_ for r in d_.itertuples() if str(r.run_file_tier) == "t3" and str(r.tier) != "t2+E"]
+check("earlier-protocol files: no plain 't3' tier; earlier block is t2+E (run_file_tier keeps the old code) and labelled 'earlier'", not bad, str(set(bad)))
 a4 = V[V.row_type == "arm"]; check("every V4 't3' arm labelled V4 recipe flags", all("V4" in str(r.feature_representation) for r in a4.itertuples() if str(r.tier) == "t3"))
 check("no V4 entries invented in model_development.csv", (M2.v4_entry.astype(str).str.startswith("NA")).all())
+# 4b. common-split three-tier table and coverage audit
+TT = pd.read_csv(T / "v4_three_tier_common_split.csv"); m3 = pd.read_csv(R / "v4/final_t1/metrics_3tier.csv"); c3 = json.load(open(R / "v4/final_t1/comparisons_3tier.json"))
+ok = True
+for r in m3.itertuples():
+    x = TT[(TT.row_type == "tier metrics") & (TT.tier == r.tier) & (TT.population == {"covered": "LLM-covered", "full": "all reserved"}[r.scope])].iloc[0]
+    ok &= close(x.r2, r.r2, 1e-12) and close(x.mae, r.mae, 1e-12) and int(x.n_test_records) == r.n and int(x.n_test_dois) == r.dois
+check("three-tier table equals results/v4/final_t1 (R2, MAE, RMSE source, n, DOIs)", ok)
+Vm = pd.read_csv(R / "v4/final/metrics.csv").set_index(["scope", "arm"])
+check("t2/t3 arms of the three-tier table are the existing V4 default arms", all(close(m3[(m3.scope == sc) & (m3.tier == t)].r2.item(), Vm.loc[(sc, f"{t}_default"), "r2"], 1e-12) for sc in ("covered", "full") for t in ("t2", "t3")))
+check("t3-t2 CIs include zero; t2-t1 CIs exclude zero (both populations)", all(c3[sc]["t3_minus_t2"]["lo"] < 0 < c3[sc]["t3_minus_t2"]["hi"] and c3[sc]["t2_minus_t1"]["lo"] > 0 for sc in c3))
+check("monotonic t1<t2<t3 in R2, MAE (lower) and RMSE (lower) in both populations", all(g_.r2.is_monotonic_increasing and g_.mae.is_monotonic_decreasing and g_.rmse.is_monotonic_decreasing for _, g_ in m3.groupby("scope")))
+ca = json.load(open(R / "coverage_mask_audit.json"))
+check("coverage audit: A 14,896/2,699; B 15,027/2,731; B-A 32 DOIs/131 records, all zero-material extractions", (ca["mask_A_records"], ca["mask_A_publications"], ca["mask_B_records"], ca["mask_B_publications"], ca["B_minus_A_publications"], ca["B_minus_A_records"], ca["B_minus_A_all_have_zero_materials"]) == (14896, 2699, 15027, 2731, 32, 131, True))
 # 5. CSV hygiene
 for f_ in sorted(glob.glob(str(T / "*.csv"))):
     d_ = pd.read_csv(f_); check(f"opens: {Path(f_).name}", len(d_) > 0 and not d_.columns.duplicated().any(), f"{len(d_)} rows x {len(d_.columns)} cols")

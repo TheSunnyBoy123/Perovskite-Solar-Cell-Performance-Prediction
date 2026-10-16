@@ -6,8 +6,14 @@ D = {
 "row_type": "'arm' (one scored model) | 'comparison' | 'paired comparison' | 'tier metrics' | 'paired difference' (what the row represents)",
 "scope": "V4 evaluation subset: 'covered (papers with V4 flags)' or 'all records' of the reserved v4final partition",
 "arm": "V4 model arm (e.g. t2_default, t3_tuned, ctl_perm0_default) or 'reference -> comparison' arm pair",
-"tier": "feature tier code. In files from the five-split ablation/model-dev/strict/baselines 't3' = ORIGINAL 44-predictor literature block; in v4_main_results.csv 't3' = final V4 recipe flags. Contrast labels such as 't3-t2' also appear here.",
-"feature_representation": "explicit name of the feature set behind the row (t1, t2, ORIGINAL block, V4 recipe flags (36), control description)",
+"tier": "feature tier. 't1' = PDP features, 't2' = t1 + material properties, 't3' = t2 + final V4 36 recipe flags (only in v4_main_results.csv and v4_three_tier_common_split.csv). In the five-split ablation/model-dev/strict/baselines files the earlier 44-predictor literature representation is written 't2+E' (contrasts '(t2+E)-t2', '(t2+E)-t1'); its original run-file code 't3' is kept in `run_file_tier`.",
+"feature_representation": "explicit name of the feature set behind the row (t1, t2, t2 + earlier representation E, V4 recipe flags (36), control description)",
+"run_file_tier": "tier code exactly as stored in the original run files / logs (for the earlier representation E this is 't3', which must NOT be read as the final V4 t3)",
+"population": "V4 evaluation population: 'LLM-covered' (reserved records whose publication has V4 extraction data) or 'all reserved'",
+"comparison": "paired comparison label (V4 files) or contrast; differences are second-minus-first (e.g. 't3 - t2' = t3 minus t2)",
+"r2_ci_lo": "lower 95% publication-cluster bootstrap bound of the tier R2", "r2_ci_hi": "upper 95% publication-cluster bootstrap bound of the tier R2",
+"delta_ci_lo": "lower 95% paired publication-cluster bootstrap bound of delta R2", "delta_ci_hi": "upper 95% paired publication-cluster bootstrap bound of delta R2",
+"split": "evaluation partition",
 "estimator": "model/estimator name (catboost, ridge, mean, xgb_default, rf, mlp, gpr_sub, or a model-development variant)",
 "estimator_config": "hyperparameter configuration of the arm (matched default / t2-tuned / t3-tuned / cross-applied)",
 "comparison": "which paired comparison: A (same settings), B (each tuned), tuning effect, or control",
@@ -75,15 +81,16 @@ assert not missing, missing
 lines = ["# Data dictionary for `tables/*.csv`", "",
  "Conventions: R² = coefficient of determination; MAE/RMSE in **PCE percentage points**; Jsc errors only for Roberts et al. (mA cm⁻²). 'sd' = sample standard deviation (ddof=1) over splits (split variability, **not** a confidence interval). "
  "Blank / `NA` = not available in the artifacts; nothing is estimated. 'records' = device entries; 'DOIs' = unique normalised publication DOIs (+ the 232-record no-DOI block where stated).",
- "**Tier codes.** `t3` has two meanings depending on the file: in `v4_main_results.csv` it is the FINAL V4 recipe-flag tier; in `original_tier_ablation*.csv`, `model_development.csv`, `evaluation_protocols*.csv`, `baseline_studies.csv` and feature-group rows it is the ORIGINAL 44-predictor literature block. The `feature_representation` column always says which.", "",
+ "**Tier codes.** `t1` = PDP features, `t2` = t1 + material properties, `t3` = t2 + the final V4 36 recipe flags (only in `v4_main_results.csv` and `v4_three_tier_common_split.csv`). The earlier 44-predictor literature representation (E) appears as `t2+E` in `original_tier_ablation*.csv`, `model_development.csv`, `evaluation_protocols*.csv` and `baseline_studies.csv`; the code used in the original run files (`t3`) is preserved in the column `run_file_tier`. Results of the two representations come from different protocols and must not be compared directly.", "",
  "| column | meaning | files |", "|---|---|---|"]
 for c, fs in cols.items(): lines.append(f"| `{c}` | {D[c]} | {', '.join(fs)} |")
 lines += ["", "## Files", "",
+ "* `v4_three_tier_common_split.csv` — common-split t1/t2/t3 on the reserved v4final publications (matched default CatBoost): per-tier R² with CI, MAE, RMSE, sample sizes; paired t2−t1, t3−t2, t3−t1.",
  "* `v4_main_results.csv` — V4 reserved evaluation: 24 arm rows (12 arms × 2 scopes) + 24 paired-comparison rows (A, B, tuning effects, controls).",
- "* `original_tier_ablation.csv` (+ `_per_split.csv`) — five-split fixed-config ablation (t1, t2, ORIGINAL block) incl. record-level rows and paired differences.",
- "* `model_development.csv` — Tuned/Bag/XGB/Ensemble for every subset × tier (ORIGINAL block; no V4 entries).",
+ "* `original_tier_ablation.csv` (+ `_per_split.csv`) — five-split fixed-config ablation (t1, t2, t2+E = earlier representation) incl. record-level rows and paired differences.",
+ "* `model_development.csv` — Tuned/Bag/XGB/Ensemble for every subset × tier (t2+E, earlier representation; no V4 entries).",
  "* `evaluation_protocols.csv` (+ `_temporal_windows.csv`, `_gap_ablation_v1.csv`) — DOI-grouped, record-level, lead-author, forward-in-time.",
- "* `feature_coverage.csv` — dataset counts, V4 partition counts, per-feature coverage of the ORIGINAL block, V4 flag prevalence, quantity-level columns.",
+ "* `feature_coverage.csv` — dataset counts, V4 partition counts, per-feature coverage of the earlier block E, V4 flag prevalence, quantity-level columns.",
  "* `control_experiments.csv` — V4 permuted/coverage controls, feature-group controls, material-identity control, E2–E6, lx2/lx3/qty experiments.",
  "* `baseline_studies.csv` — in-framework reference models and cited prior studies.",
  "* `_records_per_doi_describe.csv` — helper for the records-per-publication statistics."]
@@ -97,16 +104,17 @@ Shared style: `scripts/style.py` (Arial 8 pt, blue/green/gold tiers, dot/error-b
 
 | file | shows | representation / protocol | data source | script |
 |---|---|---|---|---|
-| fig_feature_tiers.png/.pdf | R² and RMSE of t1 / t2 / t3 (mean ± sd, 5 splits), pooled, p-i-n, n-i-p | ORIGINAL block (legend says "original block"); fixed CatBoost; 5 DOI-grouped holdouts | `results/ablation_v1` | `scripts/fig_feature_tiers.py` |
-| fig_split_effect.png/.pdf | record-level random vs DOI-grouped R², CatBoost and ridge, pooled | ORIGINAL block; record-level CatBoost/ridge from converged/rerun files via `psc.results.load_ablation` | `results/ablation_v1`, `ablation_random_cap6000`, `random_convergence_cap20000` | `scripts/fig_split_effect.py` |
-| fig_oof_diagnostics.png/.pdf | parity and residuals, 5 test sets stacked (42,142 predictions) | ORIGINAL block, matched CatBoost, pooled | `results/ablation_v1/preds/doi_overall_t3_catboost_{1..5}.npz` | `scripts/fig_oof_diagnostics.py` |
-| fig_pce_dist_trio.png/.pdf | experimental vs predicted PCE histograms, split 1: CatBoost, MLP, GPR | ORIGINAL block, pooled | `results/ablation_v1/preds`, `results/baselines_v1/preds` | `scripts/fig_pce_dist_trio.py` |
-| fig_shap_groups.png/.pdf | share of mean abs SHAP by feature group | ORIGINAL block CatBoost, split 1, 1,500 test records | `results/shap/shap_groups.csv` | `scripts/fig_shap_groups.py` |
-| shap.png/.pdf | top-12 features by mean abs SHAP, three models | ORIGINAL block | `results/shap/shap_ranking_*.csv` | `scripts/shap.py` |
-| fig_v4_recipe.png/.pdf | ΔR² (V4 t3 − t2) with 95% publication-cluster CIs; same-default vs each-tuned; grey band = range of five permuted controls | FINAL V4 recipe flags; reserved v4final; covered vs all records | `results/v4/final/comparisons.json` | `scripts/fig_v4_recipe.py` |
+| fig_feature_tiers.png/.pdf | R² and RMSE of t1 / t2 (mean ± sd, 5 splits), pooled, p-i-n, n-i-p | t1 and t2 only; fixed CatBoost; 5 DOI-grouped holdouts (the earlier-block bars were removed from the manuscript figure) | `results/ablation_v1` | `scripts/fig_feature_tiers.py` |
+| fig_split_effect.png/.pdf | record-level random vs DOI-grouped R², CatBoost and ridge, pooled | t1/t2 only (manuscript version); record-level CatBoost/ridge from converged/rerun files via `psc.results.load_ablation` | `results/ablation_v1`, `ablation_random_cap6000`, `random_convergence_cap20000` | `scripts/fig_split_effect.py` |
+| fig_oof_diagnostics.png/.pdf | parity and residuals, 5 test sets stacked (42,142 predictions) | matched CatBoost, pooled, t2 | `results/ablation_v1/preds/doi_overall_t2_catboost_{1..5}.npz` | `scripts/fig_oof_diagnostics.py` |
+| fig_pce_dist_trio.png/.pdf | experimental vs predicted PCE histograms, split 1: CatBoost, MLP, GPR | t1 (the tier for which all three models exist), pooled; reference-model scope only | `results/ablation_v1/preds`, `results/baselines_v1/preds` | `scripts/fig_pce_dist_trio.py` |
+| fig_shap_groups.png/.pdf | share of mean abs SHAP by feature group | earlier representation E (t2+E) CatBoost, NOT t3, split 1, 1,500 test records | `results/shap/shap_groups.csv` | `scripts/fig_shap_groups.py` |
+| shap.png/.pdf | top-12 features by mean abs SHAP, three models | earlier representation E (t2+E), NOT t3 | `results/shap/shap_ranking_*.csv` | `scripts/shap.py` |
+| fig_three_tier.png/.pdf | R² per tier with 95% CIs and paired t2−t1, t3−t2 differences, covered vs all reserved records | FINAL V4 t1/t2/t3 on identical reserved publications, matched default CatBoost | `results/v4/final_t1/{metrics_3tier.csv,comparisons_3tier.json}` | `scripts/fig_three_tier.py` |
+| fig_v4_recipe.png/.pdf | ΔR² (t3 − t2) with 95% publication-cluster CIs; same-default vs each-tuned; grey band = range of five permuted controls | FINAL V4 recipe flags; reserved v4final; covered vs all records | `results/v4/final/comparisons.json` | `scripts/fig_v4_recipe.py` |
 | device_structure.png, ml_pipeline.png | device schematic; workflow diagram | not data figures | `psc_manuscript/tikz/`, `scripts/build_workflow_figure.py` | — |
 
-Caveats: figures use tier code `t3` in axis/legend text for the ORIGINAL block except where stated; `ml_pipeline.png` predates V4 (its Panel 6 describes the matched CatBoost and the 77/179/223 feature counts of the ORIGINAL representation). Earlier bar-style versions of these figures (from `scripts/make_figures.py`) are in `psc_manuscript/figures_prev_backup/` and are not part of this package.
+Caveats: the files in `figures/` were refreshed to the current manuscript versions (final t1/t2/t3 labels; the earlier first-handoff copies are preserved in Git history). SHAP figures describe models with the earlier representation E, not t3. The MLP/GPR distribution figure is t1-only. `ml_pipeline.png` shows 77/179/215 predictors. Earlier bar-style versions of these figures (from `scripts/make_figures.py`) are in `psc_manuscript/figures_prev_backup/` and are not part of this package.
 """
 (H / "figures/FIGURE_MANIFEST.md").write_text(FM)
 README = """# Results handoff — PSC PCE prediction with LLM-derived recipe features
@@ -116,10 +124,10 @@ README = """# Results handoff — PSC PCE prediction with LLM-derived recipe fea
 ## Which results are which
 | what | representation | where |
 |---|---|---|
-| **Final model (V4)** — t3 = t2 + 36 recipe flags; reserved-publication evaluation (`v4final`: 14,125 records / 2,619 DOIs; covered subset 5,460 / 1,005), same-settings and separately tuned | **V4 recipe flags** | `RESULTS_REPORT.md` §C; `tables/v4_main_results.csv`; `figures/fig_v4_recipe.png` |
-| Earlier five-split fixed-configuration ablation (t1 / t2 / original literature block) | **ORIGINAL 44-predictor block** (called `t3` in old files) | §D; `tables/original_tier_ablation*.csv` |
-| Model-development table (Tuned / Bag / XGB / Ensemble) | ORIGINAL block only; no V4 entries exist | §E; `tables/model_development.csv` |
-| Record-level vs DOI-grouped, lead-author, forward-in-time, reference models, SHAP, prediction errors | ORIGINAL block | §G |
+| **Final model (V4)** — t1 / t2 / t3 on identical reserved publications (`v4final`: 14,125 records / 2,619 DOIs; covered subset 5,460 / 1,005), matched default CatBoost; t3 = t2 + 36 recipe flags; plus separately tuned t2 vs t3 | **V4 recipe flags** | `RESULTS_REPORT.md` §C (C.0 three-tier); `tables/v4_three_tier_common_split.csv`, `tables/v4_main_results.csv`; `figures/fig_v4_recipe.png` |
+| Earlier five-split fixed-configuration ablation (t1 / t2 / t2+E) | **earlier 44-predictor representation E** (code `t3` in old run files; written `t2+E` here, never t3) | §D; `tables/original_tier_ablation*.csv` |
+| Model-development table (Tuned / Bag / XGB / Ensemble) | earlier representation E (t2+E) only; no V4 entries exist | §E; `tables/model_development.csv` |
+| Record-level vs DOI-grouped, lead-author, forward-in-time, reference models, SHAP, prediction errors | earlier representation E (t2+E) for the literature tier; reference models at t1 | §G |
 | Feature construction, coverage, extraction validation, lx2/lx3/quantity explorations | both (labelled) | §F; `tables/feature_coverage.csv`, `control_experiments.csv` |
 
 ## Authoritative sources (inside `ml_paper/`)

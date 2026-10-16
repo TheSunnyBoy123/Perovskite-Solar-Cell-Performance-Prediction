@@ -29,27 +29,33 @@ Run by `verify_handoff.py` (read-only; no training, no LLM).
 - [PASS] metrics.csv n/DOIs: covered 5460/1005, full 14125/2619
 - [PASS] dev +0.0070, 12/15 folds (pen_05.csv)
 - [PASS] t3 tuning MSE lower than t2 in 6/24 configs
-- [PASS] original pooled R2 0.368/0.408/0.407 (+-0.024/0.032/0.031)
+- [PASS] earlier-block pooled R2 t1/t2/t2+E 0.368/0.408/0.407 (+-0.024/0.032/0.031)
 - [PASS] model-dev pooled ensemble 0.377/0.416/0.418
 - [PASS] model-dev table has 36 rows (3 subsets x 3 tiers x 4 models)
 - [PASS] model_dev.tex pooled t1 row matches CSV
 - [PASS] record-level CatBoost 0.587/0.618/0.627 (converged)
-- [PASS] lead-author t3 0.395; forward t3 0.335
-- [PASS] every 't3' row outside v4_main_results is labelled ORIGINAL block — set()
+- [PASS] lead-author t2+E 0.395; forward t2+E 0.335
+- [PASS] earlier-protocol files: no plain 't3' tier; earlier block is t2+E (run_file_tier keeps the old code) and labelled 'earlier' — set()
 - [PASS] every V4 't3' arm labelled V4 recipe flags
 - [PASS] no V4 entries invented in model_development.csv
+- [PASS] three-tier table equals results/v4/final_t1 (R2, MAE, RMSE source, n, DOIs)
+- [PASS] t2/t3 arms of the three-tier table are the existing V4 default arms
+- [PASS] t3-t2 CIs include zero; t2-t1 CIs exclude zero (both populations)
+- [PASS] monotonic t1<t2<t3 in R2, MAE (lower) and RMSE (lower) in both populations
+- [PASS] coverage audit: A 14,896/2,699; B 15,027/2,731; B-A 32 DOIs/131 records, all zero-material extractions
 - [PASS] opens: _records_per_doi_describe.csv — 8 rows x 2 cols
-- [PASS] opens: baseline_studies.csv — 18 rows x 16 cols
+- [PASS] opens: baseline_studies.csv — 18 rows x 17 cols
 - [PASS] opens: control_experiments.csv — 106 rows x 26 cols
-- [PASS] opens: evaluation_protocols.csv — 108 rows x 16 cols
-- [PASS] opens: evaluation_protocols_gap_ablation_v1.csv — 27 rows x 10 cols
-- [PASS] opens: evaluation_protocols_temporal_windows.csv — 27 rows x 10 cols
+- [PASS] opens: evaluation_protocols.csv — 108 rows x 17 cols
+- [PASS] opens: evaluation_protocols_gap_ablation_v1.csv — 27 rows x 11 cols
+- [PASS] opens: evaluation_protocols_temporal_windows.csv — 27 rows x 11 cols
 - [PASS] opens: feature_coverage.csv — 80 rows x 12 cols
-- [PASS] opens: model_development.csv — 36 rows x 17 cols
-- [PASS] opens: original_tier_ablation.csv — 108 rows x 25 cols
-- [PASS] opens: original_tier_ablation_per_split.csv — 45 rows x 16 cols
+- [PASS] opens: model_development.csv — 36 rows x 18 cols
+- [PASS] opens: original_tier_ablation.csv — 108 rows x 26 cols
+- [PASS] opens: original_tier_ablation_per_split.csv — 45 rows x 17 cols
 - [PASS] opens: v4_main_results.csv — 48 rows x 31 cols
+- [PASS] opens: v4_three_tier_common_split.csv — 12 rows x 20 cols
 - [PASS] every CSV column documented in DATA_DICTIONARY.md
-- [PASS] all file paths cited in report/README/manifest exist (glob/brace patterns skipped) — 101 paths checked
+- [PASS] all file paths cited in report/README/manifest exist (glob/brace patterns skipped) — 108 paths checked
 
-**49 passed, 0 failed.**
+**55 passed, 0 failed.**

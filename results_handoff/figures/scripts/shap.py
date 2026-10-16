@@ -1,4 +1,4 @@
-"""shap: twelve highest-ranked features by mean |SHAP|, (a) pooled, (b) p-i-n, (c) n-i-p, matched t3 CatBoost, first DOI split.
+"""shap: twelve highest-ranked features by mean |SHAP|, (a) pooled, (b) p-i-n, (c) n-i-p, matched CatBoost on t2 + earlier 44-predictor block (NOT t3), first DOI split.
 Data: results/shap/shap_ranking_{overall,pin,nip}.csv (columns feature, mean_abs_shap, group). Output: figures/shap.{png,pdf}
 """
 from style import *
