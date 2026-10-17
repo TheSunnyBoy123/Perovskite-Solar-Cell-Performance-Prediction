@@ -3,20 +3,20 @@
 \usepackage{microtype}\usepackage{hyperref}
 \title{Supplementary Information: Publication-Level Generalization in Perovskite Solar Cell Prediction: DOI-Grouped Evaluation with Literature-Derived Recipe Features}
 \date{}\begin{document}\maketitle\small
-\noindent\textbf{Tier naming.} Throughout the main paper and this document, $t_1$ = PDP-derived device, processing and composition features; $t_2$ = $t_1$ + curated material-property descriptors; $t_3$ = $t_2$ + the 36 LLM-derived recipe flags. An earlier, superseded 44-predictor literature representation (the ``earlier literature block'') is \emph{not} $t_3$; where its results are shown they are labelled ``$t_2$ + earlier lit.\ block''. In the underlying run files and result tables of the repository this block carries the tier name \texttt{t3}; this document relabels it and never mixes its numbers with the recipe-flag results.\par
+\noindent\textbf{Tier naming.} Throughout the main paper and this document, $\mathcal{M}_1$ = PDP-derived device, processing and composition features; $\mathcal{M}_2$ = $\mathcal{M}_1$ + curated material-property descriptors; $\mathcal{M}_3$ = $\mathcal{M}_2$ + the 36 LLM-derived recipe flags. An earlier, superseded 44-predictor literature representation (the ``earlier literature block'') is \emph{not} $\mathcal{M}_3$; where its results are shown they are labelled ``$\mathcal{M}_2$ + earlier lit.\ block''. In the underlying run files and result tables of the repository this block carries the tier name \texttt{t3}; this document relabels it and never mixes its numbers with the recipe-flag results.\par
 \section*{Table S1. Predictors per tier}
-Column sets shown for a preprocessor fitted on the full filtered data (documentation); in the experiments the \texttt{\_na} indicators and the $>$80\% missing filter are re-derived from each training partition. Tiers are nested: $t_1\subset t_2\subset t_3$ (77, 179 and 215 predictor columns in the common-split models).\par
+Column sets shown for a preprocessor fitted on the full filtered data (documentation); in the experiments the \texttt{\_na} indicators and the $>$80\% missing filter are re-derived from each training partition. Tiers are nested: $\mathcal{M}_1\subset \mathcal{M}_2\subset \mathcal{M}_3$ (77, 179 and 215 predictor columns in the common-split models).\par
 \subsection*{t1: 77 predictors (77 added relative to the previous tier)}
 \textbf{process} (21): \texttt{ETL\_deposition\_method}, \texttt{HTL\_deposition\_method}, \texttt{Perovskite\_deposition\_method}, \texttt{Perovskite\_thickness\_nm}, \texttt{ETL\_thickness\_nm}, \texttt{HTL\_thickness\_nm}, \texttt{Backcontact\_thickness\_nm}, \texttt{Perov\_anneal\_temp\_C}, \texttt{Perov\_anneal\_time\_min}, \texttt{Perov\_deposition\_steps}, \texttt{Perovskite\_dimension\_list\_of\_layers}, \texttt{Perov\_quenching\_crystallisation}, \texttt{Perovskite\_dimension\_3D\_with\_2D\_capping\_layer}, \texttt{Perovskite\_deposition\_solvent\_annealing}, \texttt{Perovskite\_thickness\_nm\_na}, \texttt{ETL\_thickness\_nm\_na}, \texttt{HTL\_thickness\_nm\_na}, \texttt{Backcontact\_thickness\_nm\_na}, \texttt{Perov\_anneal\_temp\_C\_na}, \texttt{Perov\_anneal\_time\_min\_na}, \texttt{Perovskite\_dimension\_list\_of\_layers\_na}\par\smallskip
 \textbf{device} (9): \texttt{Cell\_architecture}, \texttt{Perovskite\_band\_gap\_measured}, \texttt{is\_flexible\_x}, \texttt{is\_semitransparent}, \texttt{Encapsulation}, \texttt{Add\_lay\_front}, \texttt{Perovskite\_pl\_max\_nm}, \texttt{Perovskite\_band\_gap\_measured\_na}, \texttt{Perovskite\_pl\_max\_nm\_na}\par\smallskip
 \textbf{composition} (47): \texttt{num\_a\_ions}, \texttt{num\_b\_ions}, \texttt{num\_c\_ions}, \texttt{total\_ion\_count}, \texttt{a\_coeff\_sum}, \texttt{b\_coeff\_sum}, \texttt{c\_coeff\_sum}, \texttt{a\_FA\_fraction}, \texttt{a\_MA\_fraction}, \texttt{a\_Cs\_fraction}, \texttt{a\_Rb\_fraction}, \texttt{a\_organic\_fraction}, \texttt{a\_other\_fraction}, \texttt{b\_Pb\_fraction}, \texttt{b\_Sn\_fraction}, \texttt{b\_Bi\_fraction}, \texttt{b\_other\_fraction}, \texttt{halide\_I\_fraction}, \texttt{halide\_Br\_fraction}, \texttt{halide\_Cl\_fraction}, \texttt{halide\_F\_fraction}, \texttt{halide\_other\_fraction}, \texttt{is\_inorganic}, \texttt{is\_leadfree}, \texttt{is\_3D}, \texttt{is\_2D}, \texttt{is\_2D3D\_mixture}, \texttt{Perovskite\_composition\_perovskite\_inspired\_structure}, \texttt{Perovskite\_composition\_perovskite\_ABC3\_structure}, \texttt{a\_coeff\_sum\_na}, \texttt{b\_coeff\_sum\_na}, \texttt{c\_coeff\_sum\_na}, \texttt{a\_FA\_fraction\_na}, \texttt{a\_MA\_fraction\_na}, \texttt{a\_Cs\_fraction\_na}, \texttt{a\_Rb\_fraction\_na}, \texttt{a\_organic\_fraction\_na}, \texttt{a\_other\_fraction\_na}, \texttt{b\_Pb\_fraction\_na}, \texttt{b\_Sn\_fraction\_na}, \texttt{b\_Bi\_fraction\_na}, \texttt{b\_other\_fraction\_na}, \texttt{halide\_I\_fraction\_na}, \texttt{halide\_Br\_fraction\_na}, \texttt{halide\_Cl\_fraction\_na}, \texttt{halide\_F\_fraction\_na}, \texttt{halide\_other\_fraction\_na}\par\smallskip
 \subsection*{t2: 179 predictors (102 added relative to the previous tier)}
 \textbf{material} (102): \texttt{ETL\_band\_gap}, \texttt{ETL\_LUMO}, \texttt{ETL\_HOMO}, \texttt{ETL\_electron\_mobility}, \texttt{ETL\_hole\_mobility}, \texttt{ETL\_dielectric\_constant}, \texttt{ETL\_min\_atomic\_mass}, \texttt{ETL\_max\_atomic\_mass}, \texttt{ETL\_avg\_atomic\_mass}, \texttt{ETL\_min\_radius}, \texttt{ETL\_max\_radius}, \texttt{ETL\_avg\_radius}, \texttt{ETL\_en\_min}, \texttt{ETL\_en\_max}, \texttt{ETL\_en\_avg}, \texttt{HTL\_band\_gap}, \texttt{HTL\_LUMO}, \texttt{HTL\_HOMO}, \texttt{HTL\_electron\_mobility}, \texttt{HTL\_hole\_mobility}, \texttt{HTL\_dielectric\_constant}, \texttt{HTL\_min\_atomic\_mass}, \texttt{HTL\_max\_atomic\_mass}, \texttt{HTL\_avg\_atomic\_mass}, \texttt{HTL\_min\_radius}, \texttt{HTL\_max\_radius}, \texttt{HTL\_avg\_radius}, \texttt{HTL\_en\_min}, \texttt{HTL\_en\_max}, \texttt{HTL\_en\_avg}, \texttt{Perovskite\_band\_gap}, \texttt{Perovskite\_LUMO}, \texttt{Perovskite\_HOMO}, \texttt{Perovskite\_electron\_mobility}, \texttt{Perovskite\_hole\_mobility}, \texttt{Perovskite\_dielectric\_constant}, \texttt{Perovskite\_min\_atomic\_mass}, \texttt{Perovskite\_max\_atomic\_mass}, \texttt{Perovskite\_avg\_atomic\_mass}, \texttt{Perovskite\_min\_radius}, \texttt{Perovskite\_max\_radius}, \texttt{Perovskite\_avg\_radius}, \texttt{Perovskite\_en\_min}, \texttt{Perovskite\_en\_max}, \texttt{Perovskite\_en\_avg}, \texttt{perovskite\_tolerance\_factor}, \texttt{perovskite\_octahedral\_factor}, \texttt{perovskite\_cation\_radius\_ratio}, \texttt{perovskite\_tau\_descriptor}, \texttt{HTL\_hole\_barrier}, \texttt{ETL\_electron\_barrier}, \texttt{ETL\_band\_gap\_na}, \texttt{ETL\_LUMO\_na}, \texttt{ETL\_HOMO\_na}, \texttt{ETL\_electron\_mobility\_na}, \texttt{ETL\_hole\_mobility\_na}, \texttt{ETL\_dielectric\_constant\_na}, \texttt{ETL\_min\_atomic\_mass\_na}, \texttt{ETL\_max\_atomic\_mass\_na}, \texttt{ETL\_avg\_atomic\_mass\_na}, \texttt{ETL\_min\_radius\_na}, \texttt{ETL\_max\_radius\_na}, \texttt{ETL\_avg\_radius\_na}, \texttt{ETL\_en\_min\_na}, \texttt{ETL\_en\_max\_na}, \texttt{ETL\_en\_avg\_na}, \texttt{HTL\_band\_gap\_na}, \texttt{HTL\_LUMO\_na}, \texttt{HTL\_HOMO\_na}, \texttt{HTL\_electron\_mobility\_na}, \texttt{HTL\_hole\_mobility\_na}, \texttt{HTL\_dielectric\_constant\_na}, \texttt{HTL\_min\_atomic\_mass\_na}, \texttt{HTL\_max\_atomic\_mass\_na}, \texttt{HTL\_avg\_atomic\_mass\_na}, \texttt{HTL\_min\_radius\_na}, \texttt{HTL\_max\_radius\_na}, \texttt{HTL\_avg\_radius\_na}, \texttt{HTL\_en\_min\_na}, \texttt{HTL\_en\_max\_na}, \texttt{HTL\_en\_avg\_na}, \texttt{Perovskite\_band\_gap\_na}, \texttt{Perovskite\_LUMO\_na}, \texttt{Perovskite\_HOMO\_na}, \texttt{Perovskite\_electron\_mobility\_na}, \texttt{Perovskite\_hole\_mobility\_na}, \texttt{Perovskite\_dielectric\_constant\_na}, \texttt{Perovskite\_min\_atomic\_mass\_na}, \texttt{Perovskite\_max\_atomic\_mass\_na}, \texttt{Perovskite\_avg\_atomic\_mass\_na}, \texttt{Perovskite\_min\_radius\_na}, \texttt{Perovskite\_max\_radius\_na}, \texttt{Perovskite\_avg\_radius\_na}, \texttt{Perovskite\_en\_min\_na}, \texttt{Perovskite\_en\_max\_na}, \texttt{Perovskite\_en\_avg\_na}, \texttt{perovskite\_tolerance\_factor\_na}, \texttt{perovskite\_octahedral\_factor\_na}, \texttt{perovskite\_cation\_radius\_ratio\_na}, \texttt{perovskite\_tau\_descriptor\_na}, \texttt{HTL\_hole\_barrier\_na}, \texttt{ETL\_electron\_barrier\_na}\par\smallskip
-\subsection*{t3: 215 predictors (36 recipe flags added to $t_2$)}
+\subsection*{t3: 215 predictors (36 recipe flags added to $\mathcal{M}_2$)}
 Flags are paper-level, binary, and missing (native NaN, no indicator) for publications without an extraction record. Share positive among the 2,835 extracted papers in parentheses: \texttt{rc\_cl\_source} (20.5\%), \texttt{rc\_acetate} (4.7\%), \texttt{rc\_scn} (2.3\%), \texttt{rc\_snf2} (0.7\%), \texttt{rc\_ava} (0.8\%), \texttt{rc\_hx\_acid} (7.0\%), \texttt{rc\_alkali} (2.4\%), \texttt{rc\_cs} (12.0\%), \texttt{rc\_pea\_family} (60.8\%), \texttt{rc\_lewis\_base} (34.7\%), \texttt{rc\_water\_add} (4.1\%), \texttt{rc\_polymer} (17.7\%), \texttt{rc\_carbon} (28.4\%), \texttt{rc\_dio} (0.7\%), \texttt{rc\_htl\_tbp} (24.5\%), \texttt{rc\_htl\_litfsi} (23.5\%), \texttt{rc\_htl\_fk} (4.9\%), \texttt{rc\_htl\_f4tcnq} (0.8\%), \texttt{rc\_htl\_cu} (4.5\%), \texttt{rc\_htl\_borate} (0.3\%), \texttt{rc\_etl\_ticl4} (5.6\%), \texttt{rc\_etl\_dopant} (6.2\%), \texttt{rc\_undoped} (9.1\%), \texttt{rc\_interface\_pass} (15.7\%), \texttt{rc\_antisolvent} (6.4\%), \texttt{rc\_vacuum} (17.6\%), \texttt{rc\_two\_step} (3.9\%), \texttt{rc\_hot\_cast} (0.0\%), \texttt{rc\_solvent\_anneal} (1.0\%), \texttt{rc\_flexible} (4.3\%), \texttt{rc\_tandem} (3.4\%), \texttt{rc\_lead\_free} (4.0\%), \texttt{rc\_inorganic} (7.5\%), \texttt{rc\_mesoscopic} (22.3\%), \texttt{rc\_n2\_box} (4.0\%), \texttt{rc\_ambient} (10.4\%).\par\smallskip
-\subsection*{Earlier literature block (44 predictors; not part of $t_3$)}
+\subsection*{Earlier literature block (44 predictors; not part of $\mathcal{M}_3$)}
 \textbf{literature} (44): \texttt{has\_BCP}, \texttt{has\_LiF}, \texttt{has\_PEAI}, \texttt{has\_SAM}, \texttt{has\_C60}, \texttt{has\_PCBM}, \texttt{has\_Spiro}, \texttt{has\_PEDOT}, \texttt{has\_NiOx}, \texttt{has\_SnO2}, \texttt{has\_TiO2}, \texttt{has\_ZnO}, \texttt{has\_PTAA}, \texttt{has\_fullerene}, \texttt{has\_passivation\_layer}, \texttt{is\_flexible\_y}, \texttt{is\_encapsulated}, \texttt{has\_stability\_measurement}, \texttt{used\_antisolvent}, \texttt{used\_glovebox}, \texttt{used\_vacuum\_evaporation}, \texttt{json\_numeric\_values\_found}, \texttt{has\_BCP\_na}, \texttt{has\_LiF\_na}, \texttt{has\_PEAI\_na}, \texttt{has\_SAM\_na}, \texttt{has\_C60\_na}, \texttt{has\_PCBM\_na}, \texttt{has\_Spiro\_na}, \texttt{has\_PEDOT\_na}, \texttt{has\_NiOx\_na}, \texttt{has\_SnO2\_na}, \texttt{has\_TiO2\_na}, \texttt{has\_ZnO\_na}, \texttt{has\_PTAA\_na}, \texttt{has\_fullerene\_na}, \texttt{has\_passivation\_layer\_na}, \texttt{is\_flexible\_y\_na}, \texttt{is\_encapsulated\_na}, \texttt{has\_stability\_measurement\_na}, \texttt{used\_antisolvent\_na}, \texttt{used\_glovebox\_na}, \texttt{used\_vacuum\_evaporation\_na}, \texttt{json\_numeric\_values\_found\_na}\par\smallskip
-\section*{Table S2. Per-split results of the matched CatBoost five-holdout experiment (DOI-grouped; $t_3$ in the run files = earlier literature block)}\begin{longtable}{lllrrrr}\toprule Subset & Tier & Split & $n_\mathrm{test}$ & $R^2$ & MAE & RMSE\\\midrule\endhead
+\section*{Table S2. Per-split results of the matched CatBoost five-holdout experiment (DOI-grouped; $\mathcal{M}_3$ in the run files = earlier literature block)}\begin{longtable}{lllrrrr}\toprule Subset & Tier & Split & $n_\mathrm{test}$ & $R^2$ & MAE & RMSE\\\midrule\endhead
 nip & t1 & 1 & 5476 & 0.3524 & 3.101 & 3.937\\
 nip & t1 & 2 & 5376 & 0.3780 & 3.067 & 3.928\\
 nip & t1 & 3 & 5688 & 0.3845 & 3.068 & 3.936\\
@@ -102,58 +102,58 @@ Data SHA-256: \texttt{600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c93
 \texttt{used\_vacuum\_evaporation} & 0.362 & 1.000\\
 \bottomrule\end{tabular}\par\smallskip Coverage values below the median belong to sparsely reported process parameters; all other columns are non-missing exactly for the 14,896 records of publications with an extraction record.
 \section*{Table S5. Earlier 44-predictor literature block: five-holdout ablation (matched CatBoost, DOI-grouped; mean $\pm$ s.d. over five splits)}
-This experiment evaluated the superseded literature block, not $t_3$. $\Delta R^2$ is the mean per-split difference to $t_2$.\par\smallskip\begin{tabular}{llcccc}\toprule Subset & Tier & $R^2$ & MAE & RMSE & $\Delta R^2$ vs $t_2$\\\midrule
-Pooled & $t_1$ & $0.368\pm0.024$ & $3.081\pm0.040$ & $3.908\pm0.046$ & -0.040\\
-Pooled & $t_2$ & $0.408\pm0.032$ & $2.950\pm0.080$ & $3.783\pm0.085$ & \\
-Pooled & $t_2$ + earlier lit.\ block & $0.407\pm0.031$ & $2.958\pm0.080$ & $3.787\pm0.083$ & -0.001\\
+This experiment evaluated the superseded literature block, not $\mathcal{M}_3$. $\Delta R^2$ is the mean per-split difference to $\mathcal{M}_2$.\par\smallskip\begin{tabular}{llcccc}\toprule Subset & Tier & $R^2$ & MAE & RMSE & $\Delta R^2$ vs $\mathcal{M}_2$\\\midrule
+Pooled & $\mathcal{M}_1$ & $0.368\pm0.024$ & $3.081\pm0.040$ & $3.908\pm0.046$ & -0.040\\
+Pooled & $\mathcal{M}_2$ & $0.408\pm0.032$ & $2.950\pm0.080$ & $3.783\pm0.085$ & \\
+Pooled & $\mathcal{M}_2$ + earlier lit.\ block & $0.407\pm0.031$ & $2.958\pm0.080$ & $3.787\pm0.083$ & -0.001\\
 \midrule
-p-i-n & $t_1$ & $0.244\pm0.058$ & $3.168\pm0.049$ & $4.085\pm0.114$ & -0.047\\
-p-i-n & $t_2$ & $0.291\pm0.065$ & $3.047\pm0.045$ & $3.955\pm0.131$ & \\
-p-i-n & $t_2$ + earlier lit.\ block & $0.294\pm0.074$ & $3.051\pm0.067$ & $3.947\pm0.142$ & +0.002\\
+p-i-n & $\mathcal{M}_1$ & $0.244\pm0.058$ & $3.168\pm0.049$ & $4.085\pm0.114$ & -0.047\\
+p-i-n & $\mathcal{M}_2$ & $0.291\pm0.065$ & $3.047\pm0.045$ & $3.955\pm0.131$ & \\
+p-i-n & $\mathcal{M}_2$ + earlier lit.\ block & $0.294\pm0.074$ & $3.051\pm0.067$ & $3.947\pm0.142$ & +0.002\\
 \midrule
-n-i-p & $t_1$ & $0.374\pm0.016$ & $3.062\pm0.047$ & $3.918\pm0.061$ & -0.029\\
-n-i-p & $t_2$ & $0.404\pm0.013$ & $2.966\pm0.036$ & $3.825\pm0.060$ & \\
-n-i-p & $t_2$ + earlier lit.\ block & $0.405\pm0.010$ & $2.964\pm0.017$ & $3.821\pm0.045$ & +0.001\\
+n-i-p & $\mathcal{M}_1$ & $0.374\pm0.016$ & $3.062\pm0.047$ & $3.918\pm0.061$ & -0.029\\
+n-i-p & $\mathcal{M}_2$ & $0.404\pm0.013$ & $2.966\pm0.036$ & $3.825\pm0.060$ & \\
+n-i-p & $\mathcal{M}_2$ + earlier lit.\ block & $0.405\pm0.010$ & $2.964\pm0.017$ & $3.821\pm0.045$ & +0.001\\
 \midrule
 \bottomrule\end{tabular}\par\medskip
 \noindent Feature-group controls (same protocol):\par\smallskip\begin{tabular}{llcccc}\toprule Subset & Variant & Feat. & $R^2$ & MAE & RMSE\\\midrule
-Pooled & $t_1$ + earlier lit.\ block (no material properties) & 121 & $0.372\pm0.026$ & $3.060\pm0.053$ & $3.895\pm0.061$\\
-Pooled & $t_2$ + earlier block minus 2 completeness flags & 219 & $0.407\pm0.028$ & $2.953\pm0.075$ & $3.787\pm0.078$\\
-Pooled & $t_2$ + 32 noise columns & 211 & $0.404\pm0.029$ & $2.970\pm0.065$ & $3.796\pm0.076$\\
-p-i-n & $t_1$ + earlier lit.\ block (no material properties) & 122 & $0.251\pm0.071$ & $3.150\pm0.058$ & $4.065\pm0.136$\\
-p-i-n & $t_2$ + earlier block minus 2 completeness flags & 220 & $0.292\pm0.070$ & $3.052\pm0.061$ & $3.951\pm0.134$\\
-p-i-n & $t_2$ + 32 noise columns & 211 & $0.288\pm0.072$ & $3.067\pm0.063$ & $3.962\pm0.144$\\
-n-i-p & $t_1$ + earlier lit.\ block (no material properties) & 120 & $0.378\pm0.014$ & $3.050\pm0.038$ & $3.907\pm0.053$\\
-n-i-p & $t_2$ + earlier block minus 2 completeness flags & 218 & $0.407\pm0.012$ & $2.960\pm0.024$ & $3.816\pm0.051$\\
-n-i-p & $t_2$ + 32 noise columns & 210 & $0.402\pm0.009$ & $2.976\pm0.025$ & $3.830\pm0.053$\\
+Pooled & $\mathcal{M}_1$ + earlier lit.\ block (no material properties) & 121 & $0.372\pm0.026$ & $3.060\pm0.053$ & $3.895\pm0.061$\\
+Pooled & $\mathcal{M}_2$ + earlier block minus 2 completeness flags & 219 & $0.407\pm0.028$ & $2.953\pm0.075$ & $3.787\pm0.078$\\
+Pooled & $\mathcal{M}_2$ + 32 noise columns & 211 & $0.404\pm0.029$ & $2.970\pm0.065$ & $3.796\pm0.076$\\
+p-i-n & $\mathcal{M}_1$ + earlier lit.\ block (no material properties) & 122 & $0.251\pm0.071$ & $3.150\pm0.058$ & $4.065\pm0.136$\\
+p-i-n & $\mathcal{M}_2$ + earlier block minus 2 completeness flags & 220 & $0.292\pm0.070$ & $3.052\pm0.061$ & $3.951\pm0.134$\\
+p-i-n & $\mathcal{M}_2$ + 32 noise columns & 211 & $0.288\pm0.072$ & $3.067\pm0.063$ & $3.962\pm0.144$\\
+n-i-p & $\mathcal{M}_1$ + earlier lit.\ block (no material properties) & 120 & $0.378\pm0.014$ & $3.050\pm0.038$ & $3.907\pm0.053$\\
+n-i-p & $\mathcal{M}_2$ + earlier block minus 2 completeness flags & 218 & $0.407\pm0.012$ & $2.960\pm0.024$ & $3.816\pm0.051$\\
+n-i-p & $\mathcal{M}_2$ + 32 noise columns & 210 & $0.402\pm0.009$ & $2.976\pm0.025$ & $3.830\pm0.053$\\
 \bottomrule\end{tabular}\par\medskip
 \section*{Table S6. Earlier-block rows of the reference-model, model-development and stricter-protocol experiments}
 \noindent Reference models, pooled, five DOI-grouped splits (mean $\pm$ s.d.):\par\smallskip\begin{tabular}{llccc}\toprule Model & Tier & $R^2$ & MAE & RMSE\\\midrule
-XGBoost (defaults) & $t_2$ + earlier lit.\ block & $0.377\pm0.025$ & $3.011\pm0.057$ & $3.880\pm0.056$\\
-Random forest & $t_2$ + earlier lit.\ block & $0.352\pm0.021$ & $3.073\pm0.049$ & $3.958\pm0.070$\\
-MLP & $t_2$ + earlier lit.\ block & $0.376\pm0.023$ & $3.042\pm0.052$ & $3.883\pm0.056$\\
-GPR (3,000-record subsample) & $t_2$ + earlier lit.\ block & $0.352\pm0.029$ & $3.129\pm0.051$ & $3.957\pm0.065$\\
+XGBoost (defaults) & $\mathcal{M}_2$ + earlier lit.\ block & $0.377\pm0.025$ & $3.011\pm0.057$ & $3.880\pm0.056$\\
+Random forest & $\mathcal{M}_2$ + earlier lit.\ block & $0.352\pm0.021$ & $3.073\pm0.049$ & $3.958\pm0.070$\\
+MLP & $\mathcal{M}_2$ + earlier lit.\ block & $0.376\pm0.023$ & $3.042\pm0.052$ & $3.883\pm0.056$\\
+GPR (3,000-record subsample) & $\mathcal{M}_2$ + earlier lit.\ block & $0.352\pm0.029$ & $3.129\pm0.051$ & $3.957\pm0.065$\\
 \bottomrule\end{tabular}\par\medskip
 \noindent Model-development experiment ($R^2$, mean $\pm$ s.d. over five splits):\par\smallskip\begin{tabular}{llcccc}\toprule Subset & Tier & Tuned & Bag & XGB & Ens\\\midrule
-Pooled & $t_2$ + earlier lit.\ block & $0.408\pm0.029$ & $0.412\pm0.029$ & $0.411\pm0.024$ & $0.418\pm0.026$\\
-p-i-n & $t_2$ + earlier lit.\ block & $0.295\pm0.071$ & $0.299\pm0.069$ & $0.284\pm0.077$ & $0.300\pm0.074$\\
-n-i-p & $t_2$ + earlier lit.\ block & $0.407\pm0.015$ & $0.409\pm0.015$ & $0.403\pm0.015$ & $0.413\pm0.015$\\
+Pooled & $\mathcal{M}_2$ + earlier lit.\ block & $0.408\pm0.029$ & $0.412\pm0.029$ & $0.411\pm0.024$ & $0.418\pm0.026$\\
+p-i-n & $\mathcal{M}_2$ + earlier lit.\ block & $0.295\pm0.071$ & $0.299\pm0.069$ & $0.284\pm0.077$ & $0.300\pm0.074$\\
+n-i-p & $\mathcal{M}_2$ + earlier lit.\ block & $0.407\pm0.015$ & $0.409\pm0.015$ & $0.403\pm0.015$ & $0.413\pm0.015$\\
 \bottomrule\end{tabular}\par\medskip
 \noindent Stricter protocols, pooled CatBoost $R^2$ (mean $\pm$ s.d.):\par\smallskip\begin{tabular}{llcc}\toprule Protocol & Tier & $R^2$ & MAE\\\midrule
-Lead-author-grouped & $t_2$ + earlier lit.\ block & $0.395\pm0.013$ & 2.92\\
-Forward in time & $t_2$ + earlier lit.\ block & $0.335\pm0.058$ & 3.21\\
+Lead-author-grouped & $\mathcal{M}_2$ + earlier lit.\ block & $0.395\pm0.013$ & 2.92\\
+Forward in time & $\mathcal{M}_2$ + earlier lit.\ block & $0.335\pm0.058$ & 3.21\\
 \bottomrule\end{tabular}\par
-\section*{Figs.\ S1 and S2. SHAP analysis (models trained on $t_2$ + the earlier 44-predictor literature block; not $t_3$)}
-\begin{figure}[h]\centering\includegraphics[width=0.75\textwidth]{figures/fig_shap_groups.png}\caption*{Fig.\ S1. Share of total feature attribution by feature group for matched CatBoost models trained on $t_2$ plus the earlier 44-predictor literature block (first DOI-grouped split, 1,500 test records). Attribution is not predictive benefit, and no SHAP analysis was run for the recipe-flag model $t_3$.}\end{figure}
+\section*{Figs.\ S1 and S2. SHAP analysis (models trained on $\mathcal{M}_2$ + the earlier 44-predictor literature block; not $\mathcal{M}_3$)}
+\begin{figure}[h]\centering\includegraphics[width=0.75\textwidth]{figures/fig_shap_groups.png}\caption*{Fig.\ S1. Share of total feature attribution by feature group for matched CatBoost models trained on $\mathcal{M}_2$ plus the earlier 44-predictor literature block (first DOI-grouped split, 1,500 test records). Attribution is not predictive benefit, and no SHAP analysis was run for the recipe-flag model $\mathcal{M}_3$.}\end{figure}
 \begin{figure}[h]\centering\includegraphics[width=\textwidth]{figures/shap.png}\caption*{Fig.\ S2. Twelve highest-ranked features by mean $|$SHAP$|$ (PCE percentage points) for the (a) pooled, (b) p-i-n and (c) n-i-p models of Fig.\ S1; \texttt{na} denotes a missingness indicator.}\end{figure}
 \section*{Table S7. Common-split comparison: per-seed paired $\Delta R^2$}
 Reserved publications, matched default CatBoost; each seed model scored separately (the main-text values use the mean of the five seed models).\par\smallskip\begin{tabular}{llccccc}\toprule Population & Comparison & seed 0 & seed 1 & seed 2 & seed 3 & seed 4\\\midrule
-LLM-covered & $t_2-t_1$ & +0.0427 & +0.0431 & +0.0427 & +0.0414 & +0.0415\\
-LLM-covered & $t_3-t_2$ & -0.0012 & +0.0120 & +0.0059 & +0.0045 & +0.0092\\
-All reserved & $t_2-t_1$ & +0.0323 & +0.0337 & +0.0328 & +0.0356 & +0.0301\\
-All reserved & $t_3-t_2$ & +0.0012 & +0.0079 & +0.0017 & -0.0023 & +0.0034\\
+LLM-covered & $\mathcal{M}_2-\mathcal{M}_1$ & +0.0427 & +0.0431 & +0.0427 & +0.0414 & +0.0415\\
+LLM-covered & $\mathcal{M}_3-\mathcal{M}_2$ & -0.0012 & +0.0120 & +0.0059 & +0.0045 & +0.0092\\
+All reserved & $\mathcal{M}_2-\mathcal{M}_1$ & +0.0323 & +0.0337 & +0.0328 & +0.0356 & +0.0301\\
+All reserved & $\mathcal{M}_3-\mathcal{M}_2$ & +0.0012 & +0.0079 & +0.0017 & -0.0023 & +0.0034\\
 \bottomrule\end{tabular}\par\medskip
-Negative controls (default settings; $\Delta R^2$ relative to $t_2$ under the same settings):
+Negative controls (default settings; $\Delta R^2$ relative to $\mathcal{M}_2$ under the same settings):
 LLM-covered: five DOI-permuted flag blocks -0.0049 to +0.0015; coverage indicator only +0.0015.
 all reserved: five DOI-permuted flag blocks -0.0028 to +0.0007; coverage indicator only +0.0011.
 \par
@@ -164,11 +164,11 @@ t1 & 72 & 5 & 0\\
 t2 & 102 & 0 & 0\\
 t3 & 0 & 36 & 0\\
 \bottomrule\end{tabular}\par\smallskip
-Predictors of $t_1$ rated low risk and retained: \texttt{Add\_lay\_front}, \texttt{Backcontact\_thickness\_nm}, \texttt{Encapsulation}, \texttt{Perovskite\_band\_gap\_measured}, \texttt{Perovskite\_pl\_max\_nm}. These are device-context or film-characterisation fields (the absorber band gap, the photoluminescence maximum, encapsulation, an additional front layer, back-contact thickness) and not J--V, EQE, stability or stabilised-performance results. Material-property predictors ($t_2$) are catalogue reference values and the recipe flags ($t_3$) are paper-level identity flags; $t_3$ flags are rated low because they are constant within a publication and could encode publication identity.\par
-Checks: no predictor of the three tiers matches the outcome pattern \texttt{(\^{}JV\_\textbar{}\allowbreak EQE\textbar{}\allowbreak Stabilis\textbar{}\allowbreak Stability\textbar{}\allowbreak hysteresis\textbar{}\allowbreak PCE\textbar{}\allowbreak \textbackslash{}bVoc\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bJsc\textbackslash{}b\textbar{}\allowbreak \^{}FF\$\textbar{}\allowbreak efficien\textbar{}\allowbreak certif\textbar{}\allowbreak final\_pce\textbar{}\allowbreak champion\textbar{}\allowbreak average\_pce)} (hits: 0); the processed table contains five outcome-adjacent columns (\texttt{Stability\_measured}, \texttt{EQE\_measured}, \texttt{JV\_hysteresis\_index}, \texttt{Cell\_area\_measured\_cm2}, \texttt{Stabilised\_performance\_measured}), all excluded in code; 118 fields of the full PDP export whose names match this pattern (J--V, EQE, stability and stabilised-performance fields among them) were never carried into the processed table. The largest absolute Spearman correlation of any numeric $t_2$ predictor with the target is 0.35 (\texttt{Perovskite\_avg\_radius}), so no predictor is a near-copy of the target.\par
+Predictors of $\mathcal{M}_1$ rated low risk and retained: \texttt{Add\_lay\_front}, \texttt{Backcontact\_thickness\_nm}, \texttt{Encapsulation}, \texttt{Perovskite\_band\_gap\_measured}, \texttt{Perovskite\_pl\_max\_nm}. These are device-context or film-characterisation fields (the absorber band gap, the photoluminescence maximum, encapsulation, an additional front layer, back-contact thickness) and not J--V, EQE, stability or stabilised-performance results. Material-property predictors ($\mathcal{M}_2$) are catalogue reference values and the recipe flags ($\mathcal{M}_3$) are paper-level identity flags; $\mathcal{M}_3$ flags are rated low because they are constant within a publication and could encode publication identity.\par
+Checks: no predictor of the three tiers matches the outcome pattern \texttt{(\^{}JV\_\textbar{}\allowbreak EQE\textbar{}\allowbreak Stabilis\textbar{}\allowbreak Stability\textbar{}\allowbreak hysteresis\textbar{}\allowbreak PCE\textbar{}\allowbreak \textbackslash{}bVoc\textbackslash{}b\textbar{}\allowbreak \textbackslash{}bJsc\textbackslash{}b\textbar{}\allowbreak \^{}FF\$\textbar{}\allowbreak efficien\textbar{}\allowbreak certif\textbar{}\allowbreak final\_pce\textbar{}\allowbreak champion\textbar{}\allowbreak average\_pce)} (hits: 0); the processed table contains five outcome-adjacent columns (\texttt{Stability\_measured}, \texttt{EQE\_measured}, \texttt{JV\_hysteresis\_index}, \texttt{Cell\_area\_measured\_cm2}, \texttt{Stabilised\_performance\_measured}), all excluded in code; 118 fields of the full PDP export whose names match this pattern (J--V, EQE, stability and stabilised-performance fields among them) were never carried into the processed table. The largest absolute Spearman correlation of any numeric $\mathcal{M}_2$ predictor with the target is 0.35 (\texttt{Perovskite\_avg\_radius}), so no predictor is a near-copy of the target.\par
 \section*{Table S9. Illumination sensitivity on the reserved publications (test-set exclusion, no retraining)}
 The full PDP export records the light spectrum and intensity. All 17 filtered records with PCE $>$ 27\% (six publications) have intensity $\leq$ 0.31 (standard illumination is 100 on this scale); 12 are labelled indoor light and 5 have no spectrum label. In the filtered data 41 records have a spectrum other than AM1.5 and 249 an intensity outside 90--110. Matched default CatBoost, mean of five seed models.\par\smallskip
-\begin{tabular}{llrcccc}\toprule Population & Test records & $n$ & $R^2$ $t_1$ & $R^2$ $t_2$ & $R^2$ $t_3$ & MAE $t_3$\\\midrule
+\begin{tabular}{llrcccc}\toprule Population & Test records & $n$ & $R^2$ $\mathcal{M}_1$ & $R^2$ $\mathcal{M}_2$ & $R^2$ $\mathcal{M}_3$ & MAE $\mathcal{M}_3$\\\midrule
 LLM-covered & all & 5,460 & 0.3177 & 0.3593 & 0.3664 & 2.892\\
 LLM-covered & PCE $\leq$ 27\% & 5,458 & 0.3188 & 0.3602 & 0.3671 & 2.888\\
 LLM-covered & AM1.5, 90--110 only & 5,442 & 0.3215 & 0.3625 & 0.3696 & 2.879\\
@@ -179,19 +179,19 @@ All reserved & AM1.5, 90--110 only & 14,045 & 0.3758 & 0.4099 & 0.4124 & 2.930\\
 \section*{Table S10. Publication-weighted sensitivity metrics (reserved publications)}
 Each reserved record receives weight $1/n_p$, where $n_p$ is the number of reserved records of its publication within the population; weighted $R^2=1-\sum w_ie_i^2/\sum w_i(y_i-\bar y_w)^2$ with the weighted mean $\bar y_w$; weighted MAE and RMSE are weighted means. This is equivalent to averaging the error within each publication and then across publications. Paired intervals: publication-cluster bootstrap (2000 resamples, rng seed 0).\par\smallskip
 \begin{tabular}{llcccc}\toprule Population & Tier & $R^2$ record-wtd & $R^2$ publication-wtd & MAE pub.-wtd & RMSE pub.-wtd\\\midrule
-LLM-covered & $t_1$ & 0.318 & 0.357 & 3.032 & 3.809\\
-LLM-covered & $t_2$ & 0.359 & 0.406 & 2.900 & 3.663\\
-LLM-covered & $t_3$ & 0.366 & 0.410 & 2.889 & 3.651\\
-All reserved & $t_1$ & 0.371 & 0.399 & 3.050 & 3.846\\
-All reserved & $t_2$ & 0.403 & 0.436 & 2.938 & 3.727\\
-All reserved & $t_3$ & 0.406 & 0.437 & 2.937 & 3.722\\
+LLM-covered & $\mathcal{M}_1$ & 0.318 & 0.357 & 3.032 & 3.809\\
+LLM-covered & $\mathcal{M}_2$ & 0.359 & 0.406 & 2.900 & 3.663\\
+LLM-covered & $\mathcal{M}_3$ & 0.366 & 0.410 & 2.889 & 3.651\\
+All reserved & $\mathcal{M}_1$ & 0.371 & 0.399 & 3.050 & 3.846\\
+All reserved & $\mathcal{M}_2$ & 0.403 & 0.436 & 2.938 & 3.727\\
+All reserved & $\mathcal{M}_3$ & 0.406 & 0.437 & 2.937 & 3.722\\
 \midrule
 \end{tabular}\par\smallskip
 \begin{tabular}{llc}\toprule Population & Publication-weighted paired $\Delta R^2$ & value [95\% interval]\\\midrule
-LLM-covered & $t_2-t_1$ & $+0.0483$ [$+0.0314$, $+0.0664$]\\
-LLM-covered & $t_3-t_2$ & $+0.0040$ [$-0.0020$, $+0.0100$]\\
-All reserved & $t_2-t_1$ & $+0.0366$ [$+0.0271$, $+0.0464$]\\
-All reserved & $t_3-t_2$ & $+0.0016$ [$-0.0012$, $+0.0045$]\\
+LLM-covered & $\mathcal{M}_2-\mathcal{M}_1$ & $+0.0483$ [$+0.0314$, $+0.0664$]\\
+LLM-covered & $\mathcal{M}_3-\mathcal{M}_2$ & $+0.0040$ [$-0.0020$, $+0.0100$]\\
+All reserved & $\mathcal{M}_2-\mathcal{M}_1$ & $+0.0366$ [$+0.0271$, $+0.0464$]\\
+All reserved & $\mathcal{M}_3-\mathcal{M}_2$ & $+0.0016$ [$-0.0012$, $+0.0045$]\\
 \bottomrule\end{tabular}\par
 \section*{Table S11. Extracted versus non-extracted publications (all 41,107 filtered records)}
 `Covered' means that the publication has one of the 2,835 extraction records. Year is the PDP \texttt{Ref\_publication\_date} field. Descriptive only.\par\smallskip
@@ -220,14 +220,14 @@ not covered & 26,080 & 4,596 & 12.47 & 13.08 & 5.03 & 18.56 & 3.6\% & 68.9\%\\
 \bottomrule\end{tabular}\par\smallskip
 Years with fewer than 100 records are omitted from the table. A two-sample Kolmogorov--Smirnov test of the PCE distributions of covered and uncovered records gives $D = 0.025$ ($p = 1.2e-05$), a small difference that is detectable only because of the sample size. Reserved partition: mean PCE 12.34 (covered) versus 12.39 (all).\par
 \section*{Table S12. Recipe flags without the first-feature-use penalty (reserved publications, matched default CatBoost)}
-$t_3$ refitted once with the penalty on the flag columns set to 0 instead of 0.5 (same development records, seeds, validation splits and configuration); scored on the same reserved records. The reserved publications had been examined before this run, so it is a robustness check and not independent confirmation. On development folds the penalties 0, 0.5 and 2 gave mean $\Delta R^2$ of $+0.0052$, $+0.0070$ and $+0.0038$ (12, 12 and 11 of 15 folds positive).\par\smallskip
-\begin{tabular}{llcccc}\toprule Population & Variant & $R^2$ & MAE & RMSE & $\Delta R^2$ vs $t_2$ [95\% interval]\\\midrule
-LLM-covered & $t_2$ & 0.3593 & 2.911 & 3.747 & \\
-LLM-covered & $t_3$, penalty 0.5 (main) & 0.3664 & 2.892 & 3.726 & $+0.0071$ [$-0.0007$, $+0.0157$]\\
-LLM-covered & $t_3$, no penalty & 0.3682 & 2.885 & 3.720 & $+0.0089$ [$+0.0008$, $+0.0177$]\\
-All reserved & $t_2$ & 0.4035 & 2.955 & 3.794 & \\
-All reserved & $t_3$, penalty 0.5 (main) & 0.4060 & 2.949 & 3.787 & $+0.0025$ [$-0.0011$, $+0.0062$]\\
-All reserved & $t_3$, no penalty & 0.4069 & 2.944 & 3.784 & $+0.0034$ [$-0.0004$, $+0.0072$]\\
+$\mathcal{M}_3$ refitted once with the penalty on the flag columns set to 0 instead of 0.5 (same development records, seeds, validation splits and configuration); scored on the same reserved records. The reserved publications had been examined before this run, so it is a robustness check and not independent confirmation. On development folds the penalties 0, 0.5 and 2 gave mean $\Delta R^2$ of $+0.0052$, $+0.0070$ and $+0.0038$ (12, 12 and 11 of 15 folds positive).\par\smallskip
+\begin{tabular}{llcccc}\toprule Population & Variant & $R^2$ & MAE & RMSE & $\Delta R^2$ vs $\mathcal{M}_2$ [95\% interval]\\\midrule
+LLM-covered & $\mathcal{M}_2$ & 0.3593 & 2.911 & 3.747 & \\
+LLM-covered & $\mathcal{M}_3$, penalty 0.5 (main) & 0.3664 & 2.892 & 3.726 & $+0.0071$ [$-0.0007$, $+0.0157$]\\
+LLM-covered & $\mathcal{M}_3$, no penalty & 0.3682 & 2.885 & 3.720 & $+0.0089$ [$+0.0008$, $+0.0177$]\\
+All reserved & $\mathcal{M}_2$ & 0.4035 & 2.955 & 3.794 & \\
+All reserved & $\mathcal{M}_3$, penalty 0.5 (main) & 0.4060 & 2.949 & 3.787 & $+0.0025$ [$-0.0011$, $+0.0062$]\\
+All reserved & $\mathcal{M}_3$, no penalty & 0.4069 & 2.944 & 3.784 & $+0.0034$ [$-0.0004$, $+0.0072$]\\
 \bottomrule\end{tabular}\par
 \section*{Table S13. Definitions of the 36 recipe flags}
 Each flag is 1 if the (case-insensitive) pattern occurs in the non-outcome string content of the publication's extracted material records (HTL and ETL flags: only records of that role, additive or other), and 0 otherwise. Patterns are broad lexical matches: for example \texttt{rc\_pea\_family} also matches ``ammonium'' and hence methylammonium compounds (only 104 of its 1,723 positive publications contain a spacer-specific term). Source: \texttt{src/psc/litfeat4.py}.\par\smallskip

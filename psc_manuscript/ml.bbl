@@ -142,18 +142,32 @@ D.~R. Roberts, V.~Bahn, S.~Ciuti, M.~S. Boyce, J.~Elith, G.~Guillera-Arroita,
 \newblock \href {https://doi.org/10.1111/ecog.02881}
   {\path{doi:10.1111/ecog.02881}}.
 
+\bibitem{dagdelen2024structured}
+J.~Dagdelen, A.~Dunn, S.~Lee, N.~Walker, A.~S. Rosen, G.~Ceder, K.~A. Persson,
+  A.~Jain, Structured information extraction from scientific text with large
+  language models, Nature Communications 15 (2024) 1418.
+\newblock \href {https://doi.org/10.1038/s41467-024-45563-x}
+  {\path{doi:10.1038/s41467-024-45563-x}}.
+
+\bibitem{polak2024extracting}
+M.~P. Polak, D.~Morgan, Extracting accurate materials data from research papers
+  with conversational language models and prompt engineering, Nature
+  Communications 15 (2024) 1569.
+\newblock \href {https://doi.org/10.1038/s41467-024-45914-8}
+  {\path{doi:10.1038/s41467-024-45914-8}}.
+
+\bibitem{polak2024flexible}
+M.~P. Polak, S.~Modi, A.~Latosinska, J.~Zhang, C.-W. Wang, S.~Wang, A.~D.
+  Hazra, D.~Morgan, Flexible, model-agnostic method for materials data
+  extraction from text using general purpose language models, Digital Discovery
+  3~(6) (2024) 1221--1235.
+\newblock \href {https://doi.org/10.1039/D4DD00016A}
+  {\path{doi:10.1039/D4DD00016A}}.
+
 \bibitem{opendataloaderpdf}
 {OpenDataLoader Project}, {OpenDataLoader PDF},
   \url{https://github.com/opendataloader-project/opendataloader-pdf},
   open-source software repository, accessed October 2026.
-
-\bibitem{jain2013materialsproject}
-A.~Jain, S.~P. Ong, G.~Hautier, W.~Chen, W.~D. Richards, S.~Dacek, S.~Cholia,
-  D.~Gunter, D.~Skinner, G.~Ceder, K.~A. Persson, Commentary: The {Materials
-  Project}: A materials genome approach to accelerating materials innovation,
-  APL Materials 1~(1) (2013) 011002.
-\newblock \href {https://doi.org/10.1063/1.4812323}
-  {\path{doi:10.1063/1.4812323}}.
 
 \bibitem{prokhorenkova2018catboost}
 L.~Prokhorenkova, G.~Gusev, A.~Vorobev, A.~V. Dorogush, A.~Gulin, {CatBoost}:

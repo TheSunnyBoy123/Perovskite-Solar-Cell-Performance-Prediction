@@ -26,7 +26,7 @@ def main():
         ax.set_xticks([0, 1]); ax.set_xticklabels(["Same default\nsettings", "Each tier\ntuned"]); ax.set_xlim(-.6, 1.6)
         ax.set_title(title, fontsize=8); ax.grid(axis="y", lw=.4, alpha=.5); despine(ax)
         ax.text(-0.02, 1.08, f"({t})", transform=ax.transAxes, fontweight="bold", fontsize=9)
-    axes[0].set_ylabel(r"$\Delta R^2$ ($t_3$ minus $t_2$)"); axes[0].set_ylim(-0.012, 0.026)
+    axes[0].set_ylabel(r"$\Delta R^2$ ($\mathcal{M}_3$ minus $\mathcal{M}_2$)"); axes[0].set_ylim(-0.012, 0.026)
     fig.tight_layout(w_pad=1.2); save(fig, "fig_v4_recipe")
 
 

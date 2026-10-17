@@ -26,7 +26,7 @@ def main():
     ax.text(-0.02, 1.03, "(a)", transform=ax.transAxes, fontweight="bold", fontsize=9)
     ax = axes[1]
     for gi, (sc, _) in enumerate(pops):
-        for ti, (key, lab, col) in enumerate((("t2_minus_t1", r"$t_2-t_1$", C["t2"]), ("t3_minus_t2", r"$t_3-t_2$", C["t3"]))):
+        for ti, (key, lab, col) in enumerate((("t2_minus_t1", r"$\mathcal{M}_2-\mathcal{M}_1$", C["t2"]), ("t3_minus_t2", r"$\mathcal{M}_3-\mathcal{M}_2$", C["t3"]))):
             v = D[sc][key]; xx = gi + (ti - 0.5) * 0.3
             ax.errorbar(xx, v["dR2"], yerr=[[v["dR2"] - v["lo"]], [v["hi"] - v["dR2"]]], fmt="o", ms=5.5, color=col, ecolor=col,
                         elinewidth=1.3, capsize=2.5, capthick=1.2, zorder=3, label=lab if gi == 0 else None)
