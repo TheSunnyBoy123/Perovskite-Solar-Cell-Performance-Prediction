@@ -1,0 +1,2 @@
+{"name": "t3final_model_dev_v1", "family": "model_dev", "data": "data/dataset_json_enriched.csv",
+ "archs": ["overall", "pin", "nip"], "n_splits": 5, "test_size": 0.2, "val_size": 0.15, "seed": 42}

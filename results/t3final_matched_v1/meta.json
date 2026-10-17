@@ -1,0 +1,39 @@
+{
+  "config": {
+    "name": "t3final_matched_v1",
+    "family": "matched",
+    "data": "data/dataset_json_enriched.csv",
+    "archs": [
+      "overall",
+      "pin",
+      "nip"
+    ],
+    "protocols": [
+      "doi",
+      "random",
+      "author",
+      "temporal"
+    ],
+    "models": [
+      "catboost",
+      "ridge"
+    ],
+    "n_splits": 5,
+    "test_size": 0.2,
+    "val_size": 0.15,
+    "seed": 42,
+    "catboost": {},
+    "catboost_random_overall": {
+      "iterations": 20000
+    },
+    "ref_dirs": [
+      "ablation_v1",
+      "strict_validation_v1"
+    ]
+  },
+  "config_sha256": "b11723435fb090f02b423d6fdc336fbed4fa5849031306280bc006f9d5f26cbc",
+  "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+  "lit_v4_sha256": "3b8670b2d6182520b5dfcf21329af22c5c0a7fb8209e02a455d010cbe5eb4b65",
+  "git_head": "62d87bdd39e0e9fbdcbb481f58da56958ff48d07",
+  "first_feature_use_penalty": 0.5
+}

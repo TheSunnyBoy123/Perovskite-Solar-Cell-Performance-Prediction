@@ -21,3 +21,16 @@ def load_ablation(use_cap_rerun=True):
     if V is not None and len(V) == 15:  # converged pooled record-level fits (best iteration 7.2k-11.7k, never capped)
         A = pd.concat([A[~((A.protocol == "random") & (A.model == "catboost") & (A.arch == "overall"))], V], ignore_index=True)
     return A
+
+
+def load_final(use_cap_rerun=True):
+    """t1 and t2 from the controlled ablation plus the final t3 (t2 + 36 recipe flags; run tier 't3f', returned as 't3').
+    The superseded 44-predictor block (tier 't3' in ablation_v1) is dropped. Record-level pin/nip CatBoost t3f used the
+    default iteration cap and is therefore not comparable with the cap-6,000 t1/t2 reruns; only pooled record-level CatBoost
+    (20,000-iteration cap for all tiers) should be read across tiers."""
+    A = load_ablation(use_cap_rerun)
+    A = A[A.tier.isin(["t1", "t2"])]
+    M = read("t3final_matched_v1")
+    if M is None:
+        return A
+    return pd.concat([A, M.assign(tier="t3")], ignore_index=True)
