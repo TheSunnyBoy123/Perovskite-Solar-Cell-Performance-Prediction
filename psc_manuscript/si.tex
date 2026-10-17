@@ -16,7 +16,7 @@ Column sets shown for a preprocessor fitted on the full filtered data (documenta
 Flags are paper-level, binary, and missing (native NaN, no indicator) for publications without an extraction record. Share positive among the 2,835 extracted papers in parentheses: \texttt{rc\_cl\_source} (20.5\%), \texttt{rc\_acetate} (4.7\%), \texttt{rc\_scn} (2.3\%), \texttt{rc\_snf2} (0.7\%), \texttt{rc\_ava} (0.8\%), \texttt{rc\_hx\_acid} (7.0\%), \texttt{rc\_alkali} (2.4\%), \texttt{rc\_cs} (12.0\%), \texttt{rc\_pea\_family} (60.8\%), \texttt{rc\_lewis\_base} (34.7\%), \texttt{rc\_water\_add} (4.1\%), \texttt{rc\_polymer} (17.7\%), \texttt{rc\_carbon} (28.4\%), \texttt{rc\_dio} (0.7\%), \texttt{rc\_htl\_tbp} (24.5\%), \texttt{rc\_htl\_litfsi} (23.5\%), \texttt{rc\_htl\_fk} (4.9\%), \texttt{rc\_htl\_f4tcnq} (0.8\%), \texttt{rc\_htl\_cu} (4.5\%), \texttt{rc\_htl\_borate} (0.3\%), \texttt{rc\_etl\_ticl4} (5.6\%), \texttt{rc\_etl\_dopant} (6.2\%), \texttt{rc\_undoped} (9.1\%), \texttt{rc\_interface\_pass} (15.7\%), \texttt{rc\_antisolvent} (6.4\%), \texttt{rc\_vacuum} (17.6\%), \texttt{rc\_two\_step} (3.9\%), \texttt{rc\_hot\_cast} (0.0\%), \texttt{rc\_solvent\_anneal} (1.0\%), \texttt{rc\_flexible} (4.3\%), \texttt{rc\_tandem} (3.4\%), \texttt{rc\_lead\_free} (4.0\%), \texttt{rc\_inorganic} (7.5\%), \texttt{rc\_mesoscopic} (22.3\%), \texttt{rc\_n2\_box} (4.0\%), \texttt{rc\_ambient} (10.4\%).\par\smallskip
 \subsection*{Earlier literature block (44 predictors; not part of $\mathcal{M}_3$)}
 \textbf{literature} (44): \texttt{has\_BCP}, \texttt{has\_LiF}, \texttt{has\_PEAI}, \texttt{has\_SAM}, \texttt{has\_C60}, \texttt{has\_PCBM}, \texttt{has\_Spiro}, \texttt{has\_PEDOT}, \texttt{has\_NiOx}, \texttt{has\_SnO2}, \texttt{has\_TiO2}, \texttt{has\_ZnO}, \texttt{has\_PTAA}, \texttt{has\_fullerene}, \texttt{has\_passivation\_layer}, \texttt{is\_flexible\_y}, \texttt{is\_encapsulated}, \texttt{has\_stability\_measurement}, \texttt{used\_antisolvent}, \texttt{used\_glovebox}, \texttt{used\_vacuum\_evaporation}, \texttt{json\_numeric\_values\_found}, \texttt{has\_BCP\_na}, \texttt{has\_LiF\_na}, \texttt{has\_PEAI\_na}, \texttt{has\_SAM\_na}, \texttt{has\_C60\_na}, \texttt{has\_PCBM\_na}, \texttt{has\_Spiro\_na}, \texttt{has\_PEDOT\_na}, \texttt{has\_NiOx\_na}, \texttt{has\_SnO2\_na}, \texttt{has\_TiO2\_na}, \texttt{has\_ZnO\_na}, \texttt{has\_PTAA\_na}, \texttt{has\_fullerene\_na}, \texttt{has\_passivation\_layer\_na}, \texttt{is\_flexible\_y\_na}, \texttt{is\_encapsulated\_na}, \texttt{has\_stability\_measurement\_na}, \texttt{used\_antisolvent\_na}, \texttt{used\_glovebox\_na}, \texttt{used\_vacuum\_evaporation\_na}, \texttt{json\_numeric\_values\_found\_na}\par\smallskip
-\section*{Table S2. Per-split results of the matched CatBoost five-holdout experiment (DOI-grouped; $\mathcal{M}_3$ in the run files = earlier literature block)}\begin{longtable}{lllrrrr}\toprule Subset & Tier & Split & $n_\mathrm{test}$ & $R^2$ & MAE & RMSE\\\midrule\endhead
+\section*{Table S2. Per-split results of the matched CatBoost five-holdout experiment (DOI-grouped; tier key \texttt{t3} in the run files = earlier literature block, not the final $\mathcal{M}_3$; final $\mathcal{M}_3$ results: Tables S14--S17)}\begin{longtable}{lllrrrr}\toprule Subset & Tier & Split & $n_\mathrm{test}$ & $R^2$ & MAE & RMSE\\\midrule\endhead
 nip & t1 & 1 & 5476 & 0.3524 & 3.101 & 3.937\\
 nip & t1 & 2 & 5376 & 0.3780 & 3.067 & 3.928\\
 nip & t1 & 3 & 5688 & 0.3845 & 3.068 & 3.936\\
@@ -269,6 +269,162 @@ Each flag is 1 if the (case-insensitive) pattern occurs in the non-outcome strin
 \texttt{rc\_undoped} & undoped/interface & \texttt{undoped\textbar{}\allowbreak pristine\textbar{}\allowbreak without (additive\textbar{}\allowbreak dopant)\textbar{}\allowbreak dopant-free\textbar{}\allowbreak dopant free}\\
 \texttt{rc\_interface\_pass} & undoped/interface & \texttt{passivat\textbar{}\allowbreak interlayer\textbar{}\allowbreak surface treatment\textbar{}\allowbreak post-?treatment\textbar{}\allowbreak modif}\\
 \bottomrule\end{longtable}}
+\section*{Table S14. Final tier $\mathcal{M}_3$: run integrity}
+The $\mathcal{M}_3$ arm ($\mathcal{M}_2$ + 36 recipe flags; tier key \texttt{t3f} in \texttt{results/t3final\_matched\_v1}) comprises 108 fits (CatBoost and ridge; Record-level, DOI-grouped, Lead-author, Forward protocols; pooled, p-i-n and n-i-p data). Test indices equal those of the stored $\mathcal{M}_2$ arm in all 108 fits for which a stored arm exists. Maximum DOI overlap (test/train, validation/train, test/validation) in the publication-disjoint protocols: Lead-author 0/0/0, DOI-grouped 0/0/0, Forward 0/0/0. CatBoost first-feature-use penalty on the flag columns: 0.5; ridge uses training-mean imputed flags plus a coverage indicator. Data SHA-256 \texttt{600efce587a1bd81}, recipe artifact SHA-256 \texttt{3b8670b2d6182520}, git HEAD at run time \texttt{62d87bdd39e0}.\par
+\section*{Table S15. Per-split paired $\mathcal{M}_3-\mathcal{M}_2$ differences (pooled data)}
+$\Delta R^2$ with the 95\% publication-cluster bootstrap interval of each split (1,000 resamples); $n$ test records.\par\smallskip
+{\footnotesize\begin{longtable}{llllrrrrr}\toprule Protocol & Model & Scope & Split & $n$ & $R^2$ $\mathcal{M}_2$ & $R^2$ $\mathcal{M}_3$ & $\Delta R^2$ & [95\% interval]\\\midrule\endhead
+Lead-author & catboost & all & 1 & 7,746 & 0.4101 & 0.4144 & $+0.0043$ & [$-0.0046$, $+0.0121$]\\
+Lead-author & catboost & all & 2 & 9,424 & 0.3850 & 0.3877 & $+0.0027$ & [$-0.0048$, $+0.0105$]\\
+Lead-author & catboost & all & 3 & 8,438 & 0.4131 & 0.4057 & $-0.0074$ & [$-0.0131$, $-0.0016$]\\
+Lead-author & catboost & all & 4 & 9,424 & 0.3706 & 0.3796 & $+0.0090$ & [$+0.0009$, $+0.0183$]\\
+Lead-author & catboost & all & 5 & 6,368 & 0.3898 & 0.3910 & $+0.0011$ & [$-0.0058$, $+0.0080$]\\
+Lead-author & catboost & covered & 1 & 2,594 & 0.3693 & 0.3871 & $+0.0178$ & [$+0.0029$, $+0.0345$]\\
+Lead-author & catboost & covered & 2 & 3,809 & 0.3597 & 0.3599 & $+0.0003$ & [$-0.0132$, $+0.0141$]\\
+Lead-author & catboost & covered & 3 & 3,191 & 0.3726 & 0.3713 & $-0.0013$ & [$-0.0118$, $+0.0104$]\\
+Lead-author & catboost & covered & 4 & 3,390 & 0.3338 & 0.3530 & $+0.0192$ & [$+0.0022$, $+0.0383$]\\
+Lead-author & catboost & covered & 5 & 2,275 & 0.3679 & 0.3685 & $+0.0006$ & [$-0.0133$, $+0.0149$]\\
+Lead-author & ridge & all & 1 & 7,746 & 0.3659 & 0.3661 & $+0.0002$ & [$-0.0060$, $+0.0062$]\\
+Lead-author & ridge & all & 2 & 9,424 & 0.3504 & 0.3525 & $+0.0021$ & [$-0.0037$, $+0.0082$]\\
+Lead-author & ridge & all & 3 & 8,438 & 0.3738 & 0.3699 & $-0.0039$ & [$-0.0100$, $+0.0017$]\\
+Lead-author & ridge & all & 4 & 9,424 & 0.3319 & 0.3331 & $+0.0012$ & [$-0.0068$, $+0.0109$]\\
+Lead-author & ridge & all & 5 & 6,368 & 0.3449 & 0.3456 & $+0.0006$ & [$-0.0075$, $+0.0089$]\\
+Lead-author & ridge & covered & 1 & 2,594 & 0.3011 & 0.3037 & $+0.0026$ & [$-0.0163$, $+0.0231$]\\
+Lead-author & ridge & covered & 2 & 3,809 & 0.3313 & 0.3373 & $+0.0060$ & [$-0.0107$, $+0.0223$]\\
+Lead-author & ridge & covered & 3 & 3,191 & 0.3331 & 0.3267 & $-0.0064$ & [$-0.0213$, $+0.0085$]\\
+Lead-author & ridge & covered & 4 & 3,390 & 0.3024 & 0.3041 & $+0.0017$ & [$-0.0216$, $+0.0253$]\\
+Lead-author & ridge & covered & 5 & 2,275 & 0.3298 & 0.3352 & $+0.0054$ & [$-0.0162$, $+0.0259$]\\
+DOI-grouped & catboost & all & 1 & 8,224 & 0.4145 & 0.4060 & $-0.0085$ & [$-0.0179$, $+0.0004$]\\
+DOI-grouped & catboost & all & 2 & 8,505 & 0.3712 & 0.3779 & $+0.0067$ & [$-0.0036$, $+0.0165$]\\
+DOI-grouped & catboost & all & 3 & 8,269 & 0.3787 & 0.3798 & $+0.0010$ & [$-0.0089$, $+0.0106$]\\
+DOI-grouped & catboost & all & 4 & 8,550 & 0.4420 & 0.4396 & $-0.0024$ & [$-0.0138$, $+0.0074$]\\
+DOI-grouped & catboost & all & 5 & 8,594 & 0.4326 & 0.4297 & $-0.0029$ & [$-0.0134$, $+0.0094$]\\
+DOI-grouped & catboost & covered & 1 & 2,996 & 0.4044 & 0.3920 & $-0.0124$ & [$-0.0314$, $+0.0064$]\\
+DOI-grouped & catboost & covered & 2 & 2,878 & 0.3398 & 0.3419 & $+0.0021$ & [$-0.0172$, $+0.0216$]\\
+DOI-grouped & catboost & covered & 3 & 3,162 & 0.3756 & 0.3753 & $-0.0003$ & [$-0.0196$, $+0.0209$]\\
+DOI-grouped & catboost & covered & 4 & 2,894 & 0.4424 & 0.4525 & $+0.0101$ & [$-0.0060$, $+0.0271$]\\
+DOI-grouped & catboost & covered & 5 & 3,320 & 0.3609 & 0.3615 & $+0.0005$ & [$-0.0258$, $+0.0321$]\\
+DOI-grouped & ridge & all & 1 & 8,224 & 0.3700 & 0.3690 & $-0.0010$ & [$-0.0074$, $+0.0054$]\\
+DOI-grouped & ridge & all & 2 & 8,505 & 0.3022 & 0.2997 & $-0.0025$ & [$-0.0090$, $+0.0043$]\\
+DOI-grouped & ridge & all & 3 & 8,269 & 0.3416 & 0.3364 & $-0.0052$ & [$-0.0136$, $+0.0020$]\\
+DOI-grouped & ridge & all & 4 & 8,550 & 0.3788 & 0.3773 & $-0.0014$ & [$-0.0076$, $+0.0043$]\\
+DOI-grouped & ridge & all & 5 & 8,594 & 0.3757 & 0.3727 & $-0.0030$ & [$-0.0094$, $+0.0035$]\\
+DOI-grouped & ridge & covered & 1 & 2,996 & 0.3698 & 0.3665 & $-0.0033$ & [$-0.0218$, $+0.0154$]\\
+DOI-grouped & ridge & covered & 2 & 2,878 & 0.3002 & 0.2872 & $-0.0131$ & [$-0.0286$, $+0.0027$]\\
+DOI-grouped & ridge & covered & 3 & 3,162 & 0.3353 & 0.3247 & $-0.0107$ & [$-0.0329$, $+0.0099$]\\
+DOI-grouped & ridge & covered & 4 & 2,894 & 0.3979 & 0.3916 & $-0.0064$ & [$-0.0217$, $+0.0094$]\\
+DOI-grouped & ridge & covered & 5 & 3,320 & 0.2969 & 0.2910 & $-0.0059$ & [$-0.0234$, $+0.0120$]\\
+Record-level & catboost & all & 1 & 8,222 & 0.6226 & 0.6341 & $+0.0115$ & [$+0.0071$, $+0.0159$]\\
+Record-level & catboost & all & 2 & 8,222 & 0.6118 & 0.6207 & $+0.0089$ & [$+0.0051$, $+0.0129$]\\
+Record-level & catboost & all & 3 & 8,222 & 0.6245 & 0.6340 & $+0.0095$ & [$+0.0052$, $+0.0136$]\\
+Record-level & catboost & all & 4 & 8,222 & 0.6109 & 0.6229 & $+0.0120$ & [$+0.0075$, $+0.0166$]\\
+Record-level & catboost & all & 5 & 8,222 & 0.6190 & 0.6312 & $+0.0122$ & [$+0.0080$, $+0.0166$]\\
+Record-level & catboost & covered & 1 & 2,961 & 0.5944 & 0.6269 & $+0.0324$ & [$+0.0220$, $+0.0422$]\\
+Record-level & catboost & covered & 2 & 3,058 & 0.5996 & 0.6295 & $+0.0299$ & [$+0.0216$, $+0.0379$]\\
+Record-level & catboost & covered & 3 & 2,961 & 0.6088 & 0.6369 & $+0.0281$ & [$+0.0185$, $+0.0384$]\\
+Record-level & catboost & covered & 4 & 3,020 & 0.5688 & 0.6040 & $+0.0352$ & [$+0.0238$, $+0.0470$]\\
+Record-level & catboost & covered & 5 & 2,942 & 0.5948 & 0.6273 & $+0.0325$ & [$+0.0221$, $+0.0428$]\\
+Record-level & ridge & all & 1 & 8,222 & 0.4123 & 0.4155 & $+0.0033$ & [$+0.0002$, $+0.0063$]\\
+Record-level & ridge & all & 2 & 8,222 & 0.3946 & 0.3982 & $+0.0036$ & [$+0.0005$, $+0.0067$]\\
+Record-level & ridge & all & 3 & 8,222 & 0.4155 & 0.4195 & $+0.0040$ & [$+0.0011$, $+0.0070$]\\
+Record-level & ridge & all & 4 & 8,222 & 0.4075 & 0.4116 & $+0.0040$ & [$+0.0011$, $+0.0073$]\\
+Record-level & ridge & all & 5 & 8,222 & 0.4118 & 0.4166 & $+0.0047$ & [$+0.0019$, $+0.0079$]\\
+Record-level & ridge & covered & 1 & 2,961 & 0.3889 & 0.4001 & $+0.0111$ & [$+0.0033$, $+0.0194$]\\
+Record-level & ridge & covered & 2 & 3,058 & 0.3825 & 0.3911 & $+0.0086$ & [$-0.0004$, $+0.0173$]\\
+Record-level & ridge & covered & 3 & 2,961 & 0.4172 & 0.4292 & $+0.0120$ & [$+0.0046$, $+0.0197$]\\
+Record-level & ridge & covered & 4 & 3,020 & 0.3791 & 0.3924 & $+0.0133$ & [$+0.0046$, $+0.0219$]\\
+Record-level & ridge & covered & 5 & 2,942 & 0.3928 & 0.4051 & $+0.0123$ & [$+0.0033$, $+0.0211$]\\
+Forward & catboost & all & 1 & 6,502 & 0.3347 & 0.3361 & $+0.0013$ & [$-0.0103$, $+0.0127$]\\
+Forward & catboost & all & 2 & 6,322 & 0.3984 & 0.4030 & $+0.0046$ & [$-0.0035$, $+0.0128$]\\
+Forward & catboost & all & 3 & 6,484 & 0.3020 & 0.2895 & $-0.0125$ & [$-0.0259$, $+0.0009$]\\
+Forward & catboost & covered & 1 & 2,870 & 0.3395 & 0.3336 & $-0.0059$ & [$-0.0279$, $+0.0143$]\\
+Forward & catboost & covered & 2 & 2,556 & 0.4085 & 0.4153 & $+0.0068$ & [$-0.0057$, $+0.0201$]\\
+Forward & catboost & covered & 3 & 1,564 & 0.3432 & 0.3376 & $-0.0055$ & [$-0.0300$, $+0.0202$]\\
+Forward & ridge & all & 1 & 6,502 & 0.2945 & 0.2890 & $-0.0055$ & [$-0.0155$, $+0.0039$]\\
+Forward & ridge & all & 2 & 6,322 & 0.3690 & 0.3833 & $+0.0143$ & [$+0.0039$, $+0.0239$]\\
+Forward & ridge & all & 3 & 6,484 & 0.1956 & 0.1959 & $+0.0003$ & [$-0.0066$, $+0.0068$]\\
+Forward & ridge & covered & 1 & 2,870 & 0.2733 & 0.2578 & $-0.0155$ & [$-0.0356$, $+0.0061$]\\
+Forward & ridge & covered & 2 & 2,556 & 0.3811 & 0.3908 & $+0.0098$ & [$-0.0101$, $+0.0306$]\\
+Forward & ridge & covered & 3 & 1,564 & 0.3447 & 0.3481 & $+0.0034$ & [$-0.0173$, $+0.0245$]\\
+\bottomrule\end{longtable}}
+\section*{Table S16. Paired $\mathcal{M}_3-\mathcal{M}_2$ summary by architecture subset}
+Mean over splits; ``pos.'' counts splits with positive $\Delta R^2$; ``CI$>0$/$<0$'' counts splits whose interval lies above/below zero. Record-level p-i-n and n-i-p CatBoost fits compare default-iteration arms for both tiers (not the converged pooled fits).\par\smallskip
+{\footnotesize\begin{longtable}{lllcrcccccc}\toprule Protocol & Subset & Model & Scope & $n$ & $R^2$ $\mathcal{M}_2$ & $R^2$ $\mathcal{M}_3$ & $\Delta R^2$ & $\Delta$MAE & pos. & CI$>0$/$<0$\\\midrule\endhead
+Record-level & pooled & catboost & all & 8,222 & 0.618 & 0.629 & $+0.0108$ & $-0.039$ & 5/5 & 5/0\\
+Record-level & pooled & catboost & covered & 2,988 & 0.593 & 0.625 & $+0.0316$ & $-0.115$ & 5/5 & 5/0\\
+Record-level & pooled & ridge & all & 8,222 & 0.408 & 0.412 & $+0.0039$ & $-0.013$ & 5/5 & 5/0\\
+Record-level & pooled & ridge & covered & 2,988 & 0.392 & 0.404 & $+0.0115$ & $-0.038$ & 5/5 & 4/0\\
+Record-level & p-i-n & catboost & all & 2,537 & 0.571 & 0.578 & $+0.0074$ & $-0.018$ & 5/5 & 3/0\\
+Record-level & p-i-n & catboost & covered & 927 & 0.524 & 0.546 & $+0.0220$ & $-0.065$ & 5/5 & 4/0\\
+Record-level & p-i-n & ridge & all & 2,537 & 0.385 & 0.390 & $+0.0052$ & $-0.012$ & 5/5 & 1/0\\
+Record-level & p-i-n & ridge & covered & 927 & 0.352 & 0.364 & $+0.0115$ & $-0.025$ & 5/5 & 1/0\\
+Record-level & n-i-p & catboost & all & 5,668 & 0.605 & 0.616 & $+0.0109$ & $-0.037$ & 5/5 & 5/0\\
+Record-level & n-i-p & catboost & covered & 2,080 & 0.585 & 0.623 & $+0.0377$ & $-0.129$ & 5/5 & 5/0\\
+Record-level & n-i-p & ridge & all & 5,668 & 0.435 & 0.440 & $+0.0052$ & $-0.019$ & 5/5 & 4/0\\
+Record-level & n-i-p & ridge & covered & 2,080 & 0.411 & 0.426 & $+0.0148$ & $-0.052$ & 5/5 & 4/0\\
+DOI-grouped & pooled & catboost & all & 8,428 & 0.408 & 0.407 & $-0.0012$ & $+0.006$ & 2/5 & 0/0\\
+DOI-grouped & pooled & catboost & covered & 3,050 & 0.385 & 0.385 & $+0.0000$ & $+0.009$ & 3/5 & 0/0\\
+DOI-grouped & pooled & ridge & all & 8,428 & 0.354 & 0.351 & $-0.0026$ & $+0.006$ & 0/5 & 0/0\\
+DOI-grouped & pooled & ridge & covered & 3,050 & 0.340 & 0.332 & $-0.0079$ & $+0.014$ & 0/5 & 0/0\\
+DOI-grouped & p-i-n & catboost & all & 2,599 & 0.291 & 0.288 & $-0.0032$ & $+0.018$ & 3/5 & 0/0\\
+DOI-grouped & p-i-n & catboost & covered & 912 & 0.269 & 0.267 & $-0.0021$ & $+0.011$ & 2/5 & 0/0\\
+DOI-grouped & p-i-n & ridge & all & 2,599 & 0.206 & 0.198 & $-0.0075$ & $+0.024$ & 1/5 & 0/1\\
+DOI-grouped & p-i-n & ridge & covered & 912 & 0.211 & 0.191 & $-0.0202$ & $+0.059$ & 1/5 & 0/1\\
+DOI-grouped & n-i-p & catboost & all & 5,612 & 0.404 & 0.403 & $-0.0004$ & $+0.003$ & 2/5 & 0/0\\
+DOI-grouped & n-i-p & catboost & covered & 2,052 & 0.394 & 0.396 & $+0.0016$ & $-0.007$ & 3/5 & 0/0\\
+DOI-grouped & n-i-p & ridge & all & 5,612 & 0.367 & 0.365 & $-0.0022$ & $+0.008$ & 1/5 & 0/0\\
+DOI-grouped & n-i-p & ridge & covered & 2,052 & 0.365 & 0.365 & $+0.0001$ & $-0.002$ & 2/5 & 0/0\\
+Lead-author & pooled & catboost & all & 8,280 & 0.394 & 0.396 & $+0.0019$ & $-0.001$ & 4/5 & 1/1\\
+Lead-author & pooled & catboost & covered & 3,052 & 0.361 & 0.368 & $+0.0073$ & $-0.015$ & 4/5 & 2/0\\
+Lead-author & pooled & ridge & all & 8,280 & 0.353 & 0.353 & $+0.0000$ & $-0.002$ & 4/5 & 0/0\\
+Lead-author & pooled & ridge & covered & 3,052 & 0.320 & 0.321 & $+0.0019$ & $-0.011$ & 4/5 & 0/0\\
+Lead-author & p-i-n & catboost & all & 2,191 & 0.321 & 0.318 & $-0.0026$ & $-0.000$ & 3/5 & 1/1\\
+Lead-author & p-i-n & catboost & covered & 780 & 0.329 & 0.328 & $-0.0002$ & $-0.008$ & 3/5 & 0/0\\
+Lead-author & p-i-n & ridge & all & 2,191 & 0.272 & 0.275 & $+0.0035$ & $-0.006$ & 3/5 & 1/0\\
+Lead-author & p-i-n & ridge & covered & 780 & 0.297 & 0.292 & $-0.0050$ & $+0.018$ & 2/5 & 1/1\\
+Lead-author & n-i-p & catboost & all & 5,835 & 0.401 & 0.402 & $+0.0005$ & $+0.001$ & 3/5 & 0/0\\
+Lead-author & n-i-p & catboost & covered & 2,190 & 0.387 & 0.398 & $+0.0101$ & $-0.011$ & 3/5 & 1/0\\
+Lead-author & n-i-p & ridge & all & 5,835 & 0.369 & 0.369 & $-0.0006$ & $+0.007$ & 2/5 & 0/0\\
+Lead-author & n-i-p & ridge & covered & 2,190 & 0.366 & 0.364 & $-0.0015$ & $+0.015$ & 1/5 & 1/0\\
+Forward & pooled & catboost & all & 6,436 & 0.345 & 0.343 & $-0.0022$ & $-0.008$ & 2/3 & 0/0\\
+Forward & pooled & catboost & covered & 2,330 & 0.364 & 0.362 & $-0.0016$ & $-0.006$ & 1/3 & 0/0\\
+Forward & pooled & ridge & all & 6,436 & 0.286 & 0.289 & $+0.0031$ & $-0.016$ & 2/3 & 1/0\\
+Forward & pooled & ridge & covered & 2,330 & 0.333 & 0.332 & $-0.0008$ & $-0.013$ & 2/3 & 0/0\\
+Forward & p-i-n & catboost & all & 1,986 & 0.256 & 0.237 & $-0.0192$ & $+0.052$ & 0/3 & 0/1\\
+Forward & p-i-n & catboost & covered & 681 & 0.289 & 0.271 & $-0.0180$ & $+0.061$ & 0/3 & 0/0\\
+Forward & p-i-n & ridge & all & 1,986 & 0.236 & 0.231 & $-0.0056$ & $+0.010$ & 1/3 & 0/0\\
+Forward & p-i-n & ridge & covered & 681 & 0.232 & 0.227 & $-0.0052$ & $-0.003$ & 1/3 & 0/0\\
+Forward & n-i-p & catboost & all & 4,413 & 0.365 & 0.365 & $-0.0006$ & $+0.007$ & 1/3 & 0/0\\
+Forward & n-i-p & catboost & covered & 1,655 & 0.378 & 0.384 & $+0.0064$ & $-0.016$ & 2/3 & 0/0\\
+Forward & n-i-p & ridge & all & 4,413 & 0.325 & 0.321 & $-0.0032$ & $+0.002$ & 1/3 & 0/0\\
+Forward & n-i-p & ridge & covered & 1,655 & 0.352 & 0.349 & $-0.0037$ & $-0.015$ & 1/3 & 0/0\\
+\bottomrule\end{longtable}}
+\section*{Table S17. SHAP analysis of the final tier $\mathcal{M}_3$ (first DOI-grouped split)}
+Matched CatBoost with the first-feature-use penalty on the recipe flags; \texttt{TreeExplainer} on 1,500 held-out records; mean $|$SHAP$|$ in PCE percentage points. Attributions describe the fitted model only. The earlier SHAP analysis (Figs.\ S1 and S2) used the superseded 44-predictor block.\par\smallskip
+\begin{tabular}{lrrrrr}\toprule Subset & process & material & composition & device & recipe flags\\\midrule
+pooled & 35.5\% & 37.0\% & 14.2\% & 7.7\% & 5.6\%\\
+p-i-n & 37.1\% & 38.9\% & 14.7\% & 5.0\% & 4.4\%\\
+n-i-p & 40.9\% & 31.5\% & 14.8\% & 7.3\% & 5.5\%\\
+\bottomrule\end{tabular}\par\medskip
+\noindent Twelve highest-ranked features and the five highest-ranked recipe flags (pooled model):\par\smallskip\begin{tabular}{rlrl}\toprule Rank & Feature & mean $|$SHAP$|$ & Group\\\midrule
+1 & \texttt{Perov\_quenching\_crystallisation} & 0.770 & process\\
+2 & \texttt{total\_ion\_count} & 0.285 & composition\\
+3 & \texttt{Perovskite\_pl\_max\_nm\_na} & 0.231 & device\\
+4 & \texttt{HTL\_deposition\_method} & 0.213 & process\\
+5 & \texttt{Perovskite\_avg\_atomic\_mass} & 0.208 & material\\
+6 & \texttt{Perov\_anneal\_time\_min} & 0.189 & process\\
+7 & \texttt{HTL\_LUMO} & 0.186 & material\\
+8 & \texttt{Perovskite\_deposition\_method} & 0.183 & process\\
+9 & \texttt{Perovskite\_avg\_radius} & 0.171 & material\\
+10 & \texttt{HTL\_band\_gap} & 0.170 & material\\
+11 & \texttt{ETL\_deposition\_method} & 0.167 & process\\
+12 & \texttt{ETL\_hole\_mobility} & 0.165 & material\\
+35 & \texttt{rc\_interface\_pass} & 0.052 & recipe\\
+38 & \texttt{rc\_vacuum} & 0.041 & recipe\\
+58 & \texttt{rc\_htl\_tbp} & 0.030 & recipe\\
+62 & \texttt{rc\_etl\_dopant} & 0.024 & recipe\\
+63 & \texttt{rc\_carbon} & 0.024 & recipe\\
+\bottomrule\end{tabular}\par
 \section*{Material-descriptor implementation notes}
 \noindent\textbf{Perovskite geometry descriptors.} Fixed effective radii (pm): A-site FA 253, MA 217, Cs 188, Rb 172; B-site Pb 119, Sn 110, Bi 103; X-site I 220, Br 196, Cl 181, F 133. Site radius = fraction-weighted mean over the listed species of that site, divided by the sum of their fractions; $\mu=r_B/r_X$, $t=(r_A+r_X)/[\sqrt2(r_B+r_X)]$, $r_A/r_X$, $\tau=r_X/r_B-(1-(r_A/r_B)\ln(r_A/r_B))$ (script \texttt{opus/evaluate\_tolerance\_factor.py}; the stored octahedral and tolerance factors were reproduced to floating-point precision from the ion-fraction columns). \textbf{Layer averages.} \texttt{*\_avg\_radius}, \texttt{*\_avg\_atomic\_mass} and \texttt{*\_en\_avg} are atom-count-weighted means of covalent radii (pm), atomic masses and Pauling electronegativities over the elements of a hand-entered formula (script \texttt{opus/fill\_atomic\_data.py}); \texttt{min}/\texttt{max} are the extremes over the elements. For MAPbI$_3$ (C$_1$H$_6$N$_1$Pb$_1$I$_3$) the average radius is $(77+6\cdot31+71+146+3\cdot139)/12=74.75$ pm, matching the stored value.\par
 \section*{Extraction system prompt (verbatim from the recovered script)}\begin{verbatim}You are a materials-science data-extraction assistant.

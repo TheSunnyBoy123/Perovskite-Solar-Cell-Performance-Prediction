@@ -1,7 +1,7 @@
 """Master entry point: regenerates every data figure used by ml.tex into psc_manuscript/figures/.
 
     python make_figures.py              # all figures
-    python make_figures.py tiers split  # selected figures (three, tiers, split, diag, dist, shapgroups, shap, v4)
+    python make_figures.py tiers split  # selected figures (three, tiers, split, diag, dist, shapgroups, shap, v4, t3protocols)
 
 Each figure has its own editable script in figure_scripts/ (plotting logic, data source and output name are documented at
 the top of each file); shared fonts, colours and save settings live in figure_scripts/style.py. Figures read the
@@ -11,10 +11,10 @@ device_structure.png and ml_pipeline.png are not data figures (TikZ/drawing sour
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent / "figure_scripts"))
-import fig_three_tier, fig_feature_tiers, fig_split_effect, fig_oof_diagnostics, fig_pce_dist_trio, fig_shap_groups, shap, fig_v4_recipe
+import fig_three_tier, fig_feature_tiers, fig_split_effect, fig_oof_diagnostics, fig_pce_dist_trio, fig_shap_groups, shap, fig_v4_recipe, fig_t3_protocols, fig_shap_t3final
 
 FIGS = {"three": fig_three_tier, "tiers": fig_feature_tiers, "split": fig_split_effect, "diag": fig_oof_diagnostics, "dist": fig_pce_dist_trio,
-        "shapgroups": fig_shap_groups, "shap": shap, "v4": fig_v4_recipe}
+        "shapgroups": fig_shap_groups, "shap": shap, "v4": fig_v4_recipe, "t3protocols": fig_t3_protocols, "shapt3": fig_shap_t3final}
 
 if __name__ == "__main__":
     for k in (sys.argv[1:] or FIGS):

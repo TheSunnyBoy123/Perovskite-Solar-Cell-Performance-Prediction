@@ -26,9 +26,9 @@ def pm(m, s, p=3):
     return f"${m:.{p}f} \\pm {s:.{p}f}$"
 
 
-TIERN = {"t1": "Database only ($\mathcal{M}_1$)", "t2": "+ material ($\mathcal{M}_2$)", "t3": "+ material + LLM ($\mathcal{M}_3$)",
-         "t1_lit": "$\mathcal{M}_1$ + LLM (no material)", "t3_nometa": "$\mathcal{M}_3$ minus 2 completeness flags",
-         "t2_noise": "$\mathcal{M}_2$ + 32 noise columns"}
+TIERN = {"t1": "Database only ($\\mathcal{M}_1$)", "t2": "+ material ($\\mathcal{M}_2$)", "t3": "+ material + LLM ($\\mathcal{M}_3$)",
+         "t1_lit": "$\\mathcal{M}_1$ + LLM (no material)", "t3_nometa": "$\\mathcal{M}_3$ minus 2 completeness flags",
+         "t2_noise": "$\\mathcal{M}_2$ + 32 noise columns"}
 ARCHN = {"overall": "Pooled", "pin": "p-i-n", "nip": "n-i-p"}
 import sys; sys.path.insert(0, str(ROOT / "src"))
 from psc.results import load_ablation  # noqa: E402
@@ -103,7 +103,8 @@ if Bl is not None:
         for t in ("t1", "t3"):
             g = Bl[(Bl.model == m) & (Bl.tier == t)]
             if len(g) == 5: parts.append((mn, t, g))
-rows = [f"{mn} & {'$\mathcal{M}_1$' if t == 't1' else '$\mathcal{M}_3$'} & {pm(g.r2.mean(), g.r2.std())} & {pm(g.mae.mean(), g.mae.std())} & {pm(g.rmse.mean(), g.rmse.std())} \\\\"
+LAB = {'t1': '$\\mathcal{M}_1$', 't3': '$\\mathcal{M}_3$'}
+rows = [f"{mn} & {LAB[t]} & {pm(g.r2.mean(), g.r2.std())} & {pm(g.mae.mean(), g.mae.std())} & {pm(g.rmse.mean(), g.rmse.std())} \\\\"
         for mn, t, g in parts]
 write_rows(T / "baselines.tex", rows)
 

@@ -31,7 +31,7 @@ for j, (met, lab) in enumerate((("r2", "$R^2$"), ("rmse", "RMSE (PCE points)")))
     for i, t in enumerate(("t1", "t2", "t3")):
         g = x[x.tier == t].groupby("arch")[met].agg(["mean", "std"]).loc[["overall", "pin", "nip"]]
         ax[j].bar(np.arange(3) + (i - 1) * 0.26, g["mean"], 0.26, yerr=g["std"], color=C[t], capsize=2,
-                  label={"t1": "$\mathcal{M}_1$ database", "t2": "$\mathcal{M}_2$ + material", "t3": "$\mathcal{M}_3$ + LLM"}[t])
+                  label={"t1": "$\\mathcal{M}_1$ database", "t2": "$\\mathcal{M}_2$ + material", "t3": "$\\mathcal{M}_3$ + LLM"}[t])
     ax[j].set_xticks(range(3)); ax[j].set_xticklabels([ARCHN[a] for a in ("overall", "pin", "nip")])
     ax[j].set_ylabel(lab)
     ax[j].set_ylim(0, 0.55 if met == "r2" else 5.0)  # zero-based axes: no exaggeration of small differences
@@ -48,7 +48,7 @@ for k, (m, mn, off) in enumerate((("catboost", "CatBoost", -0.2), ("ridge", "Rid
             xpos = i + off + (0.09 if proto == "doi" else -0.09)
             ax.bar(xpos, g.mean(), 0.18, yerr=g.std(), color=C[t], alpha=al, hatch=hatch, capsize=2, edgecolor="k", lw=0.4)
 ax.set_xticks([i + o for i in range(3) for o in (-0.2, 0.2)])
-ax.set_xticklabels([f"{mn}\n{t}" for i, t in enumerate(("$\mathcal{M}_1$", "$\mathcal{M}_2$", "$\mathcal{M}_3$")) for mn in ("CB", "Ridge")], fontsize=8)
+ax.set_xticklabels([f"{mn}\n{t}" for i, t in enumerate(("$\\mathcal{M}_1$", "$\\mathcal{M}_2$", "$\\mathcal{M}_3$")) for mn in ("CB", "Ridge")], fontsize=8)
 ax.set_ylabel("$R^2$ (pooled)")
 from matplotlib.patches import Patch
 ax.legend(handles=[Patch(facecolor="w", edgecolor="k", hatch="//", label="record-level random"),

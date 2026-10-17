@@ -29,13 +29,13 @@ for t in ("t1", "t2"):
 import sys; sys.path.insert(0, str(ROOT / "src"))
 from psc import v4
 T = v4.paper_table("rec"); prev_rc = T.mean()
-o.append(f"\\subsection*{{t3: 215 predictors (36 recipe flags added to $\mathcal{M}_2$)}}")
+o.append(f"\\subsection*{{t3: 215 predictors (36 recipe flags added to $\\mathcal{{M}}_2$)}}")
 o.append("Flags are paper-level, binary, and missing (native NaN, no indicator) for publications without an extraction record. Share positive among the 2,835 extracted papers in parentheses: " +
          ", ".join(f"\\texttt{{{esc(c)}}} ({100*prev_rc[c]:.1f}\\%)" for c in T.columns) + ".\\par\\smallskip")
-o.append(f"\\subsection*{{Earlier literature block (44 predictors; not part of $\mathcal{M}_3$)}}")
+o.append(f"\\subsection*{{Earlier literature block (44 predictors; not part of $\\mathcal{{M}}_3$)}}")
 lit = [c for c in fl["t3"] if fl["t3"][c] == "literature"]
 o.append("\\textbf{literature} (" + str(len(lit)) + "): " + ", ".join(f"\\texttt{{{esc(c)}}}" for c in lit) + "\\par\\smallskip")
-o.append(r"\section*{Table S2. Per-split results of the matched CatBoost five-holdout experiment (DOI-grouped; $\mathcal{M}_3$ in the run files = earlier literature block)}\begin{longtable}{lllrrrr}\toprule Subset & Tier & Split & $n_\mathrm{test}$ & $R^2$ & MAE & RMSE\\\midrule\endhead")
+o.append(r"\section*{Table S2. Per-split results of the matched CatBoost five-holdout experiment (DOI-grouped; tier key \texttt{t3} in the run files = earlier literature block, not the final $\mathcal{M}_3$; final $\mathcal{M}_3$ results: Tables S14--S17)}\begin{longtable}{lllrrrr}\toprule Subset & Tier & Split & $n_\mathrm{test}$ & $R^2$ & MAE & RMSE\\\midrule\endhead")
 x = A[(A.protocol == "doi") & (A.model == "catboost")].sort_values(["arch", "tier", "split"])
 for _, r in x.iterrows():
     o.append(f"{r.arch} & {r.tier if r.tier != 't3' else EARLY} & {r.split} & {r.n_test} & {r.r2:.4f} & {r.mae:.3f} & {r.rmse:.3f}\\\\")
@@ -55,7 +55,7 @@ o.append(r"\bottomrule\end{tabular}\par\smallskip Coverage values below the medi
 import numpy as np
 from psc.results import load_ablation, read
 AB = load_ablation(); D = AB[(AB.protocol == "doi") & (AB.model == "catboost")]
-nm = {"t1": "$\mathcal{M}_1$", "t2": "$\mathcal{M}_2$", "t3": "$\mathcal{M}_2$ + earlier lit.\\ block"}
+nm = {"t1": "$\\mathcal{M}_1$", "t2": "$\\mathcal{M}_2$", "t3": "$\\mathcal{M}_2$ + earlier lit.\\ block"}
 o.append(r"\section*{Table S5. Earlier 44-predictor literature block: five-holdout ablation (matched CatBoost, DOI-grouped; mean $\pm$ s.d. over five splits)}")
 o.append(r"This experiment evaluated the superseded literature block, not $\mathcal{M}_3$. $\Delta R^2$ is the mean per-split difference to $\mathcal{M}_2$.\par\smallskip\begin{tabular}{llcccc}\toprule Subset & Tier & $R^2$ & MAE & RMSE & $\Delta R^2$ vs $\mathcal{M}_2$\\\midrule")
 for a, an in (("overall", "Pooled"), ("pin", "p-i-n"), ("nip", "n-i-p")):
@@ -66,7 +66,7 @@ for a, an in (("overall", "Pooled"), ("pin", "p-i-n"), ("nip", "n-i-p")):
     o.append(r"\midrule")
 o.append(r"\bottomrule\end{tabular}\par\medskip")
 G = read("feature_groups_v1")
-nmg = {"t1_lit": "$\mathcal{M}_1$ + earlier lit.\\ block (no material properties)", "t3_nometa": "$\mathcal{M}_2$ + earlier block minus 2 completeness flags", "t2_noise": "$\mathcal{M}_2$ + 32 noise columns"}
+nmg = {"t1_lit": "$\\mathcal{M}_1$ + earlier lit.\\ block (no material properties)", "t3_nometa": "$\\mathcal{M}_2$ + earlier block minus 2 completeness flags", "t2_noise": "$\\mathcal{M}_2$ + 32 noise columns"}
 o.append(r"\noindent Feature-group controls (same protocol):\par\smallskip\begin{tabular}{llcccc}\toprule Subset & Variant & Feat. & $R^2$ & MAE & RMSE\\\midrule")
 for a, an in (("overall", "Pooled"), ("pin", "p-i-n"), ("nip", "n-i-p")):
     for t in ("t1_lit", "t3_nometa", "t2_noise"):
@@ -101,7 +101,7 @@ CMP = json.load(open(R / "v4" / "final" / "comparisons.json")); C3 = json.load(o
 o.append(r"\section*{Table S7. Common-split comparison: per-seed paired $\Delta R^2$}")
 o.append(r"Reserved publications, matched default CatBoost; each seed model scored separately (the main-text values use the mean of the five seed models).\par\smallskip\begin{tabular}{llccccc}\toprule Population & Comparison & seed 0 & seed 1 & seed 2 & seed 3 & seed 4\\\midrule")
 for sc, sn in (("covered", "LLM-covered"), ("full", "All reserved")):
-    for k, kn in (("t2_minus_t1", "$\mathcal{M}_2-\mathcal{M}_1$"), ("t3_minus_t2", "$\mathcal{M}_3-\mathcal{M}_2$")):
+    for k, kn in (("t2_minus_t1", "$\\mathcal{M}_2-\\mathcal{M}_1$"), ("t3_minus_t2", "$\\mathcal{M}_3-\\mathcal{M}_2$")):
         o.append(f"{sn} & {kn} & " + " & ".join(f"{x:+.4f}" for x in C3[sc][k]["per_seed"]) + "\\\\")
 o.append(r"\bottomrule\end{tabular}\par\medskip")
 o.append(r"Negative controls (default settings; $\Delta R^2$ relative to $\mathcal{M}_2$ under the same settings): ")
@@ -127,8 +127,8 @@ for t in ("t1", "t2", "t3"):
     o.append(f"{t} & {cnt[(t,'none')]} & {cnt[(t,'low')]} & {cnt[(t,'moderate')]}\\\\")
 o.append(r"\bottomrule\end{tabular}\par\smallskip")
 low = sorted({a["predictor"] for a in AU["predictors"] if a["leakage_risk"] == "low" and a["tier"] == "t1" and not a["predictor"].endswith("_na")})
-o.append("Predictors of $\mathcal{M}_1$ rated low risk and retained: " + ", ".join(f"\\texttt{{{esc(c)}}}" for c in low) + ". These are device-context or film-characterisation fields (the absorber band gap, the photoluminescence maximum, encapsulation, an additional front layer, back-contact thickness) and not J--V, EQE, stability or stabilised-performance results. Material-property predictors ($\mathcal{M}_2$) are catalogue reference values and the recipe flags ($\mathcal{M}_3$) are paper-level identity flags; $\mathcal{M}_3$ flags are rated low because they are constant within a publication and could encode publication identity.\\par")
-o.append(f"Checks: no predictor of the three tiers matches the outcome pattern \\texttt{{{tt(AU['banned_pattern'])}}} (hits: {len(AU['predictors_matching_banned_outcome_pattern'])}); the processed table contains five outcome-adjacent columns ({OUTC}), all excluded in code; {len(AU['pdp_outcome_or_stability_fields_not_in_enriched_table'])} fields of the full PDP export whose names match this pattern (J--V, EQE, stability and stabilised-performance fields among them) were never carried into the processed table. The largest absolute Spearman correlation of any numeric $\mathcal{M}_2$ predictor with the target is {abs(AU['max_abs_spearman_with_target'][0]['rho']):.2f} (\\texttt{{{esc(AU['max_abs_spearman_with_target'][0]['predictor'])}}}), so no predictor is a near-copy of the target.\\par")
+o.append("Predictors of $\\mathcal{M}_1$ rated low risk and retained: " + ", ".join(f"\\texttt{{{esc(c)}}}" for c in low) + ". These are device-context or film-characterisation fields (the absorber band gap, the photoluminescence maximum, encapsulation, an additional front layer, back-contact thickness) and not J--V, EQE, stability or stabilised-performance results. Material-property predictors ($\\mathcal{M}_2$) are catalogue reference values and the recipe flags ($\\mathcal{M}_3$) are paper-level identity flags; $\\mathcal{M}_3$ flags are rated low because they are constant within a publication and could encode publication identity.\\par")
+o.append(f"Checks: no predictor of the three tiers matches the outcome pattern \\texttt{{{tt(AU['banned_pattern'])}}} (hits: {len(AU['predictors_matching_banned_outcome_pattern'])}); the processed table contains five outcome-adjacent columns ({OUTC}), all excluded in code; {len(AU['pdp_outcome_or_stability_fields_not_in_enriched_table'])} fields of the full PDP export whose names match this pattern (J--V, EQE, stability and stabilised-performance fields among them) were never carried into the processed table. The largest absolute Spearman correlation of any numeric $\\mathcal{{M}}_2$ predictor with the target is {abs(AU['max_abs_spearman_with_target'][0]['rho']):.2f} (\\texttt{{{esc(AU['max_abs_spearman_with_target'][0]['predictor'])}}}), so no predictor is a near-copy of the target.\\par")
 o.append(r"\section*{Table S9. Illumination sensitivity on the reserved publications (test-set exclusion, no retraining)}")
 o.append(f"The full PDP export records the light spectrum and intensity. All {IL['records_pce_gt_27']} filtered records with PCE $>$ 27\\% (six publications) have intensity $\\leq$ 0.31 (standard illumination is 100 on this scale); {IL['pce_gt_27_light_spectra'].get('Indoor light',0)} are labelled indoor light and {IL['pce_gt_27_light_spectra'].get('missing',0)} have no spectrum label. In the filtered data {IL['filtered_records_non_AM15_spectrum']} records have a spectrum other than AM1.5 and {IL['filtered_records_intensity_outside_90_110']} an intensity outside 90--110. Matched default CatBoost, mean of five seed models.\\par\\smallskip")
 o.append(r"\begin{tabular}{llrcccc}\toprule Population & Test records & $n$ & $R^2$ $\mathcal{M}_1$ & $R^2$ $\mathcal{M}_2$ & $R^2$ $\mathcal{M}_3$ & MAE $\mathcal{M}_3$\\\midrule")
@@ -144,12 +144,12 @@ o.append(r"\begin{tabular}{llcccc}\toprule Population & Tier & $R^2$ record-wtd 
 for sc, sn in (("covered", "LLM-covered"), ("full", "All reserved")):
     for t in ("t1", "t2", "t3"):
         a, b = PW[sc]["record_weighted"][t], PW[sc]["publication_weighted"][t]
-        o.append(f"{sn} & ${t[0]}_{t[1]}$ & {a['r2']:.3f} & {b['r2']:.3f} & {b['mae']:.3f} & {b['rmse']:.3f}\\\\")
+        o.append(f"{sn} & $\\mathcal{{M}}_{t[1]}$ & {a['r2']:.3f} & {b['r2']:.3f} & {b['mae']:.3f} & {b['rmse']:.3f}\\\\")
 o.append(r"\midrule")
 o.append(r"\end{tabular}\par\smallskip")
 o.append(r"\begin{tabular}{llc}\toprule Population & Publication-weighted paired $\Delta R^2$ & value [95\% interval]\\\midrule")
 for sc, sn in (("covered", "LLM-covered"), ("full", "All reserved")):
-    for k, kn in (("t2_minus_t1", "$\mathcal{M}_2-\mathcal{M}_1$"), ("t3_minus_t2", "$\mathcal{M}_3-\mathcal{M}_2$")):
+    for k, kn in (("t2_minus_t1", "$\\mathcal{M}_2-\\mathcal{M}_1$"), ("t3_minus_t2", "$\\mathcal{M}_3-\\mathcal{M}_2$")):
         v = PW[sc]["paired_publication_weighted"][k]
         o.append(f"{sn} & {kn} & ${v['dR2']:+.4f}$ [${v['lo']:+.4f}$, ${v['hi']:+.4f}$]\\\\")
 o.append(r"\bottomrule\end{tabular}\par")
@@ -171,8 +171,8 @@ o.append(r"\section*{Table S12. Recipe flags without the first-feature-use penal
 o.append(r"$\mathcal{M}_3$ refitted once with the penalty on the flag columns set to 0 instead of 0.5 (same development records, seeds, validation splits and configuration); scored on the same reserved records. The reserved publications had been examined before this run, so it is a robustness check and not independent confirmation. On development folds the penalties 0, 0.5 and 2 gave mean $\Delta R^2$ of $+0.0052$, $+0.0070$ and $+0.0038$ (12, 12 and 11 of 15 folds positive).\par\smallskip")
 o.append(r"\begin{tabular}{llcccc}\toprule Population & Variant & $R^2$ & MAE & RMSE & $\Delta R^2$ vs $\mathcal{M}_2$ [95\% interval]\\\midrule")
 for sc, sn in (("covered", "LLM-covered"), ("full", "All reserved")):
-    o.append(f"{sn} & $\mathcal{M}_2$ & {P0[sc]['t2']['r2']:.4f} & {P0[sc]['t2']['mae']:.3f} & {P0[sc]['t2']['rmse']:.3f} & \\\\")
-    for k, kn in (("t3_pen0.5", "$\mathcal{M}_3$, penalty 0.5 (main)"), ("t3_pen0", "$\mathcal{M}_3$, no penalty")):
+    o.append(f"{sn} & $\\mathcal{{M}}_2$ & {P0[sc]['t2']['r2']:.4f} & {P0[sc]['t2']['mae']:.3f} & {P0[sc]['t2']['rmse']:.3f} & \\\\")
+    for k, kn in (("t3_pen0.5", "$\\mathcal{M}_3$, penalty 0.5 (main)"), ("t3_pen0", "$\\mathcal{M}_3$, no penalty")):
         v = P0[sc][k]; d = P0[sc][k + "_minus_t2"]
         o.append(f"{sn} & {kn} & {v['r2']:.4f} & {v['mae']:.3f} & {v['rmse']:.3f} & ${d['dR2']:+.4f}$ [${d['lo']:+.4f}$, ${d['hi']:+.4f}$]\\\\")
 o.append(r"\bottomrule\end{tabular}\par")
@@ -185,6 +185,51 @@ for g, cs in v4.REC_GROUPS.items():
     for c in cs:
         o.append(f"\\texttt{{rc\\_{esc(c)}}} & {GN[g]} & \\texttt{{{tt(RECIPE[c])}}}\\\\")
 o.append(r"\bottomrule\end{longtable}}")
+
+# ---- S14-S17: final M3 (t2 + 36 recipe flags) under the repeated protocols ----
+T3 = pd.DataFrame([json.loads(l) for l in open(R / "t3final_matched_v1" / "runs.jsonl")]).drop(columns=["info"])
+T3m = json.load(open(R / "t3final_matched_v1" / "meta.json"))
+PP = pd.read_csv(R / "t3final_summary" / "matched_pairs.csv"); PS = pd.read_csv(R / "t3final_summary" / "matched_summary.csv")
+PN = {"random": "Record-level", "doi": "DOI-grouped", "author": "Lead-author", "temporal": "Forward"}
+o.append(r"\section*{Table S14. Final tier $\mathcal{M}_3$: run integrity}")
+o.append(f"The $\\mathcal{{M}}_3$ arm ($\\mathcal{{M}}_2$ + 36 recipe flags; tier key \\texttt{{t3f}} in \\texttt{{results/t3final\\_matched\\_v1}}) comprises {len(T3)} fits (CatBoost and ridge; {', '.join(PN[k] for k in PN)} protocols; pooled, p-i-n and n-i-p data). Test indices equal those of the stored $\\mathcal{{M}}_2$ arm in all {int(T3.test_ref_checked.sum())} fits for which a stored arm exists. Maximum DOI overlap (test/train, validation/train, test/validation) in the publication-disjoint protocols: " +
+         ", ".join(f"{PN[k]} {int(g.doi_overlap_test_train.max())}/{int(g.doi_overlap_val_train.max())}/{int(g.doi_overlap_test_val.max())}" for k, g in T3.groupby("protocol") if k != "random") +
+         f". CatBoost first-feature-use penalty on the flag columns: {T3[T3.model == 'catboost'].penalty.iloc[0]}; ridge uses training-mean imputed flags plus a coverage indicator. Data SHA-256 \\texttt{{{T3m['data_sha256'][:16]}}}, recipe artifact SHA-256 \\texttt{{{T3m['lit_v4_sha256'][:16]}}}, git HEAD at run time \\texttt{{{T3m['git_head'][:12]}}}.\\par")
+o.append(r"\section*{Table S15. Per-split paired $\mathcal{M}_3-\mathcal{M}_2$ differences (pooled data)}")
+o.append(r"$\Delta R^2$ with the 95\% publication-cluster bootstrap interval of each split (1,000 resamples); $n$ test records.\par\smallskip")
+o.append(r"{\footnotesize\begin{longtable}{llllrrrrr}\toprule Protocol & Model & Scope & Split & $n$ & $R^2$ $\mathcal{M}_2$ & $R^2$ $\mathcal{M}_3$ & $\Delta R^2$ & [95\% interval]\\\midrule\endhead")
+for (pr, mo, sc), g in PP[PP.arch == "overall"].groupby(["protocol", "model", "scope"], sort=False):
+    for _, r in g.sort_values("split").iterrows():
+        o.append(f"{PN[pr]} & {mo} & {sc} & {int(r.split)} & {int(r.n):,} & {r.r2_a:.4f} & {r.r2_b:.4f} & ${r.d_r2:+.4f}$ & [${r.lo:+.4f}$, ${r.hi:+.4f}$]\\\\")
+o.append(r"\bottomrule\end{longtable}}")
+o.append(r"\section*{Table S16. Paired $\mathcal{M}_3-\mathcal{M}_2$ summary by architecture subset}")
+o.append(r"Mean over splits; ``pos.'' counts splits with positive $\Delta R^2$; ``CI$>0$/$<0$'' counts splits whose interval lies above/below zero. Record-level p-i-n and n-i-p CatBoost fits compare default-iteration arms for both tiers (not the converged pooled fits).\par\smallskip")
+o.append(r"{\footnotesize\begin{longtable}{lllcrcccccc}\toprule Protocol & Subset & Model & Scope & $n$ & $R^2$ $\mathcal{M}_2$ & $R^2$ $\mathcal{M}_3$ & $\Delta R^2$ & $\Delta$MAE & pos. & CI$>0$/$<0$\\\midrule\endhead")
+AN = {"overall": "pooled", "pin": "p-i-n", "nip": "n-i-p"}
+for pr in PN:
+    for ar in ("overall", "pin", "nip"):
+        for mo in ("catboost", "ridge"):
+            for sc in ("all", "covered"):
+                g = PS[(PS.protocol == pr) & (PS.arch == ar) & (PS.model == mo) & (PS.scope == sc)]
+                if g.empty: continue
+                r = g.iloc[0]
+                o.append(f"{PN[pr]} & {AN[ar]} & {mo} & {sc} & {int(round(r.n_test)):,} & {r.r2_t2:.3f} & {r.r2_t3:.3f} & ${r.d_r2:+.4f}$ & ${r.d_mae:+.3f}$ & {int(r.pos)}/{int(r.splits)} & {int(r.ci_above0)}/{int(r.ci_below0)}\\\\")
+o.append(r"\bottomrule\end{longtable}}")
+o.append(r"\section*{Table S17. SHAP analysis of the final tier $\mathcal{M}_3$ (first DOI-grouped split)}")
+o.append(r"Matched CatBoost with the first-feature-use penalty on the recipe flags; \texttt{TreeExplainer} on 1,500 held-out records; mean $|$SHAP$|$ in PCE percentage points. Attributions describe the fitted model only. The earlier SHAP analysis (Figs.\ S1 and S2) used the superseded 44-predictor block.\par\smallskip")
+SG = pd.read_csv(R / "shap" / "t3final_groups.csv")
+o.append(r"\begin{tabular}{lrrrrr}\toprule Subset & process & material & composition & device & recipe flags\\\midrule")
+for ar in ("overall", "pin", "nip"):
+    g = SG[SG.arch == ar].set_index("group")
+    o.append(f"{AN[ar]} & " + " & ".join(f"{100*g.loc[k,'share']:.1f}\\%" for k in ("process", "material", "composition", "device", "recipe")) + "\\\\")
+o.append(r"\bottomrule\end{tabular}\par\medskip")
+for ar in ("overall",):
+    rk = pd.read_csv(R / "shap" / f"t3final_ranking_{ar}.csv")
+    o.append(r"\noindent Twelve highest-ranked features and the five highest-ranked recipe flags (pooled model):\par\smallskip\begin{tabular}{rlrl}\toprule Rank & Feature & mean $|$SHAP$|$ & Group\\\midrule")
+    for _, r in pd.concat([rk.head(12), rk[rk.group == "recipe"].head(5)]).iterrows():
+        o.append(f"{int(r['rank'])} & \\texttt{{{esc(r.feature)}}} & {r.mean_abs_shap:.3f} & {r.group}\\\\")
+    o.append(r"\bottomrule\end{tabular}\par")
+
 o.append(r"\section*{Material-descriptor implementation notes}")
 o.append(r"\noindent\textbf{Perovskite geometry descriptors.} Fixed effective radii (pm): A-site FA 253, MA 217, Cs 188, Rb 172; B-site Pb 119, Sn 110, Bi 103; X-site I 220, Br 196, Cl 181, F 133. Site radius = fraction-weighted mean over the listed species of that site, divided by the sum of their fractions; $\mu=r_B/r_X$, $t=(r_A+r_X)/[\sqrt2(r_B+r_X)]$, $r_A/r_X$, $\tau=r_X/r_B-(1-(r_A/r_B)\ln(r_A/r_B))$ (script \texttt{opus/evaluate\_tolerance\_factor.py}; the stored octahedral and tolerance factors were reproduced to floating-point precision from the ion-fraction columns). \textbf{Layer averages.} \texttt{*\_avg\_radius}, \texttt{*\_avg\_atomic\_mass} and \texttt{*\_en\_avg} are atom-count-weighted means of covalent radii (pm), atomic masses and Pauling electronegativities over the elements of a hand-entered formula (script \texttt{opus/fill\_atomic\_data.py}); \texttt{min}/\texttt{max} are the extremes over the elements. For MAPbI$_3$ (C$_1$H$_6$N$_1$Pb$_1$I$_3$) the average radius is $(77+6\cdot31+71+146+3\cdot139)/12=74.75$ pm, matching the stored value.\par")
 o.append(r"\section*{Extraction system prompt (verbatim from the recovered script)}\begin{verbatim}" + prompt + r"\end{verbatim}")
