@@ -23,7 +23,7 @@ rows = {("covered", "Default"): ("t2_default", "t3_default", "A_matched_default 
 for sc in ("covered", "full"):
     for key, (a, b, ck) in {"Default": ("t2_default", "t3_default", "A_matched_default (t3 vs t2)"), "Each tuned": ("t2_tuned", "t3_tuned", "B_each_tuned (t3_tuned vs t2_tuned)"),
                             "t3": ("t3cfg_on_t2", "t3_tuned", "A_matched_tuned_t3cfg (t3 vs t2 under t3's config)"), "t2": ("t2_tuned", "t2cfg_on_t3", "A_matched_tuned_t2cfg (t3 vs t2 under t2's config)")}.items():
-        v = K[sc][ck]; label = {"Default": "Default", "Each tuned": "Each tuned", "t3": "$\mathcal{M}_3$'s tuned config.", "t2": "$\mathcal{M}_2$'s tuned config."}[key]
+        v = K[sc][ck]; label = {"Default": "Default", "Each tuned": "Each tuned", "t3": "$\\mathcal{M}_3$'s tuned config.", "t2": "$\\mathcal{M}_2$'s tuned config."}[key]
         pre = ("Covered" if sc == "covered" else "All") + f" & {label} & {V.loc[(sc, a), 'r2']:.3f} & {V.loc[(sc, b), 'r2']:.3f} & {sg(v['dR2'])} & $[{v['lo']:+.4f}, {v['hi']:+.4f}]$ & {v['seeds_pos']}/{v['n_seeds']}"
         need(pre, f"config table {sc} {key}")
 # t2/t3 default arms of the new table equal the published V4 arms
