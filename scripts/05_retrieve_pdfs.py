@@ -1,21 +1,3 @@
-"""
-Step 5 — Retrieve open-access PDFs for a list of DOIs.
-
-Attempts three legal open-access routes in order, then writes a
-manual_queue.csv for papers that need institutional access.
-
-Usage:
-    UNPAYWALL_EMAIL=you@institution.edu \
-      python scripts/05_retrieve_pdfs.py --dois data/dois.txt --out retrieval/
-
-Output:
-    retrieval/pdfs/              downloaded PDFs (named by DOI)
-    retrieval/retrieval_log.csv  per-DOI route and status
-    retrieval/manual_queue.csv   DOIs that need manual download
-
-Note: No shadow libraries are used. The manual queue covers papers only
-obtainable through institutional subscriptions.
-"""
 import argparse
 import csv
 import os
@@ -26,13 +8,12 @@ from pathlib import Path
 
 import requests
 
-EMAIL = os.environ.get("UNPAYWALL_EMAIL", "")
-UA = f"psc-ml-paper-retrieval/1.0 (mailto:{EMAIL or 'unset'})"
+EMAIL   = os.environ.get("UNPAYWALL_EMAIL", "")
 SESSION = requests.Session()
-SESSION.headers["User-Agent"] = UA
+SESSION.headers["User-Agent"] = f"psc-ml-retrieval/1.0 (mailto:{EMAIL or 'unset'})"
 
 
-def safe_name(doi: str) -> str:
+def safe_name(doi):
     return re.sub(r"[^A-Za-z0-9.\-]+", "_", doi.strip()) + ".pdf"
 
 
@@ -44,8 +25,7 @@ def _get_json(url, **kw):
         return None
 
 
-def _download_pdf(url: str, dest: Path) -> int:
-    """Download url if it returns a valid PDF. Returns file size or 0."""
+def _download_pdf(url, dest):
     try:
         r = SESSION.get(url, timeout=60, allow_redirects=True)
         if r.status_code == 200 and r.content[:5] == b"%PDF-" and len(r.content) > 20_000:
@@ -56,8 +36,7 @@ def _download_pdf(url: str, dest: Path) -> int:
     return 0
 
 
-def open_access_urls(doi: str):
-    """Yield (route, url) pairs from Unpaywall → OpenAlex → Crossref."""
+def open_access_urls(doi):
     if EMAIL:
         data = _get_json(f"https://api.unpaywall.org/v2/{doi}", params={"email": EMAIL})
         if data:
@@ -81,9 +60,9 @@ def open_access_urls(doi: str):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--dois",  required=True, help="text file, one DOI per line")
-    ap.add_argument("--out",   required=True, help="output directory")
-    ap.add_argument("--limit", type=int,      help="process at most N DOIs (for testing)")
+    ap.add_argument("--dois",  required=True)
+    ap.add_argument("--out",   required=True)
+    ap.add_argument("--limit", type=int)
     a = ap.parse_args()
 
     out = Path(a.out)
@@ -103,7 +82,6 @@ def main():
         writer = csv.writer(f)
         if is_new:
             writer.writerow(["doi", "route", "url", "status", "bytes"])
-
         for i, doi in enumerate(dois, 1):
             if doi in done:
                 continue
@@ -112,7 +90,6 @@ def main():
                 writer.writerow([doi, "existing_file", "", "ok", dest.stat().st_size])
                 f.flush()
                 continue
-
             row = [doi, "manual_queue", "", "needs_manual", 0]
             for route, url in open_access_urls(doi):
                 n = _download_pdf(url, dest)
@@ -120,13 +97,13 @@ def main():
                     row = [doi, route, url, "ok", n]
                     break
                 time.sleep(0.5)
-
             writer.writerow(row)
             f.flush()
             time.sleep(1.0)
             print(f"[{i}/{len(dois)}] {doi}  →  {row[1]}", flush=True)
 
-    rows = list(csv.DictReader(open(log_path)))
+    rows  = list(csv.DictReader(open(log_path)))
+    n_ok  = sum(1 for r in rows if r["status"] == "ok")
     with open(out / "manual_queue.csv", "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["doi", "expected_filename"])
@@ -134,12 +111,8 @@ def main():
             if r["status"] != "ok":
                 writer.writerow([r["doi"], safe_name(r["doi"])])
 
-    routes = Counter(r["route"] for r in rows)
-    n_ok   = sum(1 for r in rows if r["status"] == "ok")
-    print(f"\n{n_ok}/{len(rows)} retrieved automatically. Routes: {dict(routes)}")
-    print(f"Manual queue ({len(rows) - n_ok} DOIs) → {out / 'manual_queue.csv'}")
-    print("Place manually downloaded PDFs in retrieval/pdfs/ using the expected filename.")
-    print("Then run: streamlit run scripts/06_manual_queue_app.py")
+    print(f"\n{n_ok}/{len(rows)} retrieved. Routes: {dict(Counter(r['route'] for r in rows))}")
+    print(f"Manual queue → {out / 'manual_queue.csv'}")
 
 
 if __name__ == "__main__":

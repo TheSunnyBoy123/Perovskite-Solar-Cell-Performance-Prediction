@@ -1,16 +1,3 @@
-"""
-Step 6 — Streamlit app to process the manual download queue.
-
-Shows papers that couldn't be retrieved automatically, lets you upload
-the PDF, converts to Markdown, and sends to the LLM for extraction.
-
-Usage:
-    streamlit run scripts/06_manual_queue_app.py
-
-Requirements:
-    pip install streamlit pymupdf4llm requests python-dotenv
-    Set LLM_ENDPOINT and LLM_MODEL in .env (OpenAI-compatible API).
-"""
 import json
 import os
 import re
@@ -33,29 +20,19 @@ LLM_ENDPOINT = os.getenv("LLM_ENDPOINT", "http://localhost:8000/v1")
 LLM_MODEL    = os.getenv("LLM_MODEL", "")
 
 SYSTEM_PROMPT = """\
-You are a materials-science data-extraction assistant.
-
-Given a Markdown document converted from a published perovskite solar cell paper,
-extract every material with its measured or reported properties.
-
+Extract structured material data from a Markdown paper on perovskite solar cells.
 Return ONLY a single JSON object:
 {
   "source": "DOI: <doi>",
   "materials": [
     {
-      "formula": "<chemical formula>",
-      "common_name": "<human-readable name>",
-      "type": "<perovskite | ETL | HTL | metal contact | additive | solvent | ...>",
-      ... <all properties: deposition_method, spin_speed_rpm, anneal_temp_C,
-           anneal_time_min, thickness_nm, concentration, antisolvent, ...>
+      "formula": "...", "common_name": "...", "type": "perovskite|ETL|HTL|contact|additive|solvent|...",
+      <all properties: deposition_method, spin_speed_rpm, anneal_temp_C, anneal_time_min,
+       thickness_nm, concentration, antisolvent, PCE, Voc, Jsc, FF, ...>
     }
   ]
 }
-
-Rules:
-- Include units when available. Do NOT invent data.
-- Drop stability / EQE measurements; keep PCE/Voc/Jsc/FF if reported.
-- Return raw JSON only — no markdown fences, no commentary.
+Do NOT invent data. Drop stability/EQE. Raw JSON only, no fences.
 """
 
 
@@ -66,96 +43,83 @@ def load_queue():
     return list(csv.DictReader(open(MANUAL_QUEUE)))
 
 
-def pdf_to_markdown(pdf_bytes: bytes) -> str:
+def pdf_to_markdown(pdf_bytes):
     import pymupdf4llm, pymupdf
     with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
         f.write(pdf_bytes)
         tmp = f.name
-    doc = pymupdf.open(tmp)
-    return pymupdf4llm.to_markdown(doc)
+    return pymupdf4llm.to_markdown(pymupdf.open(tmp))
 
 
-def call_llm(markdown: str) -> str:
-    payload = {
-        "model": LLM_MODEL,
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user",   "content": markdown},
-        ],
-        "temperature": 0.1,
-        "max_tokens": 16384,
-    }
-    r = requests.post(f"{LLM_ENDPOINT}/chat/completions", json=payload, timeout=300)
+def call_llm(markdown):
+    r = requests.post(
+        f"{LLM_ENDPOINT}/chat/completions",
+        json={"model": LLM_MODEL,
+              "messages": [{"role": "system", "content": SYSTEM_PROMPT},
+                           {"role": "user",   "content": markdown}],
+              "temperature": 0.1, "max_tokens": 16384},
+        timeout=300,
+    )
     r.raise_for_status()
     return r.json()["choices"][0]["message"]["content"]
 
 
-def clean_json(raw: str) -> str:
-    raw = raw.strip()
-    raw = re.sub(r"^```(?:json)?\s*", "", raw)
-    raw = re.sub(r"\s*```$",          "", raw)
-    return raw.strip()
+def clean_json(raw):
+    raw = re.sub(r"^```(?:json)?\s*", "", raw.strip())
+    return re.sub(r"\s*```$", "", raw).strip()
 
 
-def extraction_path(doi: str) -> Path:
-    safe = re.sub(r"[^A-Za-z0-9.\-]+", "_", doi.strip())
-    return EXTRACTIONS_DIR / f"{safe}.json"
+def extraction_path(doi):
+    return EXTRACTIONS_DIR / (re.sub(r"[^A-Za-z0-9.\-]+", "_", doi.strip()) + ".json")
 
-
-# ── UI ────────────────────────────────────────────────────────────────────────
 
 st.set_page_config(page_title="Manual PDF Queue", layout="wide")
 st.title("Manual PDF Queue")
-st.caption(f"LLM: `{LLM_ENDPOINT}`  •  model: `{LLM_MODEL or 'unset — set LLM_MODEL in .env'}`")
+st.caption(f"`{LLM_ENDPOINT}`  •  `{LLM_MODEL or 'set LLM_MODEL in .env'}`")
 
-queue = load_queue()
-done  = {p.stem.replace("_", "/", 1) for p in EXTRACTIONS_DIR.glob("*.json")}
+queue     = load_queue()
+done      = {p.stem.replace("_", "/", 1) for p in EXTRACTIONS_DIR.glob("*.json")}
+remaining = [r for r in queue if r["doi"] not in done]
 
 if not queue:
-    st.info("No manual queue found. Run `05_retrieve_pdfs.py` first.")
+    st.info("Run 05_retrieve_pdfs.py first.")
     st.stop()
 
-remaining = [r for r in queue if r["doi"] not in done]
-st.markdown(f"**{len(remaining)} remaining** of {len(queue)} total  •  {len(done)} already extracted")
+st.markdown(f"**{len(remaining)} remaining** of {len(queue)}  •  {len(done)} done")
 
 if not remaining:
-    st.success("All papers extracted! Run `07_extract_features.py` next.")
+    st.success("All done. Run 07_extract_features.py next.")
     st.stop()
 
-row = st.selectbox("Select paper", remaining, format_func=lambda r: r["doi"])
-doi = row["doi"]
-st.markdown(f"**DOI:** `{doi}`  •  expected file: `{row['expected_filename']}`")
-st.markdown(f"[Open on DOI resolver ↗](https://doi.org/{doi})")
-
-uploaded = st.file_uploader("Upload PDF (downloaded via institutional access)", type="pdf")
+row      = st.selectbox("Paper", remaining, format_func=lambda r: r["doi"])
+doi      = row["doi"]
+uploaded = st.file_uploader(f"Upload PDF for `{doi}`", type="pdf")
 
 if uploaded:
-    with st.spinner("Converting PDF to Markdown…"):
+    with st.spinner("Converting…"):
         try:
             md = pdf_to_markdown(uploaded.read())
-            st.success(f"Converted — {len(md):,} characters")
+            st.success(f"{len(md):,} chars")
         except Exception as e:
-            st.error(f"PDF conversion failed: {e}")
+            st.error(f"Conversion failed: {e}")
             st.stop()
 
-    with st.expander("Preview first 2 000 chars"):
+    with st.expander("Preview"):
         st.code(md[:2000])
 
-    if st.button("Extract with LLM", type="primary"):
+    if st.button("Extract", type="primary"):
         if not LLM_MODEL:
-            st.error("Set LLM_MODEL in .env before extracting.")
+            st.error("Set LLM_MODEL in .env")
             st.stop()
-        with st.spinner("Extracting… (1–3 min)"):
+        with st.spinner("Extracting…"):
             try:
-                raw  = call_llm(md)
-                data = json.loads(clean_json(raw))
+                data = json.loads(clean_json(call_llm(md)))
                 data.setdefault("source", f"DOI: {doi}")
-                out  = extraction_path(doi)
+                out = extraction_path(doi)
                 out.write_text(json.dumps(data, indent=2, ensure_ascii=False))
-                st.success(f"Saved → `{out.name}`  ({len(data.get('materials', []))} materials)")
+                st.success(f"Saved → {out.name}  ({len(data.get('materials', []))} materials)")
                 st.rerun()
             except requests.exceptions.ConnectionError:
-                st.error(f"Cannot reach LLM at `{LLM_ENDPOINT}`. Is it running?")
+                st.error(f"Cannot reach `{LLM_ENDPOINT}`")
             except json.JSONDecodeError as e:
-                st.error(f"LLM returned invalid JSON: {e}")
-                st.code(raw[:2000])
+                st.error(f"Invalid JSON: {e}")

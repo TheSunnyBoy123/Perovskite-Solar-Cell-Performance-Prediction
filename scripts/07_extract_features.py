@@ -1,13 +1,3 @@
-"""
-Step 7 — Build data/lit_v4.json from per-paper extraction JSONs.
-
-Reads all *.json files in extractions/ (produced by 06_manual_queue_app.py)
-and emits the paper-level recipe flags, numeric aggregates and token vocabulary
-that become the M3 feature block.
-
-Usage:
-    python scripts/07_extract_features.py --extractions extractions/ --out data/lit_v4.json
-"""
 import argparse
 import json
 import re
@@ -82,7 +72,7 @@ def _canon(s):
     return None
 
 
-def _role(m: dict) -> str:
+def _role(m):
     t = str(m.get("type", "")).lower()
     for k, v in ROLE_MAP.items():
         if k in t:
@@ -90,12 +80,12 @@ def _role(m: dict) -> str:
     return "oth"
 
 
-def material_records(doc: dict) -> list:
+def material_records(doc):
     recs = []
     for m in doc.get("materials", []):
         if not isinstance(m, dict):
             continue
-        r = _role(m)
+        r    = _role(m)
         name = _canon(str(m.get("formula", "")) + " " + str(m.get("common_name", "")))
         nums = {}
         for k, v in m.items():
@@ -114,11 +104,11 @@ def material_records(doc: dict) -> list:
                 nums.setdefault("anneal_min", []).append(x)
             elif re.search(r"thick", kl):
                 nums.setdefault("thick_nm", []).append(x)
-        all_text = " ".join(
+        text = " ".join(
             str(v) for k, v in m.items()
             if not OUTCOME_RE.search(str(k)) and isinstance(v, (str, int, float))
         ).lower()
-        recs.append({"role": r, "name": name, "nums": nums, "text": all_text})
+        recs.append({"role": r, "name": name, "nums": nums, "text": text})
     return recs
 
 
@@ -141,8 +131,8 @@ def paper_numeric(recs):
 
 
 def paper_recipe(recs):
-    all_text = " ".join(r["text"] for r in recs)
-    return {k: float(bool(rx.search(all_text))) for k, rx in _RECIPE_RE.items()}
+    text = " ".join(r["text"] for r in recs)
+    return {k: float(bool(rx.search(text))) for k, rx in _RECIPE_RE.items()}
 
 
 def normalize_doi(x):
@@ -169,11 +159,9 @@ def main():
     for f in files:
         try:
             doc     = json.loads(f.read_text(encoding="utf-8", errors="replace"))
-            doi_raw = doc.get("source", f.stem.replace("_", "/", 1))
-            doi_raw = re.sub(r"^doi:\s*", "", str(doi_raw), flags=re.I).strip()
-            doi_key = normalize_doi(doi_raw)
+            doi_raw = re.sub(r"^doi:\s*", "", str(doc.get("source", f.stem.replace("_", "/", 1))), flags=re.I).strip()
             recs    = material_records(doc)
-            papers[doi_key] = {
+            papers[normalize_doi(doi_raw)] = {
                 "tokens":       paper_tokens(recs),
                 "numeric":      paper_numeric(recs),
                 "recipe_flags": paper_recipe(recs),
@@ -182,8 +170,7 @@ def main():
             print(f"  skip {f.name}: {e}")
 
     Path(a.out).write_text(json.dumps({"schema": "lx4.0", "papers": papers}, indent=2))
-    tok_counts = Counter(t for p in papers.values() for t in p["tokens"])
-    print(f"{len(papers)} papers  •  {len(tok_counts)} unique tokens  →  {a.out}")
+    print(f"{len(papers)} papers  •  {len(Counter(t for p in papers.values() for t in p['tokens']))} tokens  →  {a.out}")
 
 
 if __name__ == "__main__":
