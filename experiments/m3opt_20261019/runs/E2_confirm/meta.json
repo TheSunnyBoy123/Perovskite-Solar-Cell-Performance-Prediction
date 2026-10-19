@@ -1,0 +1,125 @@
+{
+ "config": {
+  "name": "E2_confirm",
+  "hypothesis": "Confirm E1 screening leaders (TF-IDF/SVD text embedding of the extraction, kNN target encoding) on fresh fold partitions (seeds 45-49, not used in screening) with a DOI-permuted text control; production M3 and strict flags re-measured.",
+  "partition": "v4dev",
+  "folds": 5,
+  "seeds": [
+   45,
+   46,
+   47,
+   48,
+   49
+  ],
+  "bag": 1,
+  "pen": 0.5,
+  "params": {},
+  "arms": [
+   {
+    "name": "M2",
+    "base": "t2"
+   },
+   {
+    "name": "M2_seedrep",
+    "base": "t2",
+    "seed_offset": 7
+   },
+   {
+    "name": "M3_v4",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "v4"
+     }
+    ]
+   },
+   {
+    "name": "M3_strict",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict"
+     }
+    ]
+   },
+   {
+    "name": "N_svd16",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16
+     }
+    ]
+   },
+   {
+    "name": "N_svd16_perm",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "perm": 400
+     }
+    ]
+   },
+   {
+    "name": "N_svd8",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 8
+     }
+    ]
+   },
+   {
+    "name": "N_svd32",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 32
+     }
+    ]
+   },
+   {
+    "name": "M3s_svd16",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict"
+     },
+     {
+      "kind": "svd",
+      "k": 16
+     }
+    ]
+   },
+   {
+    "name": "N_svd16_knn",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16
+     },
+     {
+      "kind": "knn",
+      "k": 25
+     }
+    ]
+   },
+   {
+    "name": "N_knn",
+    "blocks": [
+     {
+      "kind": "knn",
+      "k": 25
+     }
+    ]
+   }
+  ]
+ },
+ "config_sha256": "224e9830efa648e837c9a17061dd0fc4c896d2c56ce76cdb86400605d57225e2",
+ "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+ "git_head": "b2efd1f37eed9a462ee39aa298b04bc180498937",
+ "n_records": 26982,
+ "n_dois": 4708,
+ "started": "2026-10-19 05:06:30"
+}

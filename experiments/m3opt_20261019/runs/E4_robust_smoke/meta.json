@@ -1,0 +1,125 @@
+{
+ "config": {
+  "name": "E4_robust",
+  "hypothesis": "Run after F_final was frozen; does not change the selection. Is the covered-subset text gain robust to model family (LightGBM), seed bagging (3 models), a more regularised CatBoost point (depth 6, l2 10; same point given to M2 and candidate = equal tuning budget), and k=32 on clean text? Fresh fold seeds 50-52.",
+  "partition": "v4dev",
+  "folds": 5,
+  "seeds": [
+   50,
+   51,
+   52
+  ],
+  "bag": 1,
+  "pen": 0.5,
+  "params": {},
+  "arms": [
+   {
+    "name": "M2",
+    "base": "t2"
+   },
+   {
+    "name": "N_svd16_clean",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "clean"
+     }
+    ]
+   },
+   {
+    "name": "N_svd32_clean",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 32,
+      "text": "clean"
+     }
+    ]
+   },
+   {
+    "name": "N_svd32_clean_perm",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 32,
+      "text": "clean",
+      "perm": 403
+     }
+    ]
+   },
+   {
+    "name": "M2_reg",
+    "base": "t2",
+    "params": {
+     "depth": 6,
+     "l2_leaf_reg": 10.0
+    }
+   },
+   {
+    "name": "N_svd16_clean_reg",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "clean"
+     }
+    ],
+    "params": {
+     "depth": 6,
+     "l2_leaf_reg": 10.0
+    }
+   },
+   {
+    "name": "M2_bag3",
+    "base": "t2",
+    "bag": 3,
+    "seed_offset": 11
+   },
+   {
+    "name": "N_svd16_clean_bag3",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "clean"
+     }
+    ],
+    "bag": 3,
+    "seed_offset": 11
+   },
+   {
+    "name": "M2_lgbm",
+    "base": "t2",
+    "model": "lgbm"
+   },
+   {
+    "name": "M3_v4_lgbm",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "v4"
+     }
+    ],
+    "model": "lgbm"
+   },
+   {
+    "name": "N_svd16_clean_lgbm",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "clean"
+     }
+    ],
+    "model": "lgbm"
+   }
+  ]
+ },
+ "config_sha256": "47c01eb3d06f630d12ed503bb4ffd67a30714b9ce610df917f113ac018077a11",
+ "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+ "git_head": "b2efd1f37eed9a462ee39aa298b04bc180498937",
+ "n_records": 26982,
+ "n_dois": 4708,
+ "started": "2026-10-19 06:13:21"
+}

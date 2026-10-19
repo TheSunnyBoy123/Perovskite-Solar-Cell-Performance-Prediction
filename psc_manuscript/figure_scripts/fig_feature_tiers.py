@@ -1,21 +1,22 @@
 """fig_feature_tiers: t1, t2 and the final t3 (t2 + 36 recipe flags) under the five repeated DOI-grouped holdouts (matched CatBoost; mean +/- s.d. of 5 splits).
-Data: results/ablation_v1 + results/t3final_matched_v1 (via style.final_ablation()). Output: figures/fig_feature_tiers.{png,pdf}
+Data: aggregate means and s.d. in results/t3final_summary/numbers.json. Output: figures/fig_feature_tiers.{png,pdf}
 The earlier 44-predictor literature block is not shown; the common-split comparison is in fig_three_tier.py / fig_v4_recipe.py.
 """
+import json
+
 from style import *
+from style import ROOT
 
 
 def main():
-    A = final_ablation()
-    x = A[(A.protocol == "doi") & (A.model == "catboost")]
+    N = json.loads((ROOT / "results" / "t3final_summary" / "numbers.json").read_text())
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.7))
     D = {}
     for ax, key, ylab, lim in ((axes[0], "r2", r"$R^2$", (0.15, 0.50)),
                                (axes[1], "rmse", "RMSE (PCE percentage points)", (3.55, 4.15))):
         for gi, arch in enumerate(ARCH):
             for ti, t in enumerate(("t1", "t2", "t3")):
-                g = x[(x.arch == arch) & (x.tier == t)][key]
-                m, s = g.mean(), g.std()
+                m, s = N[f"doi_{arch}_{t}_{key}"], N[f"doi_{arch}_{t}_{key}_sd"]
                 D[(arch, t, key)] = m
                 xx = gi + (ti - 1) * 0.24
                 ax.errorbar(xx, m, yerr=s, fmt="o", ms=5.5, color=C[t], ecolor=C[t], elinewidth=1.3, capsize=2.5,

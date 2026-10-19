@@ -1,0 +1,169 @@
+{
+ "sources_sha256": {
+  "pdb.csv": "353a14461609c06e422d3116b55513940f981620e40bbd3976ebe4b829890cbc",
+  "dataset_json_enriched.csv": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+  "lit_v4.json": "3b8670b2d6182520b5dfcf21329af22c5c0a7fb8209e02a455d010cbe5eb4b65",
+  "json_dir(sorted name+sha)": "025c7667a472e9924bec65fea746b54ae396021e8c8f6335361e2c0268f9b7cc",
+  "markdown_dir": "9fd48eb4a72bef028bca6c533f51a6b992c5d194e1fff95ae586b75ff7384f6d",
+  "n_json": 2835,
+  "n_markdown": 22,
+  "python": "3.13.5"
+ },
+ "pdb_vs_enriched": {
+  "pdb_rows": 43398,
+  "enriched_rows": 43398,
+  "enriched_cols": 156,
+  "ref_id_dup_pdb": 0,
+  "ref_id_dup_enriched": 0,
+  "only_pdb": 0,
+  "only_enriched": 0,
+  "doi_mismatch": 0,
+  "target_mismatch": 0,
+  "arch_mismatch": 0,
+  "target_missing": 1002,
+  "target_lt1": 1289,
+  "target_gt30": 13
+ },
+ "doi_normalisation": {
+  "raw_unique": 7499,
+  "normalised_unique": 7455,
+  "no_doi_records": 286,
+  "rules": [
+   "strip BOM and whitespace",
+   "lower-case",
+   "drop http(s)://(dx.)doi.org/",
+   "drop leading 'doi:'",
+   "missing -> __NO_DOI__ (one group)"
+  ]
+ },
+ "json_join": {
+  "files": 2835,
+  "schema_counts": {
+   "materials_list": 2817,
+   "top_level_material": 15,
+   "no_materials": 3
+  },
+  "status_counts": {
+   "covered": 2817,
+   "empty": 18
+  },
+  "duplicate_doi_groups_across_files": 0,
+  "source_field_disagrees_with_filename": 249,
+  "matched_to_pdp": 2782,
+  "unmatched": 53,
+  "unmatched_recoverable_via_source_field": 47,
+  "unmatched_examples": [
+   "10.1088/0256-307X_32_7_078401",
+   "10.1088/0268-1242_31_2_025009",
+   "10.1088/0957-4484_26_49_494002",
+   "10.1088/0957-4484_27_2_024004",
+   "10.1088/0957-4484_28_1_01LT02",
+   "10.1088/1361-6463_aa8ffd",
+   "10.1088/1361-6463_aa9d30",
+   "10.1088/1361-6463_aa9df8",
+   "10.1088/1361-6463_aad685",
+   "10.1088/1361-6463_aad7de"
+  ],
+  "v4_flags_reproduce_all": true,
+  "v4_papers": 2835,
+  "stored_v4_keys_not_in_json_dir": 1,
+  "many_to_many_risk": "none: paper table is unique on doi_group; join is m:1 (validated)",
+  "stems_with_extra_underscore": 52
+ },
+ "record_coverage": {
+  "population": "PCE>=1 (load_dataset default)",
+  "records": 41107,
+  "dois": 7327,
+  "by_state": [
+   {
+    "json_state": "covered",
+    "records": 14968,
+    "dois": 2714,
+    "pce_mean": 12.33,
+    "pce_sd": 4.756,
+    "year_median": 2018.0,
+    "frac_pin": 0.31
+   },
+   {
+    "json_state": "empty",
+    "records": 59,
+    "dois": 17,
+    "pce_mean": 14.714,
+    "pce_sd": 4.339,
+    "year_median": 2018.0,
+    "frac_pin": 0.119
+   },
+   {
+    "json_state": "uncovered",
+    "records": 26080,
+    "dois": 4596,
+    "pce_mean": 12.468,
+    "pce_sd": 4.987,
+    "year_median": 2018.0,
+    "frac_pin": 0.308
+   }
+  ],
+  "lx_covered_flag_agrees": true,
+  "lx_covered_vs_json_state": {
+   "covered": {
+    "0": 0,
+    "1": 14968
+   },
+   "empty": {
+    "0": 0,
+    "1": 59
+   },
+   "uncovered": {
+    "0": 26080,
+    "1": 0
+   }
+  }
+ },
+ "coverage_by_year": {
+  "2009": 0.0,
+  "2011": 0.0,
+  "2012": 0.556,
+  "2013": 0.157,
+  "2014": 0.245,
+  "2015": 0.339,
+  "2016": 0.352,
+  "2017": 0.385,
+  "2018": 0.444,
+  "2019": 0.374,
+  "2020": 0.089,
+  "2021": 0.0,
+  "2022": 0.0,
+  "2023": 0.0,
+  "2024": 0.0
+ },
+ "key_classes": {
+  "rows_by_class": {
+   "identity": 87391,
+   "process": 43835,
+   "outcome": 40043,
+   "other": 19041,
+   "characterisation": 12075,
+   "property": 6981
+  },
+  "distinct_keys": 39204,
+  "outcome_keys_missed_by_production_OUTCOME_KEY": 2455,
+  "missed_examples": {
+   "stability": 78,
+   "stability_time": 77,
+   "stability_days": 45,
+   "thermal_stability": 39,
+   "stability_condition": 35,
+   "stability_hours": 30,
+   "j_sc_average": 24,
+   "pce [%]": 24,
+   "voc (v)": 23,
+   "pce (%)": 23,
+   "stability_test_duration": 23,
+   "j_sc": 22,
+   "voc [v]": 22,
+   "v_oc_average": 22,
+   "v_oc": 21
+  },
+  "note": "production recipe flags use key *names* and string values; missed outcome keys can add their key text to the flag search string (chemistry regexes rarely match outcome text). Numeric outcome values are never used by any production feature."
+ }
+}

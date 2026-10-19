@@ -1,0 +1,249 @@
+{
+ "config": {
+  "name": "E1_screen",
+  "hypothesis": "Screen M3 representations (join fix, missingness, outcome-key filter, encodings) and new JSON-derived blocks against M2 on identical v4dev DOI-grouped folds; DOI-permuted controls give the noise floor.",
+  "partition": "v4dev",
+  "folds": 5,
+  "seeds": [
+   42,
+   43,
+   44
+  ],
+  "bag": 1,
+  "pen": 0.5,
+  "params": {},
+  "arms": [
+   {
+    "name": "M1",
+    "base": "t1"
+   },
+   {
+    "name": "M2",
+    "base": "t2"
+   },
+   {
+    "name": "M2_seedrep",
+    "base": "t2",
+    "seed_offset": 7
+   },
+   {
+    "name": "M3_v4",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "v4"
+     }
+    ]
+   },
+   {
+    "name": "M3_fixed",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "fixed"
+     }
+    ]
+   },
+   {
+    "name": "M3_strict",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict"
+     }
+    ]
+   },
+   {
+    "name": "M3_strict_pen0",
+    "pen": 0.0,
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict"
+     }
+    ]
+   },
+   {
+    "name": "M3_strict_zerocov",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict",
+      "repr": "zero_cov"
+     }
+    ]
+   },
+   {
+    "name": "M3_strict_cat3",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict",
+      "repr": "cat3"
+     }
+    ]
+   },
+   {
+    "name": "M3_strict_groups",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict",
+      "repr": "groups"
+     }
+    ]
+   },
+   {
+    "name": "M3_strict_flagsgroups",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict",
+      "repr": "flags_groups"
+     }
+    ]
+   },
+   {
+    "name": "M3_strict_prev",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict",
+      "repr": "prev"
+     }
+    ]
+   },
+   {
+    "name": "CTL_perm0",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict",
+      "perm": 100
+     }
+    ]
+   },
+   {
+    "name": "CTL_perm1",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict",
+      "perm": 101
+     }
+    ]
+   },
+   {
+    "name": "CTL_perm2",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict",
+      "perm": 102
+     }
+    ]
+   },
+   {
+    "name": "CTL_cov",
+    "blocks": [
+     {
+      "kind": "covflag",
+      "variant": "strict"
+     }
+    ]
+   },
+   {
+    "name": "N_knn",
+    "blocks": [
+     {
+      "kind": "knn",
+      "k": 25
+     }
+    ]
+   },
+   {
+    "name": "N_knn_perm",
+    "blocks": [
+     {
+      "kind": "knn",
+      "k": 25,
+      "perm": 200
+     }
+    ]
+   },
+   {
+    "name": "N_tokte",
+    "blocks": [
+     {
+      "kind": "tokte"
+     }
+    ]
+   },
+   {
+    "name": "N_tokte_perm",
+    "blocks": [
+     {
+      "kind": "tokte",
+      "perm": 300
+     }
+    ]
+   },
+   {
+    "name": "N_svd16",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16
+     }
+    ]
+   },
+   {
+    "name": "N_jprop",
+    "blocks": [
+     {
+      "kind": "jprop"
+     }
+    ]
+   },
+   {
+    "name": "N_design",
+    "blocks": [
+     {
+      "kind": "design"
+     }
+    ]
+   },
+   {
+    "name": "M3s_knn",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict"
+     },
+     {
+      "kind": "knn",
+      "k": 25
+     }
+    ]
+   },
+   {
+    "name": "M3s_tokte",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict"
+     },
+     {
+      "kind": "tokte"
+     }
+    ]
+   }
+  ]
+ },
+ "config_sha256": "82bedce7d8cd786f76b2cac4aad8b3f3214e1116843c8167c544c1b25b985d4a",
+ "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+ "git_head": "b2efd1f37eed9a462ee39aa298b04bc180498937",
+ "n_records": 26982,
+ "n_dois": 4708,
+ "started": "2026-10-19 04:05:06"
+}

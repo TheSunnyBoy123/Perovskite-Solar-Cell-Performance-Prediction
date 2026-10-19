@@ -1,0 +1,105 @@
+{
+ "config": {
+  "name": "F_final",
+  "frozen": "2026-10-19, after E1-E3 (dev only), before E4 and before any v4final / manuscript-holdout scoring in this experiment",
+  "selection_rationale": "Flag variants (v4/fixed/strict/clean, all representations) were within the seed-replicate noise floor on dev (|dR2| <= 0.002 covered). Text-embedding arms were the only family with a consistent covered gain (E1 svd16 +0.0067, E2 svd16 +0.0040 / svd32 +0.0072, E3 clean +0.0054, chem +0.0036; all CIs include 0) and each beat its DOI-permuted control. N_svd16_clean is chosen as the single primary candidate: directly measured, prompt-template and evaluative-word artefacts removed. Primary comparison: N_svd16_clean vs M2 on covered v4final records (paired, publication-cluster bootstrap). Everything else is secondary/descriptive.",
+  "primary": {
+   "arm": "N_svd16_clean",
+   "ref": "M2",
+   "subset": "covered"
+  },
+  "n_seeds": 5,
+  "params": {},
+  "arms": [
+   {
+    "name": "M1",
+    "base": "t1"
+   },
+   {
+    "name": "M2",
+    "base": "t2"
+   },
+   {
+    "name": "M3_v4",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "v4"
+     }
+    ]
+   },
+   {
+    "name": "M3_strict",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "strict"
+     }
+    ]
+   },
+   {
+    "name": "M3_clean",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "clean"
+     }
+    ]
+   },
+   {
+    "name": "N_svd16_clean",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "clean"
+     }
+    ]
+   },
+   {
+    "name": "N_svd16_clean_perm",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "clean",
+      "perm": 401
+     }
+    ]
+   }
+  ],
+  "archs": [
+   "overall",
+   "pin",
+   "nip"
+  ],
+  "arms_H": [
+   {
+    "name": "M2",
+    "base": "t2"
+   },
+   {
+    "name": "M3_v4",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "v4"
+     }
+    ]
+   },
+   {
+    "name": "N_svd16_clean",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "clean"
+     }
+    ]
+   }
+  ]
+ },
+ "config_sha256": "065d420095de9a27593aef8aad1d9f820f6a1c551dbcd8eac4c89c47dab5e79c",
+ "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+ "started": "2026-10-19 06:54:23"
+}

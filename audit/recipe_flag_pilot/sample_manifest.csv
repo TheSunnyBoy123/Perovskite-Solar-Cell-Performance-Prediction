@@ -1,0 +1,23 @@
+doi,markdown_file,pdf_file_present,markdown_chars,extraction_record_present,json_flags_predicted,fully_auditable,sampling_stratum,selection_rationale
+10.1002/adfm.201604733,10.1002_adfm.201604733.md,True,36507,True,0,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1002/aenm.201803587,10.1002_aenm.201803587.md,True,44236,True,6,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1007/s10118-017-1891-z,10.1007_s10118-017-1891-z.md,True,22320,True,1,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1016/j.electacta.2017.06.032,10.1016_j.electacta.2017.06.032.md,True,31541,True,5,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1016/j.joule.2018.06.009,10.1016_j.joule.2018.06.009.md,True,27734,True,4,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1016/j.jpowsour.2018.08.070,10.1016_j.jpowsour.2018.08.070.md,True,41450,True,1,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1016/j.nanoen.2018.10.011,10.1016_j.nanoen.2018.10.011.md,True,57175,True,4,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1021/acs.jpcc.5b06269,10.1021_acs.jpcc.5b06269.md,True,38905,True,2,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1021/acs.jpcc.8b01026,10.1021_acs.jpcc.8b01026.md,True,39054,True,0,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1021/acs.jpclett.5b01716,10.1021_acs.jpclett.5b01716.md,True,35478,True,2,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1038/ncomms13503,10.1038_ncomms13503.md,True,63273,True,2,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1038/ncomms15330,10.1038_ncomms15330.md,True,36928,True,6,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1039/c7se00100b,10.1039_c7se00100b.md,True,74850,True,2,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1039/c8ta07968d,10.1039_c8ta07968d.md,True,33495,True,7,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1039/c9ta01893j,10.1039_c9ta01893j.md,True,44851,True,1,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1063/1.4896779,10.1063_1.4896779.md,True,30093,True,5,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1088/1361-6463/ab1626,10.1088_1361-6463_ab1626.md,True,56095,True,3,True,census of the auditable frame (all 17 with full text + extraction record),source availability; selection did not use flag values or audit outcomes
+10.1016/j.electacta.2017.12.108,10.1016_j.electacta.2017.12.108.md,True,,False,,False,excluded,EXCLUDED: no extraction record in the combined JSON (not auditable against flags)
+10.1021/jp5126624,10.1021_jp5126624.md,True,,False,,False,excluded,EXCLUDED: no extraction record in the combined JSON (not auditable against flags)
+10.1117/12.2506443,10.1117_12.2506443.md,True,,False,,False,excluded,EXCLUDED: no extraction record in the combined JSON (not auditable against flags)
+10.1149/08701.0199ecst,10.1149_08701.0199ecst.md,True,,False,,False,excluded,EXCLUDED: no extraction record in the combined JSON (not auditable against flags)
+10.1246/cl.180616,10.1246_cl.180616.md,True,,False,,False,excluded,EXCLUDED: no extraction record in the combined JSON (not auditable against flags)

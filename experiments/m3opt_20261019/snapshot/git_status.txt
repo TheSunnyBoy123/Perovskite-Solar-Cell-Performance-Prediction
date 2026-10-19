@@ -1,0 +1,26 @@
+ M psc_manuscript/figure_scripts/fig_feature_tiers.py
+ M psc_manuscript/figure_scripts/fig_split_effect.py
+ M psc_manuscript/figures/fig_feature_tiers.pdf
+ M psc_manuscript/figures/fig_feature_tiers.png
+ M psc_manuscript/figures/fig_split_effect.pdf
+ M psc_manuscript/figures/fig_split_effect.png
+ M psc_manuscript/ml.pdf
+ M psc_manuscript/ml.tex
+ M psc_manuscript/references.bib
+ M results/t3final_summary/numbers.json
+?? audit/recipe_flag_pilot/
+?? experiments/
+?? psc_manuscript/figure_scripts/fig_shap_t3_split.py
+?? psc_manuscript/figure_scripts/fig_shap_t3_split_alt.py
+?? psc_manuscript/figures/fig_shap_t3_split.pdf
+?? psc_manuscript/figures/fig_shap_t3_split.png
+?? psc_manuscript/figures/fig_shap_t3_split_alt.pdf
+?? psc_manuscript/figures/fig_shap_t3_split_alt.png
+?? results/candidates/
+?? results/t3final_matched_v1/meta.superseded_pre_opencode_fix.json
+?? results/t3final_matched_v1/runs.superseded_pre_opencode_fix.jsonl
+?? scripts/confirm_covered.py
+?? scripts/select_covered.py
+?? src/psc/candidates.py
+?? tests/test_candidates.py
+?? tests/test_recipe_flag_audit.py

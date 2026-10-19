@@ -1,0 +1,141 @@
+feature,tier,source,regex,level,values,group
+rc_cl_source,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),pbcl2|macl\b|nh4cl|ch3nh3cl|methylammonium chloride|lead chloride|cscl|chloride|mapbi3-?x?cl|i3-?xclx|\bcl\b,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_acetate,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),acetate|pb\(ac\)|pbac2|\bmaac\b|\bpbac|ch3coo,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_scn,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),scn|thiocyanate,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_snf2,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),snf2|tin\(ii\) fluoride|tin fluoride,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_ava,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),5-?ava|aminovaleric|5-aminovaleric,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_hx_acid,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),\bhi\b|hydroiodic|hydrobromic|\bhbr\b|\bhcl\b|hypophosph|\bhpa\b|formic acid|acetic acid,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_alkali,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),\brbi\b|rubidium|\bki\b|potassium|\bnai\b|\bli[ib]r?\b,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_cs,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),\bcsi\b|cesium|caesium|\bcsbr\b|cspb,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_pea_family,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),\bpe(a)?i\b|phenethyl|phenylethyl|\bbai\b|butylammonium|\boai\b|octylammonium|\bgai\b|guanidin|\bnh4i|ammonium,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_lewis_base,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),urea|thiourea|pyridine|phosph|sulfoxide|formamide(?!.*iodide),publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_water_add,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),\bh2o\b|deionized|di water,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_polymer,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),\bpeg\b|\bpvp\b|\bpmma\b|\bps\b|polystyrene|polyethylene|\bpei\b|polymer,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_carbon,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),graphene|\brgo\b|cnt|nanotube|fullerene|\bc60\b|pcbm,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_dio,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),"diiodooctane|\bdio\b|1,8-diiodo",publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,P
+rc_htl_tbp,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),\btbp\b|t-bp|tert-?butyl ?pyridine|4-?tert,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,H
+rc_htl_litfsi,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),li-?tfs[ia]|lithium bis|li salt|lin\(cf3so2\)2n|litfsi,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,H
+rc_htl_fk,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),fk-?(209|102|269|211)|co\(iii\)|cobalt,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,H
+rc_htl_f4tcnq,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),f4-?tcnq|tcnq,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,H
+rc_htl_cu,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),cu\(tfsi\)2|cu\(oac\)2|cu:|copper,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,H
+rc_htl_borate,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),tpfb|borate|\bbcf\b|b\(c6f5\)3,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,H
+rc_etl_ticl4,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),ticl4,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,E
+rc_etl_dopant,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),\bnb\b|\bmg:|mg-?doped|zn-?doped|ni-?doped|\bli-doped|y-doped|nb-?doped|sn-doped|doped,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,E
+rc_undoped,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),undoped|pristine|without (additive|dopant)|dopant-free|dopant free,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,U
+rc_interface_pass,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),passivat|interlayer|surface treatment|post-?treatment|modif,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,U
+rc_antisolvent,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),anti-?solvent|quench,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,R
+rc_vacuum,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),vacuum|evaporat|co-?evaporat|vapou?r|sublim,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,R
+rc_two_step,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),two-?step|sequential|dipping|\bdip\b,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,R
+rc_hot_cast,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),hot-?cast,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,R
+rc_solvent_anneal,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),solvent anneal|dmf vapou?r|vapou?r anneal,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,R
+rc_flexible,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),\bpet\b|\bpen\b|flexible|polyimide,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,C
+rc_tandem,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),tandem|silicon|\bsi\b,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,C
+rc_lead_free,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),snI3|sni2|bismuth|\bbii3|antimony|germanium|tin-?based|lead-?free,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,C
+rc_inorganic,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),cspbi|cspbbr|cssni|inorganic,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,C
+rc_mesoscopic,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),mesoporous|mp-?tio2|scaffold|carbon electrode,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,C
+rc_n2_box,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),glove ?box|nitrogen|\bn2\b|argon,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,R
+rc_ambient,M3,raw LLM JSON (../json) -> litfeat4.paper_recipe regex over non-outcome key names and string values of all material records (role-scoped for htl_/etl_),ambient|humid|\bair\b,publication,1 = mentioned in extraction; 0 = not mentioned (NOT a verified negative); NaN = no joined JSON or empty extraction,R
+Cell_architecture,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_deposition_method,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_deposition_method,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_deposition_method,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_band_gap,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_LUMO,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_HOMO,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_electron_mobility,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_hole_mobility,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_dielectric_constant,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_min_atomic_mass,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_max_atomic_mass,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_avg_atomic_mass,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_min_radius,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_max_radius,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_avg_radius,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_en_min,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_en_max,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_en_avg,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_band_gap,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_LUMO,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_HOMO,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_electron_mobility,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_hole_mobility,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_dielectric_constant,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_min_atomic_mass,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_max_atomic_mass,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_avg_atomic_mass,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_min_radius,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_max_radius,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_avg_radius,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_en_min,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_en_max,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_en_avg,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_band_gap,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_LUMO,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_HOMO,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_electron_mobility,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_hole_mobility,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_dielectric_constant,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_min_atomic_mass,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_max_atomic_mass,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_avg_atomic_mass,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_min_radius,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_max_radius,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_avg_radius,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_en_min,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_en_max,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_en_avg,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+num_a_ions,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+num_b_ions,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+num_c_ions,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+total_ion_count,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+a_coeff_sum,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+b_coeff_sum,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+c_coeff_sum,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+a_FA_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+a_MA_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+a_Cs_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+a_Rb_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+a_organic_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+a_other_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+b_Pb_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+b_Sn_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+b_Bi_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+b_other_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+halide_I_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+halide_Br_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+halide_Cl_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+halide_F_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+halide_other_fraction,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_thickness_nm,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_thickness_nm,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_thickness_nm,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Backcontact_thickness_nm,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_band_gap_measured,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perov_anneal_temp_C,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perov_anneal_time_min,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_deposition_substrate_temperature,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_deposition_substrate_temperature,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_deposition_substrate_temperature,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perov_deposition_steps,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_dimension_list_of_layers,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+is_inorganic,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+is_leadfree,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+is_3D,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+is_2D,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+is_2D3D_mixture,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+is_flexible_x,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+is_semitransparent,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perov_quenching_crystallisation,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_composition_perovskite_inspired_structure,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_composition_perovskite_ABC3_structure,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_dimension_3D_with_2D_capping_layer,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_deposition_solvent_annealing,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Encapsulation,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Add_lay_front,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+Perovskite_pl_max_nm,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+perovskite_tolerance_factor,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+perovskite_octahedral_factor,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+perovskite_cation_radius_ratio,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+perovskite_tau_descriptor,M2,material-property catalogue,,device record,numeric/categorical; NaN -> train-median + _na flag,
+HTL_hole_barrier,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,
+ETL_electron_barrier,M1,PDP export / composition parsing,,device record,numeric/categorical; NaN -> train-median + _na flag,

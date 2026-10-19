@@ -1,0 +1,32 @@
+{
+ "canonical_long_table": "features/json_long.csv.gz: doi_group, file, mat_idx, role, canon_name, key, key_class (identity/outcome/characterisation/property/process/other), value_kind, value_raw, value_num",
+ "paper_states": {
+  "covered": "joined JSON with >= 1 material record",
+  "empty": "JSON parsed but 0 material records (17 dev+final papers) -> all M3 features NaN (production v4 set them to 0)",
+  "uncovered": "no JSON for the publication -> NaN",
+  "unjoined": "JSON whose DOI matches no PDP publication"
+ },
+ "not_recoverable": [
+  "evidence spans",
+  "extraction confidence",
+  "explicit negatives",
+  "device-level assignment",
+  "inapplicable vs absent"
+ ],
+ "doi_resolution_rules": [
+  "R1 filename first '_' -> '/' (production)",
+  "R2 filename all '_' -> '/' (IOP)",
+  "R3 JSON 'source' field when it is a DOI",
+  "else unjoined"
+ ],
+ "flag_variants": {
+  "v4": "stored data/lit_v4.json (production M3)",
+  "fixed": "R1-R3 resolution + empty -> NaN",
+  "strict": "fixed + extended outcome-key filter (stability / PCE [%] / Voc (V) ... keys removed before the regex search)"
+ },
+ "tiers": {
+  "M1": "base_frame(t1)",
+  "M2": "base_frame(t2)",
+  "M3": "M2 + 36 rc_* flags (CatBoost first-feature-use penalty 0.5)"
+ }
+}

@@ -1,0 +1,81 @@
+{
+  "papers_audited": 17,
+  "paper_flag_decisions": 612,
+  "flags": 36,
+  "resolved_decisions": 603,
+  "unresolved_decisions": 9,
+  "unresolved_fraction": 0.014705882352941176,
+  "source_positive_decisions": 84,
+  "source_negative_decisions": 519,
+  "pooled_TP": 37,
+  "pooled_FP": 13,
+  "pooled_TN": 506,
+  "pooled_FN": 47,
+  "overall_agreement_resolved": 0.900497512437811,
+  "micro_precision": 0.74,
+  "micro_recall": 0.44047619047619047,
+  "micro_precision_ci95": [
+    0.5965523212719344,
+    0.8536994156034455
+  ],
+  "micro_recall_ci95": [
+    0.33222474745081937,
+    0.5530476718747114
+  ],
+  "macro_precision_over_defined_flags": 0.7666666666666667,
+  "macro_precision_defined_flags": 21,
+  "macro_recall_over_defined_flags": 0.47842261904761907,
+  "macro_recall_defined_flags": 24,
+  "flags_with_adequate_support": 7,
+  "flags_with_any_source_positive": 24,
+  "flags_with_no_source_positive": [
+    "scn",
+    "snf2",
+    "ava",
+    "water_add",
+    "dio",
+    "htl_f4tcnq",
+    "htl_cu",
+    "htl_borate",
+    "hot_cast",
+    "solvent_anneal",
+    "flexible",
+    "tandem"
+  ],
+  "papers_fully_resolved": 9,
+  "papers_with_unresolved_decisions": {
+    "10.1002/aenm.201803587": 1,
+    "10.1007/s10118-017-1891-z": 1,
+    "10.1016/j.joule.2018.06.009": 2,
+    "10.1021/acs.jpclett.5b01716": 1,
+    "10.1038/ncomms13503": 1,
+    "10.1039/c7se00100b": 1,
+    "10.1039/c8ta07968d": 1,
+    "10.1063/1.4896779": 1
+  },
+  "discrepancy_locus": {
+    "extraction": 44,
+    "conversion": 16
+  },
+  "discrepancy_category": {
+    "device use absent from the JSON (omission)": 39,
+    "JSON formula '(PEA)2(MA)...' is not matched: the regex needs PEAI/phenethyl forms, not the bare PEA abbreviation": 1,
+    "JSON record triggers flag in a non-device context (LITERATURE)": 1,
+    "regex over-breadth (non-target string matched)": 7,
+    "JSON names DMSO; the lewis_base regex matches 'sulfoxide' only, not the DMSO abbreviation": 1,
+    "JSON names PC71BM; the regex 'pcbm' does not match the PC71BM spelling": 2,
+    "JSON record triggers flag in a non-device context (REFERENCE)": 1,
+    "JSON formula with Cs0.05/CsI text is not matched by the cs regex": 1,
+    "methylammonium iodide is matched by the 'ammonium' term": 1,
+    "material named in the JSON under an alias the regex does not match": 1,
+    "JSON record triggers flag in a non-device context (TEST_CONDITION)": 1,
+    "JSON record triggers flag in a non-device context (ETCH)": 1,
+    "JSON 'Sn-doped TiO2' photo-anode is mapped to role 'contact' by role(), which is outside the etl_dopant scope": 1,
+    "JSON formula 'Cs0.05(...)' is not matched: the regex needs CsI/CsBr/CsPb/cesium": 1,
+    "JSON record flagged with no source term in the full text": 1
+  },
+  "paper_flag_pairs_predicted_positive": 51,
+  "paper_flag_pairs_source_positive": 84,
+  "target_papers": 40,
+  "sampling": "census of the auditable frame (not random)"
+}

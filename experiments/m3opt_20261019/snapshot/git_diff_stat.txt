@@ -1,0 +1,11 @@
+ psc_manuscript/figure_scripts/fig_feature_tiers.py |  11 +-
+ psc_manuscript/figure_scripts/fig_split_effect.py  |  18 +-
+ psc_manuscript/figures/fig_feature_tiers.pdf       | Bin 46958 -> 47002 bytes
+ psc_manuscript/figures/fig_feature_tiers.png       | Bin 79333 -> 79537 bytes
+ psc_manuscript/figures/fig_split_effect.pdf        | Bin 42256 -> 31554 bytes
+ psc_manuscript/figures/fig_split_effect.png        | Bin 67067 -> 43643 bytes
+ psc_manuscript/ml.pdf                              | Bin 1820523 -> 1485808 bytes
+ psc_manuscript/ml.tex                              | 591 ++++++++-------------
+ psc_manuscript/references.bib                      | 469 ++++++++++++++--
+ results/t3final_summary/numbers.json               | 310 +++++------
+ 10 files changed, 821 insertions(+), 578 deletions(-)

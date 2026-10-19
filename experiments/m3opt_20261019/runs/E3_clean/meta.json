@@ -1,0 +1,105 @@
+{
+ "config": {
+  "name": "E3_clean",
+  "hypothesis": "Is the TF-IDF/SVD gain chemistry or extraction artefact? Remove prompt-template records (140 template-only papers -> NaN) and evaluative words; compare full-text-of-extraction (clean) vs identity-only (chem) embeddings, each with a DOI-permuted control; clean flags (template-only papers as missing).",
+  "partition": "v4dev",
+  "folds": 5,
+  "seeds": [
+   45,
+   46,
+   47,
+   48,
+   49
+  ],
+  "bag": 1,
+  "pen": 0.5,
+  "params": {},
+  "arms": [
+   {
+    "name": "M2",
+    "base": "t2"
+   },
+   {
+    "name": "M3_clean",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "clean"
+     }
+    ]
+   },
+   {
+    "name": "N_svd16_clean",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "clean"
+     }
+    ]
+   },
+   {
+    "name": "N_svd16_clean_perm",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "clean",
+      "perm": 401
+     }
+    ]
+   },
+   {
+    "name": "N_svd16_chem",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "chem"
+     }
+    ]
+   },
+   {
+    "name": "N_svd16_chem_perm",
+    "blocks": [
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "chem",
+      "perm": 402
+     }
+    ]
+   },
+   {
+    "name": "M3c_svd16chem",
+    "blocks": [
+     {
+      "kind": "flags",
+      "variant": "clean"
+     },
+     {
+      "kind": "svd",
+      "k": 16,
+      "text": "chem"
+     }
+    ]
+   },
+   {
+    "name": "N_knn_chem",
+    "blocks": [
+     {
+      "kind": "knn",
+      "k": 25,
+      "text": "chem"
+     }
+    ]
+   }
+  ]
+ },
+ "config_sha256": "02a163437aca8a7151f2be093942bd0f9510dd1f245c2bb4ac6ea4840c2e8523",
+ "data_sha256": "600efce587a1bd81c2a192e36db6534d8d78a3edfadb635dd40e685c9314ffdc",
+ "git_head": "b2efd1f37eed9a462ee39aa298b04bc180498937",
+ "n_records": 26982,
+ "n_dois": 4708,
+ "started": "2026-10-19 05:40:31"
+}
