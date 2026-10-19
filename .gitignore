@@ -1,0 +1,15 @@
+# data (too large; place manually)
+data/dataset_json_enriched.csv
+data/prepared.parquet
+
+# outputs
+results/
+retrieval/
+extractions/
+models/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env

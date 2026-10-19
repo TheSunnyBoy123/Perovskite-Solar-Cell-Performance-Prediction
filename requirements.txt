@@ -1,0 +1,12 @@
+pandas>=2.0
+pyarrow>=14.0
+scikit-learn>=1.4
+catboost>=1.2
+xgboost>=2.0
+shap>=0.44
+requests>=2.31
+streamlit>=1.35
+pymupdf>=1.24
+pymupdf4llm>=0.0.17
+python-dotenv>=1.0
+numpy>=1.26
